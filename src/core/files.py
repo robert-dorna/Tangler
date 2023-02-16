@@ -20,7 +20,7 @@ class JsonFile:
             self.flush()
             self.file.close()
             if self.on_closed:
-                self.on_closed(self)
+                self.on_closed()
 
     def flush(self):
         if not self.file.closed:

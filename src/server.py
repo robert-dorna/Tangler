@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, Response
-from .core.datadir import List
+from .api import Api
 from logging.config import dictConfig
+
 
 dictConfig({
     'version': 1,
@@ -25,25 +26,36 @@ app = Flask(__name__)
 # RAW, RPC, SOAP, REST, GraphQL
 @app.route("/data")
 def update_task():
-    data = List('r+')
 
     args = {**request.args}
+
     if 'index' in args:
         args['index'] = int(args['index']) 
         
-    if ',' in args['what']:
-        args['what'] = args['what'].split(',')
-        
-    # app.logger.info('args: %s', args)
+    app.logger.info('args: %s', args)
 
-    method = getattr(data, args.pop('method'))
-    result = method(**args)
+    api = Api()
+    method = args.pop('method') if 'method' in args else 'read'
+    method = getattr(api, method)
 
-    data.flush()
+    what = args.pop('what') if 'what' in args else 'task'
+    if ',' in what:
+        what = what.split(',')
+
+    app.logger.info('calling with')
+    app.logger.info(' > what: %s', what)
+    app.logger.info(' > args: %s', args)
+
+    if isinstance(what, list):
+        result = {w: method(what=w, **args) for w in what}
+    else:
+        result = method(what=what, **args)
+
+    # data.flush()
 
     success = True # todo, way to check from Data that it was updated
     response = jsonify(
-        {'status': 'ran update, success unknown', 'result': result } if success else 
+        {'status': 'ran method, success unknown', 'result': result } if success else 
         {'status': 'error'}
     )
     

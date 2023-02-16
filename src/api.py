@@ -1,7 +1,7 @@
 from os import path
 from .core.sorting import sort
 from .core.files import JsonFile, read_json, DATADIR_PATH
-from .core.datadir import List
+from .core.datadir import ItemFile
 
 
 LINKS_PATH = path.join(DATADIR_PATH, '_links.json')
@@ -26,13 +26,16 @@ class Api:
         return sort(self.refresh(what), what)
 
 
-    def create(self, what, values, index = None, *, on_closed = None):
-        data = List(what)
-        data.create(values, index)
-        data.close()
+    def _prepend_refresh(self, what, on_closed):
         self.refresh(what)
         if on_closed:
-            on_closed(data)
+            on_closed()
+
+
+    def create(self, what, values, index = None, *, on_closed = None):
+        on_closed = self._prepend_refresh(what, on_closed)
+        with ItemFile(what, on_closed=on_closed) as items:
+            items.create(values, index)
 
 
     def read(self, what, _id = None):
@@ -48,31 +51,27 @@ class Api:
              
 
     def update(self, what, _id, values, *, on_closed = None):
-        # print(f'API::update({what}, {_id},', values, 'on_close:', on_closed)
-        with List(what, on_closed = on_closed) as data:
+        on_closed = self._prepend_refresh(what, on_closed)
+        with ItemFile(what, on_closed = self._on_closed(on_closed)) as data:
             data.update(_id, values)
-        self.refresh(what)
 
 
     def swap(self, what, _id_a, _id_b, *, on_closed = None):
-        with List(what, on_closed = on_closed) as data:
-            data.swap(_id_a, _id_b)
-        self.refresh(what)
+        on_closed = self._prepend_refresh(what, on_closed)
+        with ItemFile(what, on_closed = on_closed) as items:
+            items.swap(_id_a, _id_b)
 
 
     def move(self, what, _id, destination_index, *, on_closed = None):
-        with List(what, on_closed = on_closed) as data:
-            data.move(_id, destination_index)
-        self.refresh(what)
+        on_closed = self._prepend_refresh(what, on_closed)
+        with ItemFile(what, on_closed = on_closed) as items:
+            items.move(_id, destination_index)
 
 
     def delete(self, what, _id, *, on_closed = None):
-        data = List(what)
-        data.delete(_id)
-        data.close()
-        self.refresh(what)
-        if on_closed:
-            on_closed(data)
+        on_closed = self._prepend_refresh(what, on_closed)
+        with ItemFile(what, on_closed = on_closed) as items:
+            items.delete(_id)
 
 
     def read_links(self):

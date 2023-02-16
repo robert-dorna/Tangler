@@ -1,5 +1,5 @@
 <script>
-  import configRaw from "../tangle_data/config.yaml?raw";
+  // import configRaw from "../tangle_data/config.yaml?raw";
   import IconSwitch from "./icon-switch.svelte";
   import Checks from "./checks.svelte"
   // import yaml from "yaml";

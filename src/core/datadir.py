@@ -7,10 +7,9 @@ def read_config(what):
 
 
 # List of same type items, handles storage I/O
-class List(JsonFile):
+class ItemFile(JsonFile):
     def __init__(self, what, *, readonly = False, on_closed = None):
-        data_path = path.join(DATADIR_PATH, f'{what}.json')
-        super().__init__(data_path, on_closed)
+        super().__init__(path.join(DATADIR_PATH, f'{what}.json'), on_closed)
         if readonly:
             self.file.close()
 

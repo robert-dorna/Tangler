@@ -31,7 +31,7 @@
     .join(",");
 
   client.get({ method: "read", what: whats }).then((json) => {
-    data = json.result;
+    data = Object.entries(json.result).reduce((a,c) => ({...a, [c[0]]: c[1][0]}), {});
   });
 
   let controlMode = false;
