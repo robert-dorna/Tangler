@@ -1,5 +1,5 @@
 <script>
-  import Modal from "./bricks/modal.svelte";
+  import Modal from "./modal.svelte";
   import Item from "./item.svelte";
 
   export let visible = false;

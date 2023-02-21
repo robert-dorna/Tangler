@@ -1,51 +1,36 @@
 <script>
   import Item from "./item.svelte";
-  import NewItem from "./new-item.svelte";
-  import client from "./client.js";
 
   export let itemtype;
-
-  export let controlMode = false;
-
   export let items = [];
-
-  export let onSelect;
-  export let onCreate;
-  export let onDelete;
-
-  $: itemsSlice = itemtype === "transaction" ? items.slice(0, 30) : items;
+  export let displayConfig = {}
 </script>
 
 <div class="container">
-  <h2>{itemtype}</h2>
-  {#each itemsSlice as item, index (item._id)}
-    {#if controlMode}
-      <NewItem on:click={() => onCreate(index)}/>
+  <div class="items">
+    {#each items as item, index (item._what + item._id)}
+      <Item {displayConfig} {itemtype} {item} />
+    {/each}
+    {#if Array.isArray(items) && items.length === 0}
+      <div class="noitems">No items</div>
     {/if}
-    <Item
-      {itemtype}
-      {controlMode}
-      {item}
-      onClick={() => onSelect(item, index)}
-      onDelete={() => onDelete(index)}
-    />
-  {/each}
-  {#if controlMode}
-    <NewItem on:click={() => onCreate()}/>
-  {/if}
-  {#if Array.isArray(itemsSlice) && itemsSlice.length === 0}
-    <div class="noitems">No items</div>
-  {/if}
+  </div>
 </div>
 
 <style>
   div.container {
     display: flex;
+    flex-direction: row;
+    min-width: 700px;
+  }
+  div.items {
+    display: flex;
     flex: 1;
     flex-direction: column;
-  }
-  h2 {
-    align-self: center;
+    align-items: flex-start;
+    padding-left: 50px;
+    padding-top: 50px;
+    /* flex-wrap: wrap; */
   }
   div.noitems {
     display: flex;

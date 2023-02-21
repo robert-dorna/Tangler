@@ -1,66 +1,38 @@
 <script>
-  // import configRaw from "../tangle_data/config.yaml?raw";
-  import IconSwitch from "./icon-switch.svelte";
-  import Checks from "./checks.svelte"
-  // import yaml from "yaml";
-
-  // const config = yaml.parse(configRaw);
-
-  // const counts = Object.keys(data).reduce(
-  //   (a, key) => ({ ...a, [key]: data[key].length }),
-  //   {}
-  // );
-
-  // function filterData(filter) {
-  //   if (!filter) return null;
-  //   let filters = filter.split(".");
-  //   if (!(filters[0] in data)) return null;
-  //   return filters.reduce(
-  //     (r, f) => (Array.isArray(r) ? r.map((o) => o[f]) : f in r ? r[f] : r),
-  //     data
-  //   );
-  // }
-
-  // let filter = "task";
-  // $: json = filterData(filter) || counts;
-
-  export let screens;
-  export let projects;
-  export let priorities;
-  export let meanings;
-  
-  export let screen;
-  export let project;
-  export let priority;
-  export let meaning;
+  import Options from "svelte-material-icons/FormatListBulletedType.svelte";
 </script>
 
 <div class="container">
-  <Checks checks={screens} allowOnlyOne={true} bind:selected={screen} />
-  <input />
-  <Checks checks={projects} bind:selected={project} />
-  <Checks checks={priorities} bind:selected={priority}/>
-  <Checks checks={meanings} bind:selected={meaning}/>
+  <div class="options">
+    <Options color="white" size={32} />
+  </div>
+  <input placeholder="Search for items that contain..." />
 </div>
 
 <style>
   div.container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
     align-items: center;
-    background-color: bisque;
+    background-color: #172a3a;
     width: 100vw;
     padding-top: 15px;
     padding-bottom: 15px;
   }
+  div.options {
+    margin-top: 3px;
+    padding-left: 30px;
+  }
   input {
-    margin-left: 10px;
-    border-radius: 20px;
-    padding: 10px;
-    border-width: 3;
-    border-color: chocolate;
-    color: chocolate;
+    all: unset;
+    background-color: #172a3a;
+    color: #f4f3ee;
+    border: 1px solid #bcb8b1;
+    border-radius: 8px;
     width: 30vw;
+    height: 40px;
+    font-size: 18px;
+    padding-left: 15px;
+    margin-left: 25px;
   }
 </style>

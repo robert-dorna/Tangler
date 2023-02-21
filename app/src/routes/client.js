@@ -20,6 +20,12 @@ const client = {
     }
 
     return fetch(url).then((res) => res.json());
+  },
+  types: async () => {
+    return fetch("http://0.0.0.0:5000/types").then(res => res.json())
+  },
+  displayConfig: async () => {
+    return fetch("http://0.0.0.0:5000/display").then(res => res.json())
   }
 }
 

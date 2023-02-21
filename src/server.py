@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request, Response
 from .api import Api
+from .core.files import read_yaml, CONFIG_PATH
 from logging.config import dictConfig
+from os import path
 
 
 dictConfig({
@@ -30,8 +32,8 @@ def update_task():
     args = {**request.args}
 
     if 'index' in args:
-        args['index'] = int(args['index']) 
-        
+        args['index'] = int(args['index'])
+
     app.logger.info('args: %s', args)
 
     api = Api()
@@ -53,15 +55,40 @@ def update_task():
 
     # data.flush()
 
-    success = True # todo, way to check from Data that it was updated
+    success = True  # todo, way to check from Data that it was updated
     response = jsonify(
-        {'status': 'ran method, success unknown', 'result': result } if success else 
+        {'status': 'ran method, success unknown', 'result': result} if success else
         {'status': 'error'}
     )
-    
+
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
-    
+
+
+@app.route("/types")
+def get_types():
+    response = jsonify([
+        {"name": "email", "emoji": "✉️"},
+        {"name": "contact", "emoji": "👤"},
+        {"name": "task", "emoji": "✅"},
+        {"name": "check", "emoji": "🔁"},
+        {"name": "note", "emoji": "✍️"},
+        {"name": "account", "emoji": "🔑"},
+        {"name": "item", "emoji": "🧳"},
+        {"name": "transaction", "emoji": "💲"},
+        {"name": "journal", "emoji": "📒"}
+    ])
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
+@app.route("/display")
+def get_display():
+    display = read_yaml(path.join(CONFIG_PATH, "_display.yaml"))
+    response = jsonify(display)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
 
 if __name__ == "__main__":
-  app.run()
+    app.run()

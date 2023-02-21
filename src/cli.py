@@ -18,7 +18,7 @@ def display_item(what, index, item, *, indent = 2):
         display_item(child_what, child_index, child_item, indent = indent * 2)
 
 
-def display(what, _id, *, count=False, fresh=False, only_roots=True):
+def display(what, _id, *, count=False, only_roots=True):
     if what is None:
         assert _id is None, 'cli display error, got _id for unknown item type'
 
@@ -29,7 +29,6 @@ def display(what, _id, *, count=False, fresh=False, only_roots=True):
 
     if what[0] == '+':
         return display(what[1:], _id, count=True)
-
 
     if _id is None:
         data = api.parentless(what) if only_roots else api.get(what)
@@ -95,17 +94,13 @@ def run_command(command_name='read', what=None, args=[]):
 
     known_ids = None
     if command_name == "create":
-        # print('collecting known ids')
         known_ids = set(item['_id'] for item in api.read(what)[0])
-    # print('known ids:', known_ids)
 
-    def on_closed(_):
+    def on_closed(_ = None):
         if command_name in ['move', 'swap', 'delete']:
             display(what, _id = None)
         elif command_name == "create":
             ids = set(item['_id'] for item in api.read(what)[0])
-            # print('ids:', ids)
-            # print('known_ids:', known_ids)
             new_id = (ids - known_ids).pop()
             display(what, _id = new_id)
         else:

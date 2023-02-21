@@ -33,7 +33,9 @@
     (labelColors[item.label] || labelColors.unknown)[1]
   };`;
   $: borderLeft = `border-left: 10px solid ${priorityColors[item.priority]};`;
-  $: style = `${backgroundColor} ${borderLeft}`;
+  // $: style = `${backgroundColor} ${borderLeft}`;
+  // $: style = `${borderLeft}`;
+  $: style = ``;
 
   const changeHighlights = [
     ["title", "color: goldenrod;"],
@@ -71,6 +73,7 @@
 </script>
 
 <Content {style} {highlightHover}>
+  ✅<Title bind:value={item.title} {editable} style={styles.title} />
   <Spaced>
     <Row>
       {#if editable}
@@ -98,8 +101,7 @@
     </Row>
     <Date bind:value={item.due_date} {editable} style={styles.due_date} />
   </Spaced>
-  <Title bind:value={item.title} {editable} style={styles.title} />
-  <Body bind:value={item.body} {editable} style={styles.body} />
+  <!-- <Body bind:value={item.body} {editable} style={styles.body} /> -->
   {#if !editable}
     <Slate on:click={() => { if (!controlMode) onClick() }} visible={controlMode}>
       <div class="button" on:click={onDelete} on:keydown={undefined}>
