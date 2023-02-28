@@ -1,32 +1,29 @@
 
-const client = {
-  get: async (args) => {
-    let url = `http://0.0.0.0:5000/data`;
+const req = async (url, args = []) => {
 
-    const shouldOmmit = value => value === null || value === undefined || String(value).toUpperCase() === "NULL";
-    const encode = value => String(value).replace(' ', '%20')
+  const shouldOmmit = value => value === null || value === undefined || String(value).toUpperCase() === "NULL";
+  const encode = value => String(value).replace(' ', '%20')
 
-    let urlArgs = []
-    Object.keys(args).forEach(key => {
-      const value = args[key]
-      if (!shouldOmmit(value)) {
-        urlArgs.push(`${key}=${encode(args[key])}`)
-      }
-    })
-
-    urlArgs = urlArgs.join('&')
-    if (urlArgs) {
-      url += `?${urlArgs}`
+  let urlArgs = []
+  Object.keys(args).forEach(key => {
+    const value = args[key]
+    if (!shouldOmmit(value)) {
+      urlArgs.push(`${key}=${encode(args[key])}`)
     }
+  })
 
-    return fetch(url).then((res) => res.json());
-  },
-  types: async () => {
-    return fetch("http://0.0.0.0:5000/types").then(res => res.json())
-  },
-  displayConfig: async () => {
-    return fetch("http://0.0.0.0:5000/display").then(res => res.json())
+  urlArgs = urlArgs.join('&')
+  if (urlArgs) {
+    url += `?${urlArgs}`
   }
+
+  return fetch(url).then((res) => res.json());
+}
+
+const client = {
+  get: async (args) => req(`http://0.0.0.0:5000/data`, args),
+  update: async (args) => req(`http://0.0.0.0:5000/update`, args),
+  displayConfig: async () => req(`http://0.0.0.0:5000/display`),
 }
 
 export default client

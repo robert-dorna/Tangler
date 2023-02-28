@@ -5,18 +5,15 @@
   import Items from "./items.svelte";
 
   let displayConfig = {};
+  let types = [];
   client.displayConfig().then(json => {
-    displayConfig = json
+    displayConfig = json.types
+    types = json.order
   })
 
-  let types = [];
-  let emojis = [];
-  client.types().then((json) => {
-    types = json.map((desc) => desc.name);
-    emojis = json.map((desc) => desc.emoji);
-  });
+  $: emojis = types.map(typename => displayConfig[typename].emoji)
 
-  let selected = "account";
+  let selected = "task";
   let data = []
   
   $: client.get({ method: "readall", what: selected }).then((json) => {
@@ -29,7 +26,6 @@
   <div class="columns">
     <Panel bind:selected {emojis} types={types} />
     <Items
-      itemtype={selected}
       items={data}
       {displayConfig}
     />

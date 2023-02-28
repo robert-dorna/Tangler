@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, Response
 from .api import Api
 from .core.files import read_yaml, CONFIG_PATH
 from logging.config import dictConfig
-from os import path
+from os import path, listdir
 
 
 dictConfig({
@@ -65,26 +65,39 @@ def update_task():
     return response
 
 
-@app.route("/types")
-def get_types():
-    response = jsonify([
-        {"name": "email", "emoji": "✉️"},
-        {"name": "contact", "emoji": "👤"},
-        {"name": "task", "emoji": "✅"},
-        {"name": "check", "emoji": "🔁"},
-        {"name": "note", "emoji": "✍️"},
-        {"name": "account", "emoji": "🔑"},
-        {"name": "item", "emoji": "🧳"},
-        {"name": "transaction", "emoji": "💲"},
-        {"name": "journal", "emoji": "📒"}
-    ])
+@app.route('/update')
+def update():
+    args = {**request.args}
+
+    what = args.pop('what')
+    _id = int(args.pop('_id'))
+
+    api = Api()
+    api.update(what, _id, values = args)
+
+    response = jsonify({'status': 'ran update, success unknown'})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
+@app.route("/createAbove")
+def createAbove():
+    args = {**request.args}
+
+    what = args.pop('what')
+    _id = int(args.pop('_id'))
+
+    api = Api()
+    api.update(what, _id, values = args)
+
+    response = jsonify({'status': 'ran update, success unknown'})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
 
 @app.route("/display")
 def get_display():
-    display = read_yaml(path.join(CONFIG_PATH, "_display.yaml"))
+    display = read_yaml(path.join(CONFIG_PATH, "_gui.yaml"))
     response = jsonify(display)
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response

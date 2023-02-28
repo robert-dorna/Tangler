@@ -74,7 +74,7 @@ class Api:
 
     def update(self, what, _id, values, *, on_closed=None):
         on_closed = self._prepend_refresh(what, on_closed)
-        with ItemFile(what, on_closed=self._on_closed(on_closed)) as data:
+        with ItemFile(what, on_closed=on_closed) as data:
             data.update(_id, values)
 
     def swap(self, what, _id_a, _id_b, *, on_closed=None):
@@ -121,7 +121,7 @@ class Api:
         data = self.get(what)
         return [item for item in data if not has_parent(item)]
 
-    def link(self, from_what, from_id, to_what, to_id):
+    def link(self, from_what, from_id, to_what, to_id, index=None):
         # TODO: recursion check & prevention mechanism
         self.read_links()
         new_link = {
@@ -132,7 +132,10 @@ class Api:
             next(None for link in self.links if link == new_link)
             print('link already exists, skipping')
         except StopIteration:
-            self.links.append(new_link)
+            if index is None:
+                self.links.append(new_link)
+            else:
+                self.links.insert(index, new_link)
             self.write_links()
 
     def unlink(self, from_what, from_id, to_what, to_id):

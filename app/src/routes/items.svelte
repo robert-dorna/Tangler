@@ -1,7 +1,6 @@
 <script>
   import Item from "./item.svelte";
 
-  export let itemtype;
   export let items = [];
   export let displayConfig = {}
 </script>
@@ -9,7 +8,7 @@
 <div class="container">
   <div class="items">
     {#each items as item, index (item._what + item._id)}
-      <Item {displayConfig} {itemtype} {item} />
+      <Item {displayConfig} {item} />
     {/each}
     {#if Array.isArray(items) && items.length === 0}
       <div class="noitems">No items</div>
@@ -20,16 +19,24 @@
 <style>
   div.container {
     display: flex;
+    /* background-color: blueviolet; */
     flex-direction: row;
     min-width: 700px;
+    overflow: scroll;
+    height: 90vh;
+    width: 100%;
+    /* width: 80vw; */
+    padding-right: 30px;
   }
   div.items {
     display: flex;
     flex: 1;
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 50px;
-    padding-top: 50px;
+    /* padding-left: 50px;
+    padding-top: 50px; */
+    padding-left: 30px;
+    padding-top: 30px;
     /* flex-wrap: wrap; */
   }
   div.noitems {
