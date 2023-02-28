@@ -1,21 +1,21 @@
 <script>
   import Navigation from "./navigation.svelte";
   import Panel from "./panel.svelte";
-  import client from "./client.js";
   import Items from "./items.svelte";
+  import client from "./client.js";
 
   let displayConfig = {};
   let types = [];
-  client.displayConfig().then(json => {
-    displayConfig = json.types
-    types = json.order
-  })
+  client.displayConfig().then((json) => {
+    displayConfig = json.types;
+    types = json.order;
+  });
 
-  $: emojis = types.map(typename => displayConfig[typename].emoji)
+  $: emojis = types.map((typename) => displayConfig[typename].emoji);
 
   let selected = "task";
-  let data = []
-  
+  let data = [];
+
   $: client.get({ method: "readall", what: selected }).then((json) => {
     data = json.result;
   });
@@ -24,11 +24,8 @@
 <div class="container">
   <Navigation />
   <div class="columns">
-    <Panel bind:selected {emojis} types={types} />
-    <Items
-      items={data}
-      {displayConfig}
-    />
+    <Panel bind:selected {emojis} {types} />
+    <Items items={data} {displayConfig} />
   </div>
 </div>
 

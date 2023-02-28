@@ -27,7 +27,6 @@
     showOptions = true;
     optionsPosition = `left: ${position.x}px; top: ${position.y}px;`;
   }
-
 </script>
 
 <div
@@ -41,7 +40,7 @@
   {#if showOptions}
     <div class="options" style={optionsPosition}>
       {#each options as option, i (option.text)}
-        <Option {...option} index={i} count={options.length}/>
+        <Option {...option} index={i} count={options.length} />
       {/each}
     </div>
   {/if}

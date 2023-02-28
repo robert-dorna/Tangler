@@ -2,7 +2,7 @@
   import ItemTree from "./item-tree.svelte";
 
   export let items = [];
-  export let displayConfig = {}
+  export let displayConfig = {};
 </script>
 
 <div class="container">

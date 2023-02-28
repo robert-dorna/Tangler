@@ -13,7 +13,7 @@
     align-items: center;
     padding: 5px;
     margin-left: 19px;
- }
+  }
   div.container:hover {
     border-radius: 8px;
     background-color: #bcb8b1;

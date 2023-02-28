@@ -9,7 +9,7 @@
 
   export let editing;
 
-  let value = item[name] || '?';
+  let value = item[name] || "?";
 
   let input = null;
   $: hasInput = input !== undefined && input !== null;

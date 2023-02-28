@@ -18,7 +18,11 @@
     <span class="titlename"> Items </span>
   </div>
   {#each types as itemtype, i}
-    <span class="item {itemtype === selected ? 'selected' : ''}" on:click={() => select(itemtype)}>
+    <span
+      class="item {itemtype === selected ? 'selected' : ''}"
+      on:click={() => select(itemtype)}
+      on:keypress={undefined}
+    >
       {emojis[i]}
       <span class="itemname">{itemtype}</span>
     </span>
@@ -51,11 +55,11 @@
     border-radius: 8px;
   }
   span.item:hover {
-    background-color: #BCB8B1;
+    background-color: #bcb8b1;
     opacity: 80%;
   }
   span.selected {
-    background-color: #BCB8B1;
+    background-color: #bcb8b1;
   }
   span.itemname {
     margin-left: 10px;
