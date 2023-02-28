@@ -1,5 +1,5 @@
 <script>
-  import Item from "./item.svelte";
+  import ItemTree from "./item-tree.svelte";
 
   export let items = [];
   export let displayConfig = {}
@@ -8,7 +8,7 @@
 <div class="container">
   <div class="items">
     {#each items as item, index (item._what + item._id)}
-      <Item {displayConfig} {item} />
+      <ItemTree {displayConfig} {item} />
     {/each}
     {#if Array.isArray(items) && items.length === 0}
       <div class="noitems">No items</div>

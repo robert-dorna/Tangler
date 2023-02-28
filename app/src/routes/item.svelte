@@ -4,31 +4,22 @@
   import DetailsAddIconButton from "./item/details-add-icon-button.svelte";
   import OptionsIconButton from "./item/options-icon-button.svelte";
   import NewItemIconsButton from "./item/new-item-icons-button.svelte";
-  import Prompt from "./prompt.svelte";
   import Field from "./field.svelte";
-
-  import Detach from "svelte-material-icons/FormatVerticalAlignTop.svelte";
-  import Move from "svelte-material-icons/HandFrontLeftOutline.svelte";
-  import CreateAbove from "svelte-material-icons/MenuUpOutline.svelte";
-  import CreateBelow from "svelte-material-icons/MenuDownOutline.svelte";
-  import CreateChild from "svelte-material-icons/FileTree.svelte";
-  import Delete from "svelte-material-icons/DeleteForeverOutline.svelte";
 
   export let item;
   export let displayConfig = {};
   export let indent = 0;
 
-  export let marked = false;
-  export let onConfirm;
+  export let open = undefined;
+  export let toggleOpen = undefined;
+
+  export let onConfirm = undefined;
+
+  export let options;
 
   $: layout = displayConfig[item["_what"]];
-  $: children = item["_children"];
-  $: hasChildren = children.length;
-  $: open = hasChildren ? true : undefined;
 
-  function toggleOpen() {
-    if (hasChildren) open = !open;
-  }
+  let editing = undefined;
 
   let hover = false;
 
@@ -39,96 +30,23 @@
     if (hover) hover = false;
   }
 
-  $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
-
   let detailed = false;
-  let editing = undefined;
 
-  const CREATE_MODE = Object.freeze({
-    ABOVE: 1,
-    BELOW: 2,
-    CHILD: 3,
-  });
-
-  let createMode = false;
-
+  $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
   $: workingItem = { ...item };
-
-  const options = [
-    {
-      Icon: Move,
-      text: "move",
-      action: () => {
-        alert("move");
-      },
-    },
-    {
-      Icon: CreateAbove,
-      text: "create above",
-      action: () => {
-        createMode = CREATE_MODE.ABOVE;
-      },
-    },
-    {
-      Icon: CreateBelow,
-      text: "create below",
-      action: () => {
-        alert("below");
-      },
-    },
-    {
-      Icon: CreateChild,
-      text: "create child",
-      action: () => {
-        alert("child");
-      },
-    },
-    {
-      Icon: Detach,
-      text: "detach top",
-      action: () => {
-        alert("detach");
-      },
-    },
-    {
-      Icon: Delete,
-      text: "delete",
-      action: () => {
-        alert("delete");
-      },
-    },
-  ];
-
-  function create(item) {
-    alert("create: " + JSON.stringify(item));
-    discard();
-  }
-
-  function discard() {
-    createMode = false;
-  }
+  $: hasBody = "body" in workingItem && workingItem.body;
 
   function createBody() {
     workingItem.body = "enter body text here.";
     detailed = true;
   }
 
-  $: hasBody = "body" in workingItem && workingItem.body;
-
-  const bodyStyle = "padding-top: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px; color: darkgoldenrod; max-width: 40vw;"
+  const bodyStyle =
+    "padding-top: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px; color: darkgoldenrod; max-width: 40vw;";
 </script>
 
-{#if createMode === CREATE_MODE.ABOVE}
-  <svelte:self
-    item={{ _children: [], _what: "account", title: "new item" }}
-    {displayConfig}
-    {indent}
-    marked
-    onConfirm={create}
-  />
-{/if}
 <div
-  class="container {marked ? 'mark' : ''}"
+  class="container {onConfirm ? 'elevated' : ''}"
   on:click|self={toggleOpen}
   on:keypress={undefined}
   on:mouseenter={hoverOn}
@@ -168,26 +86,21 @@
         {/if}
       </Field>
     {/each}
-    {#if marked}
+    {#if onConfirm}
       <NewItemIconsButton on:click={() => onConfirm(workingItem)} />
     {:else}
       <OptionsIconButton visible={hover} {options} />
     {/if}
   </div>
   {#if hasBody && detailed}
-    <Field name="body" item={workingItem} {editing} style="margin-left: {indent + 80}px; {bodyStyle}"/>
+    <Field
+      name="body"
+      item={workingItem}
+      {editing}
+      style="margin-left: {indent + 80}px; {bodyStyle}"
+    />
   {/if}
 </div>
-
-{#if open}
-  {#each children as child}
-    <svelte:self item={child} {displayConfig} indent={indent + 32} />
-  {/each}
-{/if}
-
-{#if createMode}
-  <Prompt onCreate={create} onDiscard={discard} />
-{/if}
 
 <!-- removing padding gives nice compact view -->
 <style>
@@ -206,7 +119,7 @@
     background-color: #eef0f2;
     opacity: 80%;
   }
-  div.mark {
+  div.elevated {
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
   }
   div.fields {
