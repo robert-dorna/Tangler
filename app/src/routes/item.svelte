@@ -21,6 +21,8 @@
   let editing = false;
   let detailed = false;
 
+  let v = item._what;
+
   function hoverOn() {
     if (!hover) hover = true;
   }
@@ -29,9 +31,15 @@
     if (hover) hover = false;
   }
 
-  $: gotConfirmOption = typeof options === "function";
-  $: layout = displayConfig.types[item["_what"]];
   $: workingItem = { body: "", ...item };
+  $: workingItem._what = v;
+
+  $: types = displayConfig.types;
+  $: what = workingItem._what;
+  $: layout = types[what];
+  $: fields = layout.fields;
+
+  $: gotConfirmOption = typeof options === "function";
   $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
   $: if (!hover) editing = false;
 
@@ -60,14 +68,19 @@
       on:click={toggleOpen}
     />
     {#if gotConfirmOption}
-      <EmojiIconButton bind:item={workingItem} {displayConfig} />
+      <EmojiIconButton
+        bind:value={v}
+        item={workingItem}
+        {displayConfig}
+        bind:editing
+      />
     {:else}
       <span class="emoji" on:click={toggleOpen} on:keypress={undefined}>
         {layout.emoji}
       </span>
     {/if}
 
-    {#each layout.fields as field (field)}
+    {#each fields as field (field.name)}
       <Field {...field} item={workingItem} bind:editing on:click={toggleOpen}>
         {#if field.name === "title"}
           {#if workingItem.body}
@@ -133,6 +146,7 @@
     padding: 15px;
   }
   span.emoji {
+    margin-left: 5px;
     margin-right: 10px;
   }
 </style>

@@ -25,6 +25,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 10px;
   }
 </style>
