@@ -4,14 +4,21 @@
   import Items from "./items.svelte";
   import client from "./client.js";
 
+  // import { JSONEditor } from 'svelte-jsoneditor'
+
   let displayConfig = {};
-  let types = [];
   client.displayConfig().then((json) => {
-    displayConfig = json.types;
-    types = json.order;
+    displayConfig = {
+      types: json.types,
+      order: json.order,
+      emojis: json.order.map((typename) => json.types[typename].emoji)
+    }
   });
 
-  $: emojis = types.map((typename) => displayConfig[typename].emoji);
+  // $: content = {
+  //   text: undefined,
+  //   json: { ...displayConfig },
+  // }
 
   let selected = "task";
   let data = [];
@@ -24,10 +31,14 @@
 <div class="container">
   <Navigation />
   <div class="columns">
-    <Panel bind:selected {emojis} {types} />
+    <Panel bind:selected emojis={displayConfig.emojis} types={displayConfig.order} />
     <Items items={data} {displayConfig} />
   </div>
 </div>
+
+<!-- <div class="overlay">
+  <JSONEditor bind:content/>
+</div> -->
 
 <style>
   div {
@@ -35,6 +46,17 @@
     background-color: white;
     width: 100vw;
     height: 100vh;
+  }
+  div.overlay {
+    z-index: 1;
+    position: absolute;
+    top: 20vh;
+    left: 20vw;
+    width: 60vw;
+    height: 60vh;
+    justify-content: center;
+    align-items: center;
+    background-color: brown;
   }
   div.container {
     flex: 1;

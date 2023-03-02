@@ -14,11 +14,24 @@
   export let displayConfig = {};
   export let indent = 0;
 
-  $: open = item._children.length ? true : undefined;
+  $: children = item._children
+  $: len = children.length
+  $: open = len > 0 ? true : undefined
 
-  function toggleOpen() {
-    if (item._children.length) open = !open;
-  }
+  // NOTE
+  // with such definition of open
+  //
+  //   let open = undefined;
+  //
+  // this will work
+  //
+  //   $: if (len > 0) { open = true; }
+  //
+  // but this not, correctly evaluating open at init but then value is blocked
+  //
+  //   $: if (item._children.length > 0) {
+  //     open = true;
+  //   }
 
   const CREATE_MODE = Object.freeze({
     ABOVE: 1,
@@ -51,10 +64,10 @@
 </script>
 
 {#if createMode === CREATE_MODE.ABOVE}
-  <Item item={newItem} {displayConfig} {indent} onConfirm={create} {options} />
+  <Item item={newItem} {displayConfig} {indent} options={create} />
 {/if}
 
-<Item {item} {displayConfig} {indent} {open} {toggleOpen} {options} />
+<Item {item} {displayConfig} {indent} {options} bind:open />
 
 {#if open}
   {#each item._children as child}
@@ -67,8 +80,7 @@
     item={newItem}
     {displayConfig}
     indent={indent + (createMode === CREATE_MODE.CHILD ? 32 : 0)}
-    onConfirm={create}
-    {options}
+    options={create}
   />
 {/if}
 

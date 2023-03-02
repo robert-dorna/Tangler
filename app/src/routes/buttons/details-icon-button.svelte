@@ -46,6 +46,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
   div.container:hover {
     border-radius: 8px;

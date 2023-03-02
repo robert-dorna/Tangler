@@ -16,6 +16,7 @@
 	"type": "module",
 	"dependencies": {
 		"@zerodevx/svelte-json-view": "^1.0.0",
+		"svelte-jsoneditor": "^0.15.1",
 		"svelte-material-icons": "^2.0.4",
 		"yaml": "^2.1.3"
 	}

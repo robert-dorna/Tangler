@@ -1,40 +1,39 @@
 <script>
-  import ExpandIconButton from "./item/expand-icon-button.svelte";
-  import DetailsIconButton from "./item/details-icon-button.svelte";
-  import DetailsAddIconButton from "./item/details-add-icon-button.svelte";
-  import OptionsIconButton from "./item/options-icon-button.svelte";
-  import NewItemIconsButton from "./item/new-item-icons-button.svelte";
+  import ExpandIconButton from "./buttons/expand-icon-button.svelte";
+  import DetailsIconButton from "./buttons/details-icon-button.svelte";
+  import DetailsAddIconButton from "./buttons/details-add-icon-button.svelte";
+  import OptionsIconButton from "./buttons/options-icon-button.svelte";
+  import NewItemIconsButton from "./buttons/new-item-icons-button.svelte";
+  import EmojiIconButton from "./buttons/emoji-icon-button.svelte";
   import Field from "./field.svelte";
 
   export let item;
   export let displayConfig = {};
   export let indent = 0;
-
-  export let open = undefined;
-  export let toggleOpen = undefined;
-
-  export let onConfirm = undefined;
-
   export let options;
+  export let open = undefined;
 
-  $: layout = displayConfig[item["_what"]];
-
-  let editing = undefined;
+  function toggleOpen() {
+    if (open !== undefined) open = !open;
+  }
 
   let hover = false;
+  let editing = false;
+  let detailed = false;
 
   function hoverOn() {
     if (!hover) hover = true;
   }
+
   function hoverOff() {
     if (hover) hover = false;
   }
 
-  let detailed = false;
-
+  $: gotConfirmOption = typeof options === "function";
+  $: layout = displayConfig.types[item["_what"]];
+  $: workingItem = { body: "", ...item };
   $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
-  $: workingItem = { ...item };
-  $: hasBody = "body" in workingItem && workingItem.body;
+  $: if (!hover) editing = false;
 
   function createBody() {
     workingItem.body = "enter body text here.";
@@ -46,7 +45,7 @@
 </script>
 
 <div
-  class="container {onConfirm ? 'elevated' : ''}"
+  class="container {gotConfirmOption ? 'elevated' : ''}"
   on:click|self={toggleOpen}
   on:keypress={undefined}
   on:mouseenter={hoverOn}
@@ -60,14 +59,18 @@
       size={30}
       on:click={toggleOpen}
     />
-    <span class="emoji" on:click={toggleOpen} on:keypress={undefined}>
-      {layout.emoji}
-    </span>
+    {#if gotConfirmOption}
+      <EmojiIconButton bind:item={workingItem} {displayConfig} />
+    {:else}
+      <span class="emoji" on:click={toggleOpen} on:keypress={undefined}>
+        {layout.emoji}
+      </span>
+    {/if}
 
     {#each layout.fields as field (field)}
-      <Field {...field} bind:item={workingItem} {editing} on:click={toggleOpen}>
+      <Field {...field} item={workingItem} bind:editing on:click={toggleOpen}>
         {#if field.name === "title"}
-          {#if hasBody}
+          {#if workingItem.body}
             <DetailsIconButton
               bind:detailed
               color="darkgoldenrod"
@@ -86,17 +89,17 @@
         {/if}
       </Field>
     {/each}
-    {#if onConfirm}
-      <NewItemIconsButton on:click={() => onConfirm(workingItem)} />
+    {#if gotConfirmOption}
+      <NewItemIconsButton on:click={() => options(workingItem)} />
     {:else}
-      <OptionsIconButton visible={hover} {options} />
+      <OptionsIconButton visible={hover} bind:editing {options} />
     {/if}
   </div>
-  {#if hasBody && detailed}
+  {#if workingItem.body && detailed}
     <Field
       name="body"
       item={workingItem}
-      {editing}
+      bind:editing
       style="margin-left: {indent + 80}px; {bodyStyle}"
     />
   {/if}
@@ -117,7 +120,6 @@
   }
   div.container:hover {
     background-color: #eef0f2;
-    opacity: 80%;
   }
   div.elevated {
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);

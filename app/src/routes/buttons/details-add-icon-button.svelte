@@ -36,8 +36,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 5px;
   }
   div.container:hover {
     border-radius: 8px;
