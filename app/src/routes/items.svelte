@@ -3,12 +3,14 @@
 
   export let items = [];
   export let displayConfig = {};
+
+  let enableOptions = true;
 </script>
 
 <div class="container">
   <div class="items">
     {#each items as item, index (item._what + item._id)}
-      <ItemTree {displayConfig} {item}/>
+      <ItemTree {displayConfig} {item} bind:enableOptions/>
     {/each}
     {#if Array.isArray(items) && items.length === 0}
       <div class="noitems">No items</div>

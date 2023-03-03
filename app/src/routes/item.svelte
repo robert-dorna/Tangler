@@ -13,6 +13,8 @@
   export let options;
   export let open = undefined;
 
+  export let enableOptions = true;
+
   function toggleOpen() {
     if (open !== undefined) open = !open;
   }
@@ -105,7 +107,7 @@
     {#if gotConfirmOption}
       <NewItemIconsButton on:click={() => options(workingItem)} />
     {:else}
-      <OptionsIconButton visible={hover} bind:editing {options} />
+      <OptionsIconButton visible={hover && enableOptions} bind:editing {options} />
     {/if}
   </div>
   {#if workingItem.body && detailed}
