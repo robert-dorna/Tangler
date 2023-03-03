@@ -33,8 +33,8 @@
     }
   }
 
-  function onSelect(v) {
-    item[name] = v;
+  function onSelect(event) {
+    item[name] = event.detail.value;
     submitChange();
   }
 
@@ -56,7 +56,7 @@
 >
   {#if name === editing}
     {#if colors !== undefined}
-      <ValueSelector {colors} style={menuPosition} {onSelect} />
+      <ValueSelector {colors} style={menuPosition} on:select={onSelect} />
     {:else}
       <input
         bind:this={input}

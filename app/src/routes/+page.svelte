@@ -4,25 +4,24 @@
   import Items from "./items.svelte";
   import client from "./client.js";
 
-  // import { JSONEditor } from 'svelte-jsoneditor'
+  import { onMount } from "svelte";
 
-  let displayConfig = {};
-  client.displayConfig().then((json) => {
-    displayConfig = {
-      types: json.types,
-      order: json.order,
-      emojis: json.order.map((typename) => json.types[typename].emoji)
-    }
+  onMount(() => {
+    client.displayConfig().then((json) => {
+      displayConfig = {
+        types: json.types,
+        order: json.order,
+        emojis: json.order.map((typename) => json.types[typename].emoji),
+      };
+    });
   });
 
-  // $: content = {
-  //   text: undefined,
-  //   json: { ...displayConfig },
-  // }
+  let displayConfig = {};
 
   let selected = "task";
   let data = [];
 
+  // is this good or does it have e.g. SSR problems?
   $: client.get({ method: "readall", what: selected }).then((json) => {
     data = json.result;
   });
@@ -31,14 +30,14 @@
 <div class="container">
   <Navigation />
   <div class="columns">
-    <Panel bind:selected emojis={displayConfig.emojis} types={displayConfig.order} />
+    <Panel
+      bind:selected
+      emojis={displayConfig.emojis}
+      types={displayConfig.order}
+    />
     <Items items={data} {displayConfig} />
   </div>
 </div>
-
-<!-- <div class="overlay">
-  <JSONEditor bind:content/>
-</div> -->
 
 <style>
   div {
@@ -46,17 +45,6 @@
     background-color: white;
     width: 100vw;
     height: 100vh;
-  }
-  div.overlay {
-    z-index: 1;
-    position: absolute;
-    top: 20vh;
-    left: 20vw;
-    width: 60vw;
-    height: 60vh;
-    justify-content: center;
-    align-items: center;
-    background-color: brown;
   }
   div.container {
     flex: 1;

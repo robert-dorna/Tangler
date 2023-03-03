@@ -2,18 +2,27 @@
   import Check from "svelte-material-icons/Check.svelte";
   import Close from "svelte-material-icons/Close.svelte";
 
-  export let onConfirm;
-  export let onDiscard;
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <div class="container">
   <div class="prompt">
     <div class="title">What to do with new item?</div>
-    <div class="option" on:click={onConfirm} on:keypress={undefined}>
+    <div
+      class="option"
+      on:click={() => dispatch("create")}
+      on:keypress={undefined}
+    >
       <Check color="black" size={30} />
       Create
     </div>
-    <div class="option" on:click={onDiscard} on:keypress={undefined}>
+    <div
+      class="option"
+      on:click={() => dispatch("discard")}
+      on:keypress={undefined}
+    >
       <Close color="black" size={30} />
       Discard
     </div>

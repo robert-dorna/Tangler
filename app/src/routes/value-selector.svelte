@@ -1,18 +1,21 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
   export let colors;
   export let style = undefined;
-  export let onSelect;
+
+  const dispatch = createEventDispatcher()
 
   $: values = Object.keys(colors);
 </script>
 
 <div class="container" {style}>
   <div class="wrap">
-    {#each values as value}
+    {#each values as value (value)}
       <div
         class="value"
         style="color: {colors[value]};"
-        on:click={() => onSelect(value)}
+        on:click={() => dispatch('select', { value })}
         on:keypress={undefined}
       >
         {value}

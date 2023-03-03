@@ -17,7 +17,7 @@
     </div>
     <span class="titlename"> Items </span>
   </div>
-  {#each types as itemtype, i}
+  {#each types as itemtype, i (itemtype)}
     <span
       class="item {itemtype === selected ? 'selected' : ''}"
       on:click={() => select(itemtype)}

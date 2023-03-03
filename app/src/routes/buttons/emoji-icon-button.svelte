@@ -36,7 +36,7 @@
     {#if editing === "_what"}
       <div class="container" {style}>
         <div class="wrap">
-          {#each values as v}
+          {#each values as v (v)}
             <div
               class="value"
               on:keypress={undefined}

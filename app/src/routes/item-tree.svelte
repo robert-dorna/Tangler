@@ -14,9 +14,9 @@
   export let displayConfig = {};
   export let indent = 0;
 
-  $: children = item._children
-  $: len = children.length
-  $: open = len > 0 ? true : undefined
+  $: children = item._children;
+  $: len = children.length;
+  $: open = len > 0 ? true : undefined;
 
   // NOTE
   // with such definition of open
@@ -70,7 +70,7 @@
 <Item {item} {displayConfig} {indent} {options} bind:open />
 
 {#if open}
-  {#each item._children as child}
+  {#each item._children as child (child._id)}
     <svelte:self item={child} {displayConfig} indent={indent + 32} />
   {/each}
 {/if}
@@ -85,5 +85,5 @@
 {/if}
 
 {#if createMode}
-  <Prompt onCreate={create} onDiscard={discard} />
+  <Prompt on:create={create} on:discard={discard} />
 {/if}
