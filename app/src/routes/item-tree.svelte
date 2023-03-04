@@ -10,6 +10,10 @@
   import TopIcon from "svelte-material-icons/FormatVerticalAlignTop.svelte";
   import TrashIcon from "svelte-material-icons/DeleteForeverOutline.svelte";
 
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher()
+
   export let item;
   export let displayConfig = {};
   export let indent = 0;
@@ -23,6 +27,11 @@
 
   let createMode = false;
 
+  function handleDelete() {
+    alert('TODO: costam');
+
+  }
+
   // prettier-ignore
   const options = [
     { Icon: HandIcon,   text: "move",          action: () => { alert("TODO: move"); } },
@@ -30,7 +39,7 @@
     { Icon: DownIcon,   text: "create below",  action: () => { createMode = CREATE_MODE.BELOW; } },
     { Icon: TreeIcon,   text: "create child",  action: () => { createMode = CREATE_MODE.CHILD; } },
     { Icon: TopIcon,    text: "detach top",    action: () => { alert("TODO: detach"); } },
-    { Icon: TrashIcon,  text: "delete",        action: () => { alert("TODO: delete"); } },
+    { Icon: TrashIcon,  text: "delete",        action: handleDelete },
   ];
 
   function create(item) {

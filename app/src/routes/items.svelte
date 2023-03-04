@@ -1,6 +1,14 @@
 <script>
   import ItemTree from "./item-tree.svelte";
 
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
+
+  function triggerRefresh() {
+    dispatch("refresh");
+  }
+
   export let items = [];
   export let displayConfig = {};
 
@@ -10,7 +18,12 @@
 <div class="container">
   <div class="items">
     {#each items as item, index (item._what + item._id)}
-      <ItemTree {displayConfig} {item} bind:enableOptions/>
+      <ItemTree
+        {displayConfig}
+        {item}
+        bind:enableOptions
+        on:refresh={triggerRefresh}
+      />
     {/each}
     {#if Array.isArray(items) && items.length === 0}
       <div class="noitems">No items</div>

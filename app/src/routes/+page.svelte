@@ -25,6 +25,12 @@
   $: client.get({ method: "readall", what: selected }).then((json) => {
     data = json.result;
   });
+
+  function refreshData() {
+    client.get({ method: "readall", what: selected }).then((json) => {
+      data = json.result;
+    });
+  }
 </script>
 
 <div class="container">
@@ -35,7 +41,7 @@
       emojis={displayConfig.emojis}
       types={displayConfig.order}
     />
-    <Items items={data} {displayConfig} />
+    <Items items={data} {displayConfig} on:refresh={refreshData}/>
   </div>
 </div>
 
