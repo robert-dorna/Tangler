@@ -25,6 +25,8 @@
         on:refresh={triggerRefresh}
       />
     {/each}
+    <div class="space">space</div>
+    <div class="space">space</div>
     {#if Array.isArray(items) && items.length === 0}
       <div class="noitems">No items</div>
     {/if}
@@ -52,7 +54,13 @@
     padding-top: 50px; */
     padding-left: 30px;
     padding-top: 30px;
+    margin-bottom: 50px;
     /* flex-wrap: wrap; */
+  }
+  div.space {
+    display: flex;
+    font-size: 128px;
+    visibility: hidden;
   }
   div.noitems {
     display: flex;

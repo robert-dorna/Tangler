@@ -63,7 +63,7 @@ def run_command(command_name='read', what=None, args=[]):
     if command_name in ['link', 'unlink']:
         _id, target_what, target_id = int(args[0]), args[1], int(args[2])
         getattr(api, command_name)(what, _id, target_what, target_id)
-        display(what, _id = _id, fresh=True)
+        display(what, _id = _id)
         return
 
     assert what is not None, 'missing item type'

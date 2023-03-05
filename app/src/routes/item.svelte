@@ -83,7 +83,7 @@
     {/if}
 
     {#each fields as field (field.name)}
-      <Field {...field} item={workingItem} bind:editing on:click={toggleOpen}>
+      <Field {...field} item={workingItem} bind:editing on:click={toggleOpen} on:refresh>
         {#if field.name === "title"}
           {#if workingItem.body}
             <DetailsIconButton
@@ -116,6 +116,7 @@
       item={workingItem}
       bind:editing
       style="margin-left: {indent + 80}px; {bodyStyle}"
+      on:refresh
     />
   {/if}
 </div>

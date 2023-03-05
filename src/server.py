@@ -33,6 +33,8 @@ def update_task():
 
     if 'index' in args:
         args['index'] = int(args['index'])
+    if '_id' in args:
+        args['_id'] = int(args['_id'])
 
     app.logger.info('args: %s', args)
 
@@ -76,6 +78,36 @@ def update():
     api.update(what, _id, values = args)
 
     response = jsonify({'status': 'ran update, success unknown'})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
+@app.route('/create')
+def create():
+    args = {**request.args}
+
+    args.pop('_children')
+
+    what = args.pop('_what')
+    above = {
+        '_id': int(args.pop('_aboveId')),
+        'what': args.pop('_aboveWhat'),
+    }
+
+    api = Api()
+    api.read_links()
+
+    try:
+        i, link = next((i, v) for i, v in enumerate(api.links) if v['to'] == above)
+        newId = api.create(what, values = args)
+        new_link = { 'from': link['from'], 'to': {'_id': newId, 'what': what}}
+        api.links.insert(i, new_link)
+        api.write_links()
+    except StopIteration:
+        i, _ = api.read(above['what'], above['_id'])
+        api.create(what, index = i, values = args)
+
+    response = jsonify({'status': 'ran craete, success unknown'})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 

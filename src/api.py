@@ -33,16 +33,19 @@ class Api:
     def create(self, what, values, index=None, *, on_closed=None):
         on_closed = self._prepend_refresh(what, on_closed)
         with ItemFile(what, on_closed=on_closed) as items:
-            items.create(values, index)
+            new_id = items.create(values, index)
+        return new_id
 
     def read(self, what, _id=None):
         data = self.get(what)
         if _id is None:
-            # TODO: sort it
-            return sort(data, what), None
+            result = [item | {'_what': what} for item in sort(data, what)]
+            return result, None
 
         try:
-            return next((i, item) for i, item in enumerate(data) if item['_id'] == _id)
+            i, item = next((i, item)
+                           for i, item in enumerate(data) if item['_id'] == _id)
+            return i, item | {'_what': what}
         except StopIteration:
             raise KeyError(f'cannot find item of type "{what}" with _id {_id}')
 
@@ -55,7 +58,7 @@ class Api:
                 item['_what'] = what
                 item['_children'] = [
                     self.readall(
-                        what = l['to']['what'],
+                        what=l['to']['what'],
                         _id=int(l['to']['_id'])
                     ) for l in self.children(what, item['_id'])
                 ]
@@ -89,6 +92,27 @@ class Api:
 
     def delete(self, what, _id, *, on_closed=None):
         on_closed = self._prepend_refresh(what, on_closed)
+
+        fr = {'what': what, '_id': _id}
+
+        parent_data = self.parent(what, _id)
+        if parent_data is not None:
+            link_index, parent = parent_data
+
+            self.read_links()
+            self.links.pop(link_index)
+
+            for link in self.links:
+                if link['from'] == fr:
+                    link['from'] = { 'what': parent['_what'], '_id': parent['_id'] }
+            
+            self.write_links()
+
+
+        self.read_links()
+        self.links = [link for link in self.links if link['from'] != fr]
+        self.write_links()
+
         with ItemFile(what, on_closed=on_closed) as items:
             items.delete(_id)
 
@@ -120,6 +144,19 @@ class Api:
 
         data = self.get(what)
         return [item for item in data if not has_parent(item)]
+
+    def parent(self, what, _id):
+        if self.links is None:
+            self.read_links()
+
+        to = {'what': what, '_id': _id}
+        try:
+            i, link = next((i, v)
+                           for i, v in enumerate(self.links) if v['to'] == to)
+            _, parent = self.read(link['from']['what'], link['from']['_id'])
+            return i, parent
+        except StopIteration:
+            return None
 
     def link(self, from_what, from_id, to_what, to_id, index=None):
         # TODO: recursion check & prevention mechanism

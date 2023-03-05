@@ -12,7 +12,9 @@
 
   import { createEventDispatcher } from "svelte";
 
-  const dispatch = createEventDispatcher()
+  import client from "./client";
+
+  const dispatch = createEventDispatcher();
 
   export let item;
   export let displayConfig = {};
@@ -28,8 +30,10 @@
   let createMode = false;
 
   function handleDelete() {
-    alert('TODO: costam');
-
+    client
+      .get({ method: "delete", what: item["_what"], _id: item["_id"] })
+      .then(() => dispatch("refresh"))
+      .catch(() => alert("error on delete"));
   }
 
   // prettier-ignore
@@ -42,16 +46,21 @@
     { Icon: TrashIcon,  text: "delete",        action: handleDelete },
   ];
 
-  function create(item) {
-    alert("create: " + JSON.stringify(item));
-    discard();
+  function create(fields) {
+    // alert("create: " + JSON.stringify(fields));
+    client
+      .create({ ...fields, _aboveId: item["_id"], _aboveWhat: item["_what"] })
+      .then(() => {
+        dispatch("refresh");
+        discard();
+      });
   }
 
   function discard() {
     createMode = false;
   }
 
-  $: enableOptions = Boolean(createMode == false)
+  $: enableOptions = Boolean(createMode == false);
 
   // NOTE
   // with such definition of open
@@ -72,18 +81,32 @@
   $: len = children.length;
   $: open = len > 0 ? true : undefined;
 
-  const newItem = { _children: [], _what: "account", title: "new item" };
+  const newItem = { _children: [], _what: item["_what"], title: "new item" };
 </script>
 
 {#if createMode === CREATE_MODE.ABOVE}
   <Item item={newItem} {displayConfig} {indent} options={create} />
 {/if}
 
-<Item {item} {displayConfig} {indent} {options} bind:open {enableOptions}/>
+<Item
+  {item}
+  {displayConfig}
+  {indent}
+  {options}
+  bind:open
+  {enableOptions}
+  on:refresh
+/>
 
 {#if open}
   {#each item._children as child (child._id)}
-    <svelte:self item={child} {displayConfig} indent={indent + 32} bind:enableOptions/>
+    <svelte:self
+      item={child}
+      {displayConfig}
+      indent={indent + 32}
+      bind:enableOptions
+      on:refresh
+    />
   {/each}
 {/if}
 

@@ -1,7 +1,11 @@
 <script>
   import Trackpad from "./buttons/trackpad.svelte";
   import ValueSelector from "./value-selector.svelte";
-  // import client from "./client";
+  import client from "./client";
+
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher()
 
   export let name;
   export let style = undefined;
@@ -10,19 +14,26 @@
   export let item;
   export let editing;
 
+  let originalValue = item[name];
+
   let input = null;
   let position = { x: 0, y: 0 };
   let menuPosition = "";
 
   function submitChange() {
     editing = false;
-    // if (valueChanged && "_id" in item) {
-    //   client.update({
-    //     what: item["_what"],
-    //     _id: item["_id"],
-    //     [name]: item[name],
-    //   });
-    // }
+    if (item[name] !== originalValue && "_id" in item) {
+      client
+        .update({
+          what: item["_what"],
+          _id: item["_id"],
+          [name]: item[name],
+        })
+        .then(() => {
+          dispatch('refresh')
+          originalValue = item[name];
+        });
+    }
   }
 
   function handleKeyPress(event) {
