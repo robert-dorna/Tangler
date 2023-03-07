@@ -14,6 +14,7 @@
   export let open = undefined;
 
   export let enableOptions = true;
+  export let elevate = false;
 
   function toggleOpen() {
     if (open !== undefined) open = !open;
@@ -42,6 +43,7 @@
   $: fields = layout.fields;
 
   $: gotConfirmOption = typeof options === "function";
+  $: elevated = gotConfirmOption || elevate === true
   $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
   $: if (!hover) editing = false;
 
@@ -55,7 +57,7 @@
 </script>
 
 <div
-  class="container {gotConfirmOption ? 'elevated' : ''}"
+  class="container {elevated ? 'elevated' : ''}"
   on:click|self={toggleOpen}
   on:keypress={undefined}
   on:mouseenter={hoverOn}
@@ -146,7 +148,7 @@
     flex-wrap: wrap-reverse;
     flex-direction: row;
     align-items: center;
-    padding: 15px;
+    /* padding: 15px; */
   }
   span.emoji {
     margin-left: 5px;

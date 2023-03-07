@@ -24,6 +24,7 @@ const client = {
   get: async (args) => req(`http://0.0.0.0:5000/data`, args),
   update: async (args) => req(`http://0.0.0.0:5000/update`, args),
   create: async (args) => req(`http://0.0.0.0:5000/create`, args),
+  move: async (args) => req(`http://0.0.0.0:5000/move`, args),
   displayConfig: async () => req(`http://0.0.0.0:5000/display`),
 }
 

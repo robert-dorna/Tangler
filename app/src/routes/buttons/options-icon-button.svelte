@@ -30,7 +30,16 @@
     {#if showOptions}
       <div class="options" style={menuPosition}>
         {#each options as option, i (option.text)}
-          <Option {...option} index={i} count={options.length} />
+          <Option
+            {...option}
+            index={i}
+            count={options.length}
+            on:click={() => {
+              // TODO: fix open menu on options change
+              option.action();
+              // editing = false;
+            }}
+          />
         {/each}
       </div>
     {/if}

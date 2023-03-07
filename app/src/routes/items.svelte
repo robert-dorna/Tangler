@@ -13,6 +13,7 @@
   export let displayConfig = {};
 
   let enableOptions = true;
+  let moving = null;
 </script>
 
 <div class="container">
@@ -23,6 +24,7 @@
         {item}
         bind:enableOptions
         on:refresh={triggerRefresh}
+        bind:moving
       />
     {/each}
     <div class="space">space</div>

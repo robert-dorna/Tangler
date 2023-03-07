@@ -146,8 +146,7 @@ class Api:
         return [item for item in data if not has_parent(item)]
 
     def parent(self, what, _id):
-        if self.links is None:
-            self.read_links()
+        self.read_links()
 
         to = {'what': what, '_id': _id}
         try:

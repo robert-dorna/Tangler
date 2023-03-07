@@ -16,7 +16,7 @@
         : '';
 </script>
 
-<div class="option {extraClass}" on:click={action} on:keypress={undefined}>
+<div class="option {extraClass}" on:click on:keypress={undefined}>
   <svelte:component this={Icon} color="black" size={24} />
   {text}
   {#if text === "move"}

@@ -1,8 +1,10 @@
-from flask import Flask, jsonify, request, Response
+from flask import abort, Flask, jsonify, request, Response
 from .api import Api
 from .core.files import read_yaml, CONFIG_PATH
 from logging.config import dictConfig
 from os import path, listdir
+from werkzeug.exceptions import BadRequest
+import json
 
 
 dictConfig({
@@ -22,6 +24,21 @@ dictConfig({
 })
 
 app = Flask(__name__)
+
+
+@app.errorhandler(BadRequest)
+def handle_exception(e):
+    """Return JSON instead of HTML for HTTP errors."""
+    # start with the correct headers and status code from the error
+    response = e.get_response()
+    # replace the body with JSON
+    response.data = json.dumps({
+        "code": e.code,
+        "name": e.name,
+        "description": e.description,
+    })
+    response.content_type = "application/json"
+    return response
 
 
 # SOCKETS, WebSockets/Socket.IO,
@@ -75,7 +92,7 @@ def update():
     _id = int(args.pop('_id'))
 
     api = Api()
-    api.update(what, _id, values = args)
+    api.update(what, _id, values=args)
 
     response = jsonify({'status': 'ran update, success unknown'})
     response.headers.add("Access-Control-Allow-Origin", "*")
@@ -98,31 +115,66 @@ def create():
     api.read_links()
 
     try:
-        i, link = next((i, v) for i, v in enumerate(api.links) if v['to'] == above)
-        newId = api.create(what, values = args)
-        new_link = { 'from': link['from'], 'to': {'_id': newId, 'what': what}}
+        i, link = next((i, v)
+                       for i, v in enumerate(api.links) if v['to'] == above)
+        newId = api.create(what, values=args)
+        new_link = {'from': link['from'], 'to': {'_id': newId, 'what': what}}
         api.links.insert(i, new_link)
         api.write_links()
     except StopIteration:
         i, _ = api.read(above['what'], above['_id'])
-        api.create(what, index = i, values = args)
+        api.create(what, index=i, values=args)
 
     response = jsonify({'status': 'ran craete, success unknown'})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
 
-@app.route("/createAbove")
-def createAbove():
+@app.route("/move")
+def move():
     args = {**request.args}
 
+    location = args.pop('location')
     what = args.pop('what')
-    _id = int(args.pop('_id'))
+    id = int(args.pop('id'))
+    to_what = args.pop('to_what')
+    to_id = int(args.pop('to_id'))
 
     api = Api()
-    api.update(what, _id, values = args)
 
-    response = jsonify({'status': 'ran update, success unknown'})
+    if api.parent(to_what, to_id) is None and what != to_what and location != "child":
+        abort(400)
+
+    parent_data = api.parent(what, id)
+    if parent_data:
+        app.logger.info('unlinking source')
+        _, parent = parent_data
+        api.unlink(parent['_what'], parent['_id'], what, id)
+
+    app.logger.info('location is %s', location)
+    if location == "child":
+        app.logger.info('location is child')
+        api.link(to_what, to_id, what, id)
+    else:
+        app.logger.info('location is not child')
+        parent_data = api.parent(to_what, to_id)
+        if parent_data is None:
+            app.logger.info('"to" parent is None')
+            index, _ = api.read(to_what, to_id)
+            api.move(what, id, index)
+        else:
+            link_index, parent = parent_data
+            new_link = {
+                'from': {'what': parent['_what'], '_id': parent['_id']},
+                'to': {'what': what, '_id': id}
+            }
+            app.logger.info('new link is %s', new_link)
+            if location == "below":
+                link_index += 1
+            api.links.insert(link_index, new_link)
+            api.write_links()
+
+    response = jsonify({'status': 'ran move, success unknown'})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
