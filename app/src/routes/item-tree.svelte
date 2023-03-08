@@ -44,6 +44,13 @@
       .catch(() => alert("error on delete"));
   }
 
+  function handleDetach() {
+    client
+      .unlink({ what: item["_what"], _id: item["_id"] })
+      .then(() => dispatch("refresh"))
+      .catch(() => alert("error on detach"));
+  }
+
   function moveItem(location) {
     client
       .move({
@@ -71,7 +78,7 @@
     { Icon: UpIcon,     text: "create above",  action: () => { createMode = LOCATION.ABOVE; } },
     { Icon: DownIcon,   text: "create below",  action: () => { createMode = LOCATION.BELOW; } },
     { Icon: TreeIcon,   text: "create child",  action: () => { createMode = LOCATION.CHILD; } },
-    { Icon: TopIcon,    text: "detach top",    action: () => { alert("TODO: detach"); } },
+    { Icon: TopIcon,    text: "detach top",    action: handleDetach },
     { Icon: TrashIcon,  text: "delete",        action: handleDelete },
   ];
 

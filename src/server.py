@@ -179,6 +179,25 @@ def move():
     return response
 
 
+@app.route("/unlink")
+def unlink():
+    args = {**request.args}
+
+    what = args.pop('what')
+    id = int(args.pop('_id'))
+
+    api = Api()
+
+    parent_data = api.parent(what, id)
+    if parent_data:
+        _, parent = parent_data
+        api.unlink(parent['_what'], parent['_id'], what, id)
+
+    response = jsonify({'status': 'ran unlink, success unknown'})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
 @app.route("/display")
 def get_display():
     display = read_yaml(path.join(CONFIG_PATH, "_gui.yaml"))
