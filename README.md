@@ -89,9 +89,3 @@ E.g. you can define such items to use in your lists :
 ## Other interesting projects
 
 [Obsidian](https://obsidian.md)
-
-## Ideas
-
-- company finance tool (taxes, salary, CRM,...)
-- data aggregator/wrapper
-- grafik, np plan lekcji, zadania, zastepstwa itp

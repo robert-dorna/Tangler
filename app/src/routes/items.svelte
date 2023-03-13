@@ -12,21 +12,25 @@
   export let items = [];
   export let displayConfig = {};
 
+  $: displayConfigAvailable = Object.keys(displayConfig).length !== 0
+
   let enableOptions = true;
   let moving = null;
 </script>
 
 <div class="container">
   <div class="items">
-    {#each items as item, index (item._what + item._id)}
-      <ItemTree
-        {displayConfig}
-        {item}
-        bind:enableOptions
-        on:refresh={triggerRefresh}
-        bind:moving
-      />
-    {/each}
+    {#if displayConfigAvailable}
+      {#each items as item, index (item._what + item._id)}
+        <ItemTree
+          {displayConfig}
+          {item}
+          bind:enableOptions
+          on:refresh={triggerRefresh}
+          bind:moving
+        />
+      {/each}
+    {/if}
     <div class="space">space</div>
     <div class="space">space</div>
     {#if Array.isArray(items) && items.length === 0}

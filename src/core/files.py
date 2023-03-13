@@ -1,6 +1,7 @@
 from os import environ, path
 import json
 import yaml
+import sys
 
 
 class JsonFile:
@@ -30,7 +31,7 @@ class JsonFile:
 
 
 def read_yaml(path):
-    with open(path) as f: 
+    with open(path) as f:
         return yaml.safe_load(f)
 
 
@@ -39,6 +40,17 @@ def read_json(path):
         return json.load(f)
 
 
-TANGLE_PATH = path.join(environ['HOME'], 'Tangle')
-DATADIR_PATH = path.join(TANGLE_PATH, '_data')
-CONFIG_PATH = path.join(DATADIR_PATH, '_config')
+config_file_path = path.join(path.dirname(
+    path.realpath(sys.argv[0])), 'tangle.yaml')
+
+config = read_yaml(config_file_path)
+
+
+TANGLE_PATH = config['directories']['storage'].replace('$HOME', environ['HOME'])
+DATADIR_PATH = config['directories']['data'].replace('$HOME', environ['HOME'])
+CONFIG_PATH = config['directories']['config'].replace('$HOME', environ['HOME'])
+
+
+# TANGLE_PATH = path.join(environ['HOME'], 'Tangle')
+# DATADIR_PATH = path.join(TANGLE_PATH, '_data')
+# CONFIG_PATH = path.join(DATADIR_PATH, '_config')

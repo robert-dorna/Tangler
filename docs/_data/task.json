@@ -1,0 +1,249 @@
+[
+    {
+        "_id": 23,
+        "body": "",
+        "due_date": "2023-03-12",
+        "label": "feat",
+        "project": "pwa",
+        "title": "local mvp version"
+    },
+    {
+        "_id": 24,
+        "body": "",
+        "due_date": "2023-03",
+        "label": "feat",
+        "project": "pwa",
+        "title": "project board version"
+    },
+    {
+        "_id": 25,
+        "body": "",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "future version"
+    },
+    {
+        "_id": 12,
+        "body": "list, tables, roadmap, pirate map, smart doc",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "list views"
+    },
+    {
+        "_id": 0,
+        "due_date": "2023-03-12",
+        "label": "feat",
+        "project": "pwa",
+        "title": "ability to create first item of some kind"
+    },
+    {
+        "_id": 1,
+        "due_date": "2023-03-12",
+        "label": "refactor",
+        "project": "pwa",
+        "title": "disable options while creating as global setting?"
+    },
+    {
+        "_id": 2,
+        "due_date": "2023-03-12",
+        "label": "refactor",
+        "project": "pwa",
+        "title": "server controller"
+    },
+    {
+        "_id": 3,
+        "due_date": "2023-03-12",
+        "label": "refactor",
+        "project": "pwa",
+        "title": "chapter - store"
+    },
+    {
+        "_id": 4,
+        "due_date": "2023-03-12",
+        "label": "refactor",
+        "project": "pwa",
+        "title": "single source of truth?"
+    },
+    {
+        "_id": 5,
+        "due_date": "2023-03-12",
+        "label": "refactor",
+        "project": "pwa",
+        "title": "item as workingItem"
+    },
+    {
+        "_id": 6,
+        "body": "chapter - bindings - focus",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "focus and keyboard navigation"
+    },
+    {
+        "_id": 7,
+        "body": "lifecycle: onMount() and tick() jako solve dla body button?",
+        "due_date": "2023-03-12",
+        "label": "refactor",
+        "project": "pwa",
+        "title": "chapter - lifecycle"
+    },
+    {
+        "_id": 8,
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "analytics"
+    },
+    {
+        "_id": 9,
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "charts"
+    },
+    {
+        "_id": 10,
+        "body": "gmail, mbank, markdown and other documents,...",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "integrations"
+    },
+    {
+        "_id": 11,
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "splits and saved views"
+    },
+    {
+        "_id": 13,
+        "due_date": "2023-03-12",
+        "label": "feat",
+        "project": "pwa",
+        "title": "types display editing"
+    },
+    {
+        "_id": 14,
+        "due_date": "2023-03",
+        "label": "feat",
+        "project": "pwa",
+        "title": "filtering and searching"
+    },
+    {
+        "_id": 15,
+        "due_date": "2023-03",
+        "label": "feat",
+        "project": "pwa",
+        "title": "sorting"
+    },
+    {
+        "_id": 16,
+        "body": "move, link, unlink",
+        "due_date": "2023-03-12",
+        "label": "feat",
+        "project": "pwa",
+        "title": "items move operations"
+    },
+    {
+        "_id": 17,
+        "due_date": "2023-03-12",
+        "label": "feat",
+        "project": "pwa",
+        "title": "items CRUD operations"
+    },
+    {
+        "_id": 18,
+        "due_date": "2023-03-12",
+        "label": "feat",
+        "project": "pwa",
+        "title": "recursion protection"
+    },
+    {
+        "_id": 19,
+        "body": "this means local, later releasing public (hosted) versions to users will also require solid security, tests and other safety precautions",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "Profile/Organization settings"
+    },
+    {
+        "_id": 20,
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "transactions"
+    },
+    {
+        "_id": 21,
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "contacts"
+    },
+    {
+        "_id": 22,
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "readonly mode"
+    },
+    {
+        "_id": 26,
+        "body": "",
+        "due_date": "2023-03-12",
+        "label": "feat",
+        "project": "pwa",
+        "title": "types CRUD operations"
+    },
+    {
+        "_id": 27,
+        "body": "",
+        "due_date": "2023-03-12",
+        "label": "feat",
+        "project": "pwa",
+        "title": "types order editing"
+    },
+    {
+        "_id": 28,
+        "body": "",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "animations"
+    },
+    {
+        "_id": 29,
+        "body": "",
+        "due_date": "2023-03",
+        "label": "feat",
+        "project": "pwa",
+        "title": "table view"
+    },
+    {
+        "_id": 30,
+        "body": "",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "edit history"
+    },
+    {
+        "_id": 31,
+        "body": "to get aligned fields like in pwa. maybe integrate display configs of those two somehow?",
+        "due_date": "2023-03-12",
+        "label": "feat",
+        "project": "pwa",
+        "title": "flex formatting for terminal"
+    },
+    {
+        "_id": 32,
+        "body": "e.g. body is not wrapped when editing, options menu is not hiding when selecting move,...",
+        "due_date": "2023-03-12",
+        "label": "bug",
+        "project": "pwa",
+        "title": "general UI polishing"
+    }
+]

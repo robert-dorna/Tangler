@@ -1,0 +1,5 @@
+
+directories: 
+  storage: '$HOME/Projects/tangle/docs'
+  data: '$HOME/Projects/tangle/docs/_data'
+  config: '$HOME/Projects/tangle/docs/_data/_config'

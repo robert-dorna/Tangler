@@ -18,6 +18,7 @@
 
   let displayConfig = {};
 
+  // TODO: deduce or from config
   let selected = "task";
   let data = [];
 
@@ -34,7 +35,7 @@
 </script>
 
 <div class="container">
-  <Navigation />
+  <!-- <Navigation /> -->
   <div class="columns">
     <Panel
       bind:selected

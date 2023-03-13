@@ -1,0 +1,172 @@
+[
+    {
+        "_id": 0,
+        "title": "idea: company finance tool (taxes, salary, CRM,...)"
+    },
+    {
+        "_id": 1,
+        "title": "idea: data aggregator/wrapper"
+    },
+    {
+        "_id": 2,
+        "title": "idea: grafik, np plan lekcji, zadania, zastepstwa itp"
+    },
+    {
+        "_id": 3,
+        "title": "part: library"
+    },
+    {
+        "_id": 4,
+        "title": "part: terminal app"
+    },
+    {
+        "_id": 5,
+        "title": "part: data server"
+    },
+    {
+        "_id": 6,
+        "title": "part: cloud"
+    },
+    {
+        "_id": 7,
+        "title": "part: webapp"
+    },
+    {
+        "_id": 8,
+        "title": "part: browser extension"
+    },
+    {
+        "_id": 9,
+        "title": "topic: Google Workspace"
+    },
+    {
+        "_id": 10,
+        "title": "topic: Banking"
+    },
+    {
+        "_id": 11,
+        "title": "topic: Crypto"
+    },
+    {
+        "_id": 12,
+        "title": "topic: eCommerce"
+    },
+    {
+        "_id": 13,
+        "title": "topic: items market"
+    },
+    {
+        "_id": 14,
+        "title": "topic: sharing and renting"
+    },
+    {
+        "_id": 15,
+        "title": "topic: arbitrary internet service"
+    },
+    {
+        "_id": 16,
+        "title": "example: gmail"
+    },
+    {
+        "_id": 17,
+        "title": "example: google drive"
+    },
+    {
+        "_id": 18,
+        "title": "example: google contacts"
+    },
+    {
+        "_id": 19,
+        "title": "example: mBank"
+    },
+    {
+        "_id": 20,
+        "title": "example: Binance"
+    },
+    {
+        "_id": 21,
+        "title": "example: Amazon"
+    },
+    {
+        "_id": 22,
+        "title": "example: Revolut"
+    },
+    {
+        "_id": 23,
+        "title": "example: PKO"
+    },
+    {
+        "_id": 24,
+        "title": "example: ING"
+    },
+    {
+        "_id": 25,
+        "title": "example: BPC"
+    },
+    {
+        "_id": 26,
+        "title": "example: Coinbase"
+    },
+    {
+        "_id": 27,
+        "title": "example: DEGIRO"
+    },
+    {
+        "_id": 28,
+        "title": "example: Exante"
+    },
+    {
+        "_id": 29,
+        "title": "example: TradingView"
+    },
+    {
+        "_id": 30,
+        "body": "e.g. closing, raport of what is unused (not necessary) or duplicates features",
+        "title": "function: accounts automatic detection and easy+delegated management"
+    },
+    {
+        "_id": 31,
+        "title": "function: progress and stagnation detection"
+    },
+    {
+        "_id": 32,
+        "title": "function: financial analytics"
+    },
+    {
+        "_id": 33,
+        "title": "function: projects analytics"
+    },
+    {
+        "_id": 34,
+        "title": "alternative: Obsidian (https://obsidian.md)"
+    },
+    {
+        "_id": 35,
+        "title": "link: emoji: https://emojidb.org/project-emojis?user_typed_query=1&utm_source=user_search"
+    },
+    {
+        "_id": 36,
+        "title": "link: icons: https://pictogrammers.com/library/mdi/"
+    },
+    {
+        "_id": 37,
+        "title": "link: colors: https://coolors.co/463f3a-8a817c-bcb8b1-f4f3ee-e0afa0"
+    },
+    {
+        "_id": 38,
+        "title": "link: colors: https://coolors.co/172a3a-44a1a0-247b7b-c05746-eef0f2"
+    },
+    {
+        "_id": 39,
+        "title": "link: css box: https://cssgenerator.pl/box-shadow-generator/"
+    },
+    {
+        "_id": 40,
+        "title": "list/item as a project view with calendar, deadlines etc"
+    },
+    {
+        "_id": 41,
+        "body": "",
+        "title": "if someone reads it: dates are not to be depended upon"
+    }
+]

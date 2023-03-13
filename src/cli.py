@@ -22,7 +22,9 @@ def display(what, _id, *, count=False, only_roots=True):
     if what is None:
         assert _id is None, 'cli display error, got _id for unknown item type'
 
-        whats = ['email', 'check', 'task', 'note', '+item', '+account', '+transaction', '+journal', '+contact']
+        # TODO: load this from config or deduce from defined types 
+        # whats = ['email', 'check', 'task', 'note', '+item', '+account', '+transaction', '+journal', '+contact']
+        whats = ['task', 'note']
         for what in whats:
             display(what, None)
         return
