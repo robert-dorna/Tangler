@@ -3,7 +3,6 @@ storage/
 storage
 
 .venv
-requirements.txt
 
 mbank/
 gmail/
