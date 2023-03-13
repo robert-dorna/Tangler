@@ -235,7 +235,7 @@
         "body": "to get aligned fields like in pwa. maybe integrate display configs of those two somehow?",
         "due_date": "2023-03-12",
         "label": "feat",
-        "project": "pwa",
+        "project": "cli",
         "title": "flex formatting for terminal"
     },
     {
