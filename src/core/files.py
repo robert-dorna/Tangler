@@ -40,15 +40,17 @@ def read_json(path):
         return json.load(f)
 
 
-config_file_path = path.join(path.dirname(
-    path.realpath(sys.argv[0])), 'tangle.yaml')
-
+project_path = path.dirname(path.realpath(sys.argv[0]))
+config_file_path = path.join(project_path, 'tangle.yaml')
 config = read_yaml(config_file_path)
 
 
-TANGLE_PATH = config['directories']['storage'].replace('$HOME', environ['HOME'])
-DATADIR_PATH = config['directories']['data'].replace('$HOME', environ['HOME'])
-CONFIG_PATH = config['directories']['config'].replace('$HOME', environ['HOME'])
+TANGLE_PATH = config['directories']['storage'].replace(
+    '$PROJECT', project_path)
+DATADIR_PATH = config['directories']['data'].replace(
+    '$PROJECT', project_path)
+CONFIG_PATH = config['directories']['config'].replace(
+    '$PROJECT', project_path)
 
 
 # TANGLE_PATH = path.join(environ['HOME'], 'Tangle')
