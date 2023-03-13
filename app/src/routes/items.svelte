@@ -46,7 +46,7 @@
     flex-direction: row;
     min-width: 700px;
     overflow: scroll;
-    height: 90vh;
+    height: 100vh;
     width: 100%;
     /* width: 80vw; */
     padding-right: 30px;
@@ -56,6 +56,7 @@
     flex: 1;
     flex-direction: column;
     align-items: flex-start;
+    /* align-items: center; */
     /* padding-left: 50px;
     padding-top: 50px; */
     padding-left: 30px;
