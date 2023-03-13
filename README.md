@@ -51,6 +51,38 @@ E.g. you can define such items to use in your lists :
 * User can define **`🧳 equipment`** and **`📁 file`**, then scan or take a pic of any equipment related documents such as purchase receipts, warranties, instructions and repair reports. Those files can be linked as children of a given equipment.
 * **`📁 Document`** such as signed `Terms and Conditions` or `Privacy Policy` can be stored under **`👤 🔑 account`** items to not lose it and for easy access.
 
+## How to run it and see project board/roadmap
+
+Instead of using GitHub Issues, GitHub Projects, JIRA or something else Tangle tasks, docs and everything else is managed by Tangle itself. If you want to see what is going on right now in this project or how it already looks like in action, run below. 
+
+```shell
+# download Tangle and python requirements for cli and server
+git clone https://github.com/ssurrealism/Tangle
+cd Tangle
+python -m venv .venv
+source .venv/bin/activate
+pip -r requirements.txt
+
+# run cli (no server needed)
+python tangle.py
+python tangle.py read note
+python tangle.py read task
+python tangle.py create task label 'feat' due_date '2023-03-13' project 'cli' title 'implement help command'
+
+# Tangle uses json and yaml files as database right now so you can also read those manually if you want
+cat docs/_data/_config/task.yaml
+cat docs/_data/task.json
+
+# run server
+python tangle.py server
+
+# run webapp (keep server running and run below commands in new terminal)
+cd Tangle/app/
+npm install
+npm run dev
+# now visit localhost:5173 in your web browser
+```
+
 ## Technical details
 
 #### Parts of tangle ecosystem
@@ -86,6 +118,4 @@ E.g. you can define such items to use in your lists :
 * **Examples**: `gmail`, `google drive`, `google contacts`, `mBank`, `Binance`, `Amazon`, `Revolut`,  `PKO`, `ING`, `BPC`, `Coinbase`, `DEGIRO`, `Exante`, `TradingView`, ...
 * **Functions**: accounts automatic detection and easy+delegated management (e.g. closing, raport of what is unused (not necessary) or duplicates features),..., `progress and stagnation detection`, `financial analytics`, `projects analytics`
 
-## Other interesting projects
-
-[Obsidian](https://obsidian.md)
+# 
