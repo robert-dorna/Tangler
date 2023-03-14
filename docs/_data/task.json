@@ -2,7 +2,7 @@
     {
         "_id": 23,
         "body": "",
-        "due_date": "2023-03-12",
+        "due_date": "46 hours",
         "label": "feat",
         "project": "pwa",
         "title": "local mvp version"
@@ -10,7 +10,7 @@
     {
         "_id": 24,
         "body": "",
-        "due_date": "2023-03",
+        "due_date": "5 days",
         "label": "feat",
         "project": "pwa",
         "title": "project board version"
@@ -33,42 +33,42 @@
     },
     {
         "_id": 0,
-        "due_date": "2023-03-12",
+        "due_date": "1 hour",
         "label": "feat",
         "project": "pwa",
         "title": "ability to create first item of some kind"
     },
     {
         "_id": 1,
-        "due_date": "2023-03-12",
+        "due_date": "2 hours",
         "label": "refactor",
         "project": "pwa",
         "title": "disable options while creating as global setting?"
     },
     {
         "_id": 2,
-        "due_date": "2023-03-12",
+        "due_date": "3 hours",
         "label": "refactor",
         "project": "pwa",
         "title": "server controller"
     },
     {
         "_id": 3,
-        "due_date": "2023-03-12",
+        "due_date": "3 hours",
         "label": "refactor",
         "project": "pwa",
         "title": "chapter - store"
     },
     {
         "_id": 4,
-        "due_date": "2023-03-12",
+        "due_date": "6 hours",
         "label": "refactor",
         "project": "pwa",
         "title": "single source of truth?"
     },
     {
         "_id": 5,
-        "due_date": "2023-03-12",
+        "due_date": "2 hours",
         "label": "refactor",
         "project": "pwa",
         "title": "item as workingItem"
@@ -84,7 +84,7 @@
     {
         "_id": 7,
         "body": "lifecycle: onMount() and tick() jako solve dla body button?",
-        "due_date": "2023-03-12",
+        "due_date": "3 hours",
         "label": "refactor",
         "project": "pwa",
         "title": "chapter - lifecycle"
@@ -120,21 +120,21 @@
     },
     {
         "_id": 13,
-        "due_date": "2023-03-12",
+        "due_date": "8 hours",
         "label": "feat",
         "project": "pwa",
         "title": "types display editing"
     },
     {
         "_id": 14,
-        "due_date": "2023-03",
+        "due_date": "2 days",
         "label": "feat",
         "project": "pwa",
         "title": "filtering and searching"
     },
     {
         "_id": 15,
-        "due_date": "2023-03",
+        "due_date": "1 day",
         "label": "feat",
         "project": "pwa",
         "title": "sorting"
@@ -142,21 +142,21 @@
     {
         "_id": 16,
         "body": "move, link, unlink",
-        "due_date": "2023-03-12",
+        "due_date": "1 hour",
         "label": "feat",
         "project": "pwa",
         "title": "items move operations"
     },
     {
         "_id": 17,
-        "due_date": "2023-03-12",
+        "due_date": "2 hours",
         "label": "feat",
         "project": "pwa",
         "title": "items CRUD operations"
     },
     {
         "_id": 18,
-        "due_date": "2023-03-12",
+        "due_date": "1 hour",
         "label": "feat",
         "project": "pwa",
         "title": "recursion protection"
@@ -193,7 +193,7 @@
     {
         "_id": 26,
         "body": "",
-        "due_date": "2023-03-12",
+        "due_date": "4 hours",
         "label": "feat",
         "project": "pwa",
         "title": "types CRUD operations"
@@ -201,7 +201,7 @@
     {
         "_id": 27,
         "body": "",
-        "due_date": "2023-03-12",
+        "due_date": "2 hours",
         "label": "feat",
         "project": "pwa",
         "title": "types order editing"
@@ -217,7 +217,7 @@
     {
         "_id": 29,
         "body": "",
-        "due_date": "2023-03",
+        "due_date": "2 days",
         "label": "feat",
         "project": "pwa",
         "title": "table view"
@@ -233,7 +233,7 @@
     {
         "_id": 31,
         "body": "to get aligned fields like in pwa. maybe integrate display configs of those two somehow?",
-        "due_date": "2023-03-12",
+        "due_date": "3 hours",
         "label": "feat",
         "project": "cli",
         "title": "flex formatting for terminal"
@@ -241,7 +241,7 @@
     {
         "_id": 32,
         "body": "e.g. body is not wrapped when editing, options menu is not hiding when selecting move,...",
-        "due_date": "2023-03-12",
+        "due_date": "5 hours",
         "label": "bug",
         "project": "pwa",
         "title": "general UI polishing"
