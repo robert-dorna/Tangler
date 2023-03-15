@@ -1,4 +1,5 @@
 <script>
+  import Styles from "./styles.svelte"
   import Navigation from "./navigation.svelte";
   import Panel from "./panel.svelte";
   import Items from "./items.svelte";

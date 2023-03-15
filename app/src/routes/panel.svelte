@@ -1,5 +1,8 @@
 <script>
   import CodeBraces from "svelte-material-icons/ChevronDown.svelte";
+  import Cog from "svelte-material-icons/Cog.svelte";
+  import HandIcon from "svelte-material-icons/HandFrontLeftOutline.svelte";
+  import Plus from "svelte-material-icons/PlusThick.svelte";
 
   export let types = [];
   export let emojis = [];
@@ -11,66 +14,95 @@
 </script>
 
 <div class="container">
-  <div class="title">
-    <div class="abc">
-      <CodeBraces color="black" size="18" />
+  <div class="item title-hover">
+    <CodeBraces color="black" size="18" />
+    <div class="name title">Items</div>
+    <div class="spacer" />
+    <div class="buttons">
+      <Plus color="grey" size="20" />
     </div>
-    <span class="titlename"> Items </span>
   </div>
   {#each types as itemtype, i (itemtype)}
-    <span
-      class="item {itemtype === selected ? 'selected' : ''}"
+    <div
+      class="item item-hover"
+      class:selected={itemtype === selected}
       on:click={() => select(itemtype)}
       on:keypress={undefined}
     >
       {emojis[i]}
-      <span class="itemname">{itemtype}</span>
-    </span>
+      <div class="name">{itemtype}</div>
+      <div class="spacer" />
+      <div class="buttons">
+        <div class="button" on:click={undefined} on:keypress={undefined}>
+          <Cog color="black" size="20" />
+        </div>
+        <HandIcon color="black" size="20" />
+      </div>
+    </div>
   {/each}
 </div>
 
 <style>
-  div.abc {
-    display: flex;
+  :root {
+    --buttons-visibility: hidden;
   }
   div.container {
     display: flex;
     flex-direction: column;
-    background-color: #eef0f2;
-    width: 12vw;
+    background-color: var(--panel-color-bg);
+    border-right: 2px solid var(--panel-color-border);
+    width: 20vw;
     padding-left: 15px;
     padding-top: 45px;
   }
-  span.titlename {
-    margin-left: 14px;
-  }
-  span.item {
-    font-size: 16px;
-    margin: 2px;
-    padding: 6px;
-    padding-left: 15px;
-    margin-right: 20px;
-    user-select: none;
-    cursor: pointer;
-    border-radius: 8px;
-  }
-  span.item:hover {
-    background-color: #bcb8b1;
-    opacity: 80%;
-  }
-  span.selected {
-    background-color: #bcb8b1;
-  }
-  span.itemname {
-    margin-left: 10px;
+  div.name {
+    margin-left: 15px;
   }
   div.title {
-    display: flex;
-    flex-direction: row;
-    font-size: 16px;
-    color: black;
     font-weight: bold;
-    padding-left: 20px;
-    margin-bottom: 10px;
+  }
+  div.item {
+    display: flex;
+    align-items: center;
+    margin: 2px;
+    margin-right: 20px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 18px;
+    border-radius: 8px;
+    user-select: none;
+    cursor: pointer;
+  }
+  div.title-hover:hover {
+    --buttons-visibility: visible;
+  }
+  div.item-hover:hover {
+    background-color: var(--panel-color-hover);
+    opacity: 80%;
+    --buttons-visibility: visible;
+  }
+  div.selected {
+    background-color: var(--panel-color-hover);
+  }
+  div.spacer {
+    display: flex;
+    flex: 1;
+  }
+  div.buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    visibility: var(--buttons-visibility);
+  }
+  div.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 8px;
+  }
+  div.button:hover {
+    background-color: var(--panel-color-button-hover);
   }
 </style>

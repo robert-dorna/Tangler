@@ -20,7 +20,7 @@
   $: style = !visible
     ? "visibility: hidden;"
     : showOptions
-    ? "border-radius: 8px; background-color: #bcb8b1;"
+    ? "background-color: #bcb8b1;"
     : "";
 </script>
 
@@ -53,9 +53,9 @@
     align-items: center;
     padding: 5px;
     margin-left: 19px;
+    border-radius: 8px;
   }
   div.container:hover {
-    border-radius: 8px;
     background-color: #bcb8b1;
   }
   div.options {

@@ -43,7 +43,7 @@
   $: fields = layout.fields;
 
   $: gotConfirmOption = typeof options === "function";
-  $: elevated = gotConfirmOption || elevate === true
+  $: elevated = gotConfirmOption || elevate === true;
   $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
   $: if (!hover) editing = false;
 
@@ -57,7 +57,8 @@
 </script>
 
 <div
-  class="container {elevated ? 'elevated' : ''}"
+  class="container"
+  class:elevated
   on:click|self={toggleOpen}
   on:keypress={undefined}
   on:mouseenter={hoverOn}
@@ -85,7 +86,13 @@
     {/if}
 
     {#each fields as field (field.name)}
-      <Field {...field} item={workingItem} bind:editing on:click={toggleOpen} on:refresh>
+      <Field
+        {...field}
+        item={workingItem}
+        bind:editing
+        on:click={toggleOpen}
+        on:refresh
+      >
         {#if field.name === "title"}
           {#if workingItem.body}
             <DetailsIconButton
@@ -109,7 +116,11 @@
     {#if gotConfirmOption}
       <NewItemIconsButton on:click={() => options(workingItem)} />
     {:else}
-      <OptionsIconButton visible={hover && enableOptions} bind:editing {options} />
+      <OptionsIconButton
+        visible={hover && enableOptions}
+        bind:editing
+        {options}
+      />
     {/if}
   </div>
   {#if workingItem.body && detailed}
