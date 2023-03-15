@@ -245,5 +245,13 @@
         "label": "bug",
         "project": "pwa",
         "title": "general UI polishing"
+    },
+    {
+        "_id": 33,
+        "body": "now everything is a div, replace that with correct elements and test resulting accessibility (switch devices, screen readers,...) link: https://web.dev/learn/html/semantic-html/",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "use semantic elements"
     }
 ]
