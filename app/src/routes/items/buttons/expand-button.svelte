@@ -5,7 +5,7 @@
 
   export let expanded;
   export let color;
-  export let size;
+  export let size = 30;
 </script>
 
 <div class="container" on:click on:keypress={undefined}>

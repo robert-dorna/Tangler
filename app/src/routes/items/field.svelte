@@ -1,7 +1,7 @@
 <script>
-  import Trackpad from "./buttons/trackpad.svelte";
-  import ValueSelector from "./value-selector.svelte";
-  import client from "./client";
+  import Trackpad from "../utils/trackpad.svelte";
+  import ValueSelector from "../value-selector.svelte";
+  import client from "../client";
 
   import { createEventDispatcher } from "svelte";
 
@@ -62,7 +62,6 @@
 <div
   class="container"
   style="{style} {colors && value in colors ? `color: ${colors[value]};` : ''}"
-  on:click|self
   on:keypress={undefined}
 >
   {#if name === editing}
@@ -81,7 +80,7 @@
 
   {#if name !== editing || colors !== undefined}
     <Trackpad bind:position>
-      <span class="field" on:click={onClick} on:keypress={undefined}>
+      <span class="field" on:click|stopPropagation={onClick} on:keypress={undefined}>
         {value}
       </span>
     </Trackpad>

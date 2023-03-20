@@ -1,6 +1,5 @@
 
 const req = async (url, args = []) => {
-
   const shouldOmmit = value => value === null || value === undefined || String(value).toUpperCase() === "NULL";
   const encode = value => String(value).replace(' ', '%20')
 

@@ -1,7 +1,7 @@
 <script>
-  import Trackpad from "./trackpad.svelte";
+  import Trackpad from "../../utils/trackpad.svelte";
   import DotsVertical from "svelte-material-icons/DotsVertical.svelte";
-  import Option from "../option.svelte";
+  import Option from "../../option.svelte";
 
   export let visible = false;
   export let options = [];

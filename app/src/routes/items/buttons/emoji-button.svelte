@@ -1,16 +1,16 @@
 <script>
-  import Trackpad from "./trackpad.svelte";
+  import Trackpad from "../../utils/trackpad.svelte";
+
+  import { displayConfig } from "../../stores";
 
   export let item;
-  export let displayConfig;
   export let editing;
-
   export let value;
 
-  $: types = displayConfig.types
-  $: what = item._what
-  $: typeConfig = types[what]
-  $: emoji = typeConfig.emoji
+  $: types = $displayConfig.types;
+  $: what = item._what;
+  $: typeConfig = types[what];
+  $: emoji = typeConfig.emoji;
 
   let style = "";
 
@@ -19,19 +19,23 @@
     style = `left: ${position.x}px; top: ${position.y}px;`;
   }
 
-  $: values = displayConfig.order;
+  $: values = $displayConfig.order;
 
   let position = { x: 0, y: 0 };
 
   function onSelect(v) {
     value = v;
-    item['title'] = 'costam'
+    item["title"] = "costam";
     editing = false;
   }
 </script>
 
 <Trackpad bind:position>
-  <div class="emoji" on:click|self={onClick} on:keypress={undefined}>
+  <div
+    class="emoji"
+    on:click|self|stopPropagation={onClick}
+    on:keypress={undefined}
+  >
     {emoji}
     {#if editing === "_what"}
       <div class="container" {style}>
@@ -40,9 +44,9 @@
             <div
               class="value"
               on:keypress={undefined}
-              on:click={() => onSelect(v)}
+              on:click|stopPropagation={() => onSelect(v)}
             >
-              {displayConfig.types[v].emoji}
+              {$displayConfig.types[v].emoji}
               {v}
             </div>
           {/each}

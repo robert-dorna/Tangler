@@ -3,9 +3,9 @@
   import Dots from "svelte-material-icons/DotsHorizontal.svelte";
 
   export let detailed = false;
-  export let color;
-  export let hoverColor;
-  export let size;
+  export let color = 'darkgoldenrod';
+  export let hoverColor = 'brown';
+  export let size = 24;
 
   const extraPadding = "padding-left: 5px; padding-right: 5px;";
 
@@ -28,7 +28,7 @@
 <div
   class="container"
   style={!detailed ? extraPadding : ""}
-  on:click={handleClick}
+  on:click|stopPropagation={handleClick}
   on:keypress={undefined}
   on:mouseenter={hoverOn}
   on:mouseleave={hoverOff}

@@ -8,7 +8,7 @@
 </script>
 
 <div
-  on:click
+  on:click|stopPropagation
   on:keypress={undefined}
   on:mousemove={handleMouseMove}
 >

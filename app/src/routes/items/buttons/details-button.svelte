@@ -1,9 +1,9 @@
 <script>
   import PencilPlus from "svelte-material-icons/PencilPlus.svelte";
 
-  export let color;
-  export let hoverColor;
-  export let size;
+  export let color = 'darkgoldenrod';
+  export let hoverColor = 'brown';
+  export let size = 24;
   export let visible = false;
 
   $: style = visible ? "" : "visibility: hidden;";
@@ -25,7 +25,7 @@
   {style}
   on:mouseenter={hoverOn}
   on:mouseleave={hoverOff}
-  on:click
+  on:click|stopPropagation
   on:keypress={undefined}
 >
   <PencilPlus color={currentColor} {size} />

@@ -1,68 +1,44 @@
 <script>
-  import Styles from "./styles.svelte"
-  import Navigation from "./navigation.svelte";
-  import Panel from "./panel.svelte";
-  import Items from "./items.svelte";
-  import client from "./client.js";
+  import Styles from "./styles.svelte";
+  import Panel from "./panel/panel.svelte";
+  import Items from "./items/items.svelte";
+  import client from "./client";
+  import { displayConfig, newItem } from "./stores";
 
   import { onMount } from "svelte";
 
   onMount(() => {
-    client.displayConfig().then((json) => {
-      displayConfig = {
-        types: json.types,
-        order: json.order,
-        emojis: json.order.map((typename) => json.types[typename].emoji),
-      };
-    });
+    displayConfig.fetch();
   });
-
-  let displayConfig = {};
 
   // TODO: deduce or from config
   let selected = "task";
-  let data = [];
-
-  // is this good or does it have e.g. SSR problems?
-  $: client.get({ method: "readall", what: selected }).then((json) => {
-    data = json.result;
-  });
+  let items = [];
 
   function refreshData() {
     client.get({ method: "readall", what: selected }).then((json) => {
-      data = json.result;
+      items = json.result;
     });
   }
+
+  // is this good or does it have e.g. SSR problems?
+  $: if (selected) refreshData()
+  $: if ($newItem.anchorId === null) refreshData()
 </script>
 
 <div class="container">
-  <!-- <Navigation /> -->
-  <div class="columns">
-    <Panel
-      bind:selected
-      emojis={displayConfig.emojis}
-      types={displayConfig.order}
-    />
-    <Items items={data} {displayConfig} on:refresh={refreshData}/>
-  </div>
+  <Panel bind:selected />
+  <Items {items} on:refresh={refreshData} />
 </div>
 
 <style>
-  div {
+  div.container {
     display: flex;
-    background-color: white;
+    flex-direction: row;
+    flex: 1;
     width: 100vw;
     height: 100vh;
-  }
-  div.container {
-    flex: 1;
-    flex-direction: column;
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif;
-  }
-  div.columns {
-    flex: 1;
-    flex-direction: row;
-    width: 100vw;
+    font-family: var(--app-font-family);
+    background-color: var(--page-color-bg);
   }
 </style>

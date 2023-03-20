@@ -1,5 +1,9 @@
 <style>
   :global(:root) {
+    /* global settings */
+    --app-font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+
     /* colors */
     --color-mint-cream: #F5FFFA;
     --color-nyanza: #E9FFDB;
@@ -16,6 +20,9 @@
     --color-cinnabar: #F4442E;
     --color-field-drab: #6A5837;
     --color-prussian-blue: #172A3A;
+
+    /* +page */
+    --page-color-bg: white;
 
     /* panel */
     --panel-color-bg: var(--color-mint-cream);
