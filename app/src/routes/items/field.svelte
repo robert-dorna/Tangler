@@ -1,11 +1,11 @@
 <script>
-  import Trackpad from "../utils/trackpad.svelte";
-  import ValueSelector from "../value-selector.svelte";
   import client from "../client";
+
+  import Menu from "../lib/menu.svelte";
 
   import { createEventDispatcher } from "svelte";
 
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher();
 
   export let name;
   export let style = undefined;
@@ -17,8 +17,6 @@
   let originalValue = item[name];
 
   let input = null;
-  let position = { x: 0, y: 0 };
-  let menuPosition = "";
 
   function submitChange() {
     editing = false;
@@ -30,7 +28,7 @@
           [name]: item[name],
         })
         .then(() => {
-          dispatch('refresh')
+          dispatch("refresh");
           originalValue = item[name];
         });
     }
@@ -44,18 +42,22 @@
     }
   }
 
-  function onSelect(event) {
-    item[name] = event.detail.value;
-    submitChange();
-  }
-
-  function onClick() {
-    editing = name;
-    menuPosition = `left: ${position.x}px; top: ${position.y}px;`;
-  }
-
   $: value = item[name] || "?";
   $: if (input) input.focus();
+
+  const options =
+    colors === undefined
+      ? []
+      : Object.keys(colors).map((value) => {
+          return {
+            text: value,
+            textColor: colors[value],
+            action: () => {
+              item[name] = value;
+              submitChange();
+            },
+          };
+        });
 </script>
 
 <svelte:window on:keyup={handleKeyPress} />
@@ -64,26 +66,28 @@
   style="{style} {colors && value in colors ? `color: ${colors[value]};` : ''}"
   on:keypress={undefined}
 >
-  {#if name === editing}
-    {#if colors !== undefined}
-      <ValueSelector {colors} style={menuPosition} on:select={onSelect} />
-    {:else}
-      <input
-        bind:this={input}
-        style="width: {value.length / 2 + 2}em;"
-        type="text"
-        bind:value={item[name]}
-        on:focusout={submitChange}
-      />
-    {/if}
-  {/if}
-
-  {#if name !== editing || colors !== undefined}
-    <Trackpad bind:position>
-      <span class="field" on:click|stopPropagation={onClick} on:keypress={undefined}>
+  {#if colors !== undefined}
+    <Menu bind:focus={editing} {options}>
+      <span class="field">
         {value}
       </span>
-    </Trackpad>
+    </Menu>
+  {:else if name === editing}
+    <input
+      bind:this={input}
+      style="width: {value.length / 2 + 2}em;"
+      type="text"
+      bind:value={item[name]}
+      on:focusout={submitChange}
+    />
+  {:else}
+    <span
+      class="field"
+      on:click={() => (editing = name)}
+      on:keypress={undefined}
+    >
+      {value}
+    </span>
   {/if}
   <slot />
 </div>

@@ -28,10 +28,10 @@ export const displayConfigAvailable = derived(displayConfig, $displayConfig => B
 export const displayConfigTypes = derived(displayConfig, $displayConfig => $displayConfig.types)
 
 export const LOCATION = Object.freeze({
-    ABOVE: 1,
-    BELOW: 2,
-    CHILD: 3,
-  });
+  ABOVE: 1,
+  BELOW: 2,
+  CHILD: 3,
+});
 
 export const movingItem = writable(null)
 
@@ -53,7 +53,7 @@ function createNewItem() {
   const { subscribe, set, update } = writable(nothingSelected)
 
   function select(anchor, location) {
-    set({ location, anchorId: anchor._id, anchorWhat: anchor._what })
+    set({ location, anchorId: anchor._id, anchorWhat: anchor._what, fields: plain })
   }
 
   function create(fields) {

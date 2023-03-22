@@ -1,7 +1,9 @@
 <script>
-  import Styles from "./styles.svelte";
+  import "./styles.svelte";
+
   import Panel from "./panel/panel.svelte";
   import Items from "./items/items.svelte";
+
   import client from "./client";
   import { displayConfig, newItem } from "./stores";
 
@@ -11,24 +13,24 @@
     displayConfig.fetch();
   });
 
-  // TODO: deduce or from config
+  // TODO: deduce it or load from config
   let selected = "task";
   let items = [];
 
-  function refreshData() {
+  function refreshItems() {
     client.get({ method: "readall", what: selected }).then((json) => {
       items = json.result;
     });
   }
 
-  // is this good or does it have e.g. SSR problems?
-  $: if (selected) refreshData()
-  $: if ($newItem.anchorId === null) refreshData()
+  // TODO: check is this good or does it have e.g. SSR problems?
+  $: if (selected) refreshItems();
+  $: if ($newItem.anchorId === null) refreshItems();
 </script>
 
 <div class="container">
   <Panel bind:selected />
-  <Items {items} on:refresh={refreshData} />
+  <Items {items} on:refresh={refreshItems} />
 </div>
 
 <style>

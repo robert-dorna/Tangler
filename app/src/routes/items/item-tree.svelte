@@ -6,8 +6,11 @@
   export let item;
   export let indent = 0;
 
+  $: anchorId = $newItem.anchorId;
+  $: anchorWhat = $newItem.anchorWhat;
+
   $: newItemLocation =
-    $newItem.anchorId === item._id && $newItem.anchorWhat === item._what
+    anchorId === item._id && anchorWhat === item._what
       ? $newItem.location
       : false;
 
@@ -15,7 +18,6 @@
   $: len = children.length;
   $: open = len > 0 ? true : undefined;
 </script>
-
 
 {#if newItemLocation === LOCATION.ABOVE}
   <Item {indent} />
@@ -29,9 +31,9 @@
   {/each}
 {/if}
 
-{#if newItemLocation === LOCATION.BELOW || newItemLocation === LOCATION.CHILD}
+<!-- {#if newItemLocation === LOCATION.BELOW || newItemLocation === LOCATION.CHILD}
   <Item indent={indent + (newItemLocation === LOCATION.CHILD ? 32 : 0)} />
-{/if}
+{/if} -->
 
 <!-- TODO: move prompts to options? -->
 

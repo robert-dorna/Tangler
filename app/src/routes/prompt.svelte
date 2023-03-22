@@ -1,29 +1,26 @@
 <script>
-  import Check from "svelte-material-icons/Check.svelte";
-  import Close from "svelte-material-icons/Close.svelte";
-
+  import Icon from "./lib/icon.svelte";
   import { createEventDispatcher } from "svelte";
-
   const dispatch = createEventDispatcher();
 </script>
 
 <div class="container">
-  <div class="prompt">
+  <div class="prompt g-elevated">
     <div class="title">What to do with new item?</div>
     <div
       class="option"
-      on:click={() => dispatch("create")}
+      on:click|stopPropagation={() => dispatch("create")}
       on:keypress={undefined}
     >
-      <Check color="black" size={30} />
+      <Icon name="check" color="black" size={30} />
       Create
     </div>
     <div
       class="option"
-      on:click={() => dispatch("discard")}
+      on:click|stopPropagation={() => dispatch("discard")}
       on:keypress={undefined}
     >
-      <Close color="black" size={30} />
+      <Icon name="close" color="black" size={30} />
       Discard
     </div>
   </div>
@@ -46,7 +43,6 @@
     padding-right: 40px;
     align-items: center;
     border-radius: 40px;
-    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     background-color: white;
   }
   div.title {

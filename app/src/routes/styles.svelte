@@ -30,4 +30,7 @@
     --panel-color-hover: var(--color-tea-green);
     --panel-color-button-hover: var(--color-pistachio);
   }
+  :global(div.g-elevated) {
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  }
 </style>

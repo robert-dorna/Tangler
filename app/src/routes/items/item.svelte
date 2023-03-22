@@ -1,19 +1,28 @@
 <script>
-  import HoverPad from "../utils/hoverpad.svelte";
+  import Hovering from "../lib/hovering.svelte";
 
-  import ExpandButton from "./buttons/expand-button.svelte";
-  import EmojiButton from "./buttons/emoji-button.svelte";
+  import Icon from "../lib/icon.svelte";
+  import Menu from "../lib/menu.svelte";
+
   import DetailsToggle from "./buttons/details-toggle.svelte";
-  import DetailsButton from "./buttons/details-button.svelte";
-  import ConfirmButton from "./buttons/confirm-button.svelte";
-  import OptionsButton from "./buttons/options-button.svelte";
+  import DetailsButton from "./buttons/details.svelte";
+  import ConfirmButton from "./buttons/confirm.svelte";
 
   import Field from "./field.svelte";
   import Options from "./options.svelte";
 
-  import { displayConfigTypes, newItem, movingItem } from "../stores";
+  import {
+    displayConfig,
+    displayConfigTypes,
+    newItem,
+    movingItem,
+  } from "../stores";
 
-  export let item = newItem.plain;
+  export let item = {
+    _children: [],
+    _id: "new",
+    _what: $newItem.anchorWhat,
+  };
   export let indent = 0;
   export let open = undefined;
 
@@ -44,7 +53,7 @@
   $: layout = $displayConfigTypes[what];
   $: fields = layout.fields;
 
-  $: creatingNewItem = item === newItem.plain;
+  $: creatingNewItem = item._id === "new";
 
   $: elevated =
     creatingNewItem ||
@@ -55,55 +64,70 @@
   $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
   $: if (!hover) editing = false;
 
-  $: showOptions = Boolean($newItem.anchorId === null) && hover;
-
   const bodyStyleConst =
     "padding-top: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px; color: darkgoldenrod; max-width: 40vw;";
 
   $: bodyStyle = `margin-left: ${indent + 80}px; ${bodyStyleConst}`;
+
+  const emojiOptions = $displayConfig.order.map((typeName) => ({
+    emoji: $displayConfigTypes[typeName].emoji,
+    text: typeName,
+    action: () => (v = typeName),
+  })); 
 </script>
 
-<div class="container" class:elevated>
-  <HoverPad bind:hover on:click={toggleOpen}>
-    <div class="fields">
-      <div class="indent" style="width: {indent}px;" />
-      <ExpandButton expanded={open} color={chevronColor} />
+<Hovering cls="g-item-container" {elevated} bind:hover on:click={toggleOpen}>
+  <div class="fields">
+    <div class="indent" style="width: {indent}px;" />
+    <Icon
+      name={open === undefined ? "dot" : open ? "expanded" : "expand"}
+      color={chevronColor}
+      size={30}
+    />
 
-      {#if creatingNewItem}
-        <EmojiButton bind:value={v} {item} bind:editing />
-      {:else}
-        <span class="emoji"> {layout.emoji} </span>
-      {/if}
-
-      {#each fields as field (field.name)}
-        <Field {...field} {item} bind:editing on:refresh>
-          {#if field.name === "title"}
-            {#if item.body}
-              <DetailsToggle bind:detailed />
-            {:else}
-              <DetailsButton visible={hover} on:click={createBody} />
-            {/if}
-          {/if}
-        </Field>
-      {/each}
-
-      {#if creatingNewItem}
-        <ConfirmButton on:click={() => options(item)} />
-      {:else}
-        <OptionsButton visible={showOptions} bind:editing {options} />
-      {/if}
-    </div>
-    {#if item.body && detailed}
-      <Field name="body" {item} bind:editing style={bodyStyle} on:refresh />
+    {#if creatingNewItem}
+      <Menu cls="g-item-emoji-menu" options={emojiOptions} bind:focus={editing}>
+        <span class="emoji-button"> {layout.emoji} </span>
+      </Menu>
+    {:else}
+      <span class="emoji"> {layout.emoji} </span>
     {/if}
-  </HoverPad>
-</div>
 
-<Options {item} bind:options />
+    {#each fields as field (field.name)}
+      <Field {...field} {item} bind:editing on:refresh>
+        {#if field.name === "title"}
+          {#if item.body}
+            <DetailsToggle bind:detailed />
+          {:else}
+            <DetailsButton visible={hover} on:click={createBody} />
+          {/if}
+        {/if}
+      </Field>
+    {/each}
+
+    {#if creatingNewItem}
+      <ConfirmButton on:click={() => options(item)} />
+    {:else}
+      <Menu
+        cls="g-item-menu-container"
+        hide={!hover || $newItem.anchorId !== null}
+        bind:focus={editing}
+        {options}
+      >
+        <Icon name="dots-v" color="grey" size={30} />
+      </Menu>
+    {/if}
+  </div>
+  {#if item.body && detailed}
+    <Field name="body" {item} bind:editing style={bodyStyle} on:refresh />
+  {/if}
+</Hovering>
+
+<Options {item} bind:options on:refresh />
 
 <!-- removing padding gives nice compact view -->
 <style>
-  div.container {
+  :global(div.g-item-container) {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -114,12 +138,10 @@
     cursor: pointer;
     font-size: 22px;
   }
-  div.container:hover {
+  :global(div.g-item-container:hover) {
     background-color: #eef0f2;
   }
-  div.elevated {
-    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-  }
+
   div.fields {
     display: flex;
     flex: 1;
@@ -131,5 +153,50 @@
   span.emoji {
     margin-left: 5px;
     margin-right: 10px;
+  }
+  span.emoji-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    padding: 5px;
+    border-radius: 8px;
+  }
+  span.emoji-button:hover {
+    background-color: #bcb8b1;
+  }
+  /* to bylo w emoji menu container */
+  /* :global(div.g-emoji-container) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    padding: 5px;
+  }
+  :global(div.g-emoji-container:hover) {
+    border-radius: 8px;
+    background-color: #bcb8b1;
+  } */
+
+  :global(div.g-item-emoji-menu) {
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+
+  /* Menu styles */
+
+  :global(div.g-item-menu-container) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 8px;
+
+    /* TODO: this is global and will fuck up other menus? */
+    background-color: var(--menu-is-visible, var(--color-silver))
+      var(--menu-is-not-visible, inherit);
+  }
+  :global(div.g-item-menu-container:hover) {
+    background-color: var(--color-silver);
   }
 </style>

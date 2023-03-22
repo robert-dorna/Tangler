@@ -1,36 +1,30 @@
 <script>
-  import Item from "./panel-item.svelte";
-  import Button from "./panel-button.svelte";
+  import Item from "./item.svelte";
+  import Button from "./button.svelte";
   import { displayConfig } from "../stores";
-
-  $: emojis = $displayConfig.emojis || []
-  $: types = $displayConfig.order || []
 
   export let selected;
 
   let newItem = false;
 
-  function select(itemtype) {
-    selected = itemtype;
+  function create() {
+    newItem = { emoji: "🌋", name: "xd" };
   }
 
-  function create() {
-    newItem = {
-      emoji: '🌋',
-      name: 'xd'
-    };
-  }
+  $: emojis = $displayConfig.emojis || [];
+  $: types = $displayConfig.order || [];
 </script>
 
 <div class="container">
   <Item title name="Items" on:plus={create}>
-    <Button name="down" color="black" slim />
+    <Button name="expanded" color="black" slim />
   </Item>
-  {#each types as itemtype, i (itemtype)}
+  {#each types as typeName, i (typeName)}
     <Item
-      name={itemtype}
-      selected={itemtype === selected}
-      on:click={() => select(itemtype)}
+      name={typeName}
+      selected={typeName === selected}
+      on:click={() => (selected = typeName)}
+      on:settings={() => alert("settings")}
     >
       {emojis[i]}
     </Item>

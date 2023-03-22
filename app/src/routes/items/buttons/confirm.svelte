@@ -1,9 +1,9 @@
 <script>
-  import Check from "svelte-material-icons/Check.svelte";
+  import Icon from "../../lib/icon.svelte";
 </script>
 
-<div class="container" on:click on:keypress={undefined}>
-  <Check color="grey" size={30} />
+<div class="container" on:click|stopPropagation on:keypress={undefined}>
+  <Icon name="check" color="grey" size={30} />
 </div>
 
 <style>

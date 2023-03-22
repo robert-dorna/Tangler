@@ -1,5 +1,7 @@
 <script>
-  import PanelButton from "./panel-button.svelte";
+  import Button from "./button.svelte";
+
+  import Menu from "../lib/menu.svelte";
 
   import { createEventDispatcher } from "svelte";
 
@@ -12,7 +14,15 @@
 
   let editing = false;
   let input = null;
+
   $: if (input) input.focus();
+
+  // prettier-ignore
+  const options = [
+    { icon: 'pencil-outline', text: "rename",   action: () => { alert('rename')} },
+    { icon: 'cog-outline',    text: "edit",     action: () => { alert('edit')} },
+    { icon: 'trash',          text: "delete",   action: () => { alert('delete')} },
+  ];
 </script>
 
 <div
@@ -26,21 +36,21 @@
   {#if !editing}
     <div class="name" class:title>{name}</div>
   {:else}
-    <input
-      bind:this={input}
-      type="text"
-      bind:value={name}
-    />
+    <input bind:this={input} type="text" bind:value={name} />
   {/if}
+
   <div class="spacer" />
+  
   <div class="buttons">
     {#if title}
-      <PanelButton name="plus" color="grey" on:click={() => dispatch("plus")} />
+      <Button name="plus" color="grey" on:click={() => dispatch("plus")} />
     {:else if edit}
-      <PanelButton name="plus" color="grey" on:click={() => dispatch("plus")} />
+      <Button name="plus" color="grey" on:click={() => dispatch("plus")} />
     {:else}
-      <PanelButton name="cog" color="black" on:click={undefined} />
-      <PanelButton name="hand" color="black" on:click={undefined} />
+      <Menu {options} loseFocus>
+        <Button name="cog-outline" color="black" />
+      </Menu>
+      <Button name="hand-outline" color="black" on:click={undefined} />
     {/if}
   </div>
 </div>

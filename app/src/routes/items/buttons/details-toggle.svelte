@@ -1,56 +1,42 @@
 <script>
-  import Dot from "svelte-material-icons/CircleSmall.svelte";
-  import Dots from "svelte-material-icons/DotsHorizontal.svelte";
+  import Hovering from "../../lib/hovering.svelte";
+  import Icon from "../../lib/icon.svelte";
 
   export let detailed = false;
-  export let color = 'darkgoldenrod';
-  export let hoverColor = 'brown';
+  export let color = "darkgoldenrod";
+  export let hoverColor = "brown";
   export let size = 24;
-
-  const extraPadding = "padding-left: 5px; padding-right: 5px;";
-
-  function handleClick() {
-    detailed = !detailed;
-  }
 
   let hover = false;
 
-  function hoverOn() {
-    if (!hover) hover = true;
-  }
-  function hoverOff() {
-    if (hover) hover = false;
-  }
-
   $: currentColor = hoverColor && hover ? hoverColor : color;
+  $: cls = `g-details-toggle-container ${!detailed ? "g-details-toggle-extra-padding" : ""}`;
 </script>
 
-<div
-  class="container"
-  style={!detailed ? extraPadding : ""}
-  on:click|stopPropagation={handleClick}
-  on:keypress={undefined}
-  on:mouseenter={hoverOn}
-  on:mouseleave={hoverOff}
->
+<Hovering {cls} bind:hover on:click={() => (detailed = !detailed)}>
   {#if detailed}
-    <Dot color={currentColor} {size} />
-    <Dot color={currentColor} {size} />
+    <Icon name="dot" color={currentColor} {size} />
+    <Icon name="dot" color={currentColor} {size} />
   {:else}
-    <Dots color={currentColor} {size} />
+    <Icon name="dots-h" color={currentColor} {size} />
   {/if}
-</div>
+</Hovering>
 
+<!-- TODO: figure out a way to avoid global classes here or complicated names -->
 <style>
-  div.container {
+  :global(div.g-details-toggle-container) {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 5px;
     padding-bottom: 5px;
   }
-  div.container:hover {
+  :global(div.g-details-toggle-container:hover) {
     border-radius: 8px;
     background-color: #bcb8b1;
+  }
+  :global(div.g-details-toggle-extra-padding) {
+    padding-left: 5px;
+    padding-right: 5px;
   }
 </style>

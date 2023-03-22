@@ -2,14 +2,6 @@
   import client from "../client";
   import { LOCATION, movingItem, newItem } from "../stores";
 
-  import HandIcon from "svelte-material-icons/HandFrontLeftOutline.svelte";
-  import UpIcon from "svelte-material-icons/MenuUpOutline.svelte";
-  import DownIcon from "svelte-material-icons/MenuDownOutline.svelte";
-  import TreeIcon from "svelte-material-icons/FileTree.svelte";
-  import TopIcon from "svelte-material-icons/FormatVerticalAlignTop.svelte";
-  import TrashIcon from "svelte-material-icons/DeleteForeverOutline.svelte";
-  import CancelIcon from "svelte-material-icons/Cancel.svelte";
-
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
@@ -19,25 +11,25 @@
   export const allOptions = {
     // prettier-ignore
     normal: [
-      { Icon: HandIcon, text: "move", action: () => { $movingItem = { what: item._what, _id: item._id }; } },
-      { Icon: UpIcon, text: "create above", action: () => { newItem.select(item, LOCATION.ABOVE) } },
-      { Icon: UpIcon, text: "create below", action: () => { newItem.select(item, LOCATION.BELOW) } },
-      { Icon: UpIcon, text: "create child", action: () => { newItem.select(item, LOCATION.CHILD) } },
-      { Icon: TopIcon, text: "detach top", action: () => { detachItem() } },
-      { Icon: TrashIcon, text: "delete", action: () => { deleteItem() } },
+      { icon: 'hand-outline',   text: "move",           action: () => { $movingItem = { what: item._what, _id: item._id }; } },
+      { icon: 'up',             text: "create above",   action: () => { newItem.select(item, LOCATION.ABOVE) } },
+      { icon: 'down',           text: "create below",   action: () => { newItem.select(item, LOCATION.BELOW) } },
+      { icon: 'tree',           text: "create child",   action: () => { newItem.select(item, LOCATION.CHILD) } },
+      { icon: 'top',            text: "detach top",     action: () => { detachItem() } },
+      { icon: 'trash',          text: "delete",         action: () => { deleteItem() } },
     ],
 
     // prettier-ignore
     moveTarget: [
-      { Icon: CancelIcon, text: "cancel move", action: () => { $movingItem = null; } },
-      { Icon: UpIcon, text: "place above", action: () => { moveItem(LOCATION.ABOVE); } },
-      { Icon: DownIcon, text: "place below", action: () => { moveItem(LOCATION.BELOW); } },
-      { Icon: TreeIcon, text: "place as child ", action: () => { moveItem(LOCATION.CHILD); } },
+      { icon: 'cancel',       text: "cancel move",      action: () => { $movingItem = null; } },
+      { icon: 'up',           text: "place above",      action: () => { moveItem(LOCATION.ABOVE); } },
+      { icon: 'down',         text: "place below",      action: () => { moveItem(LOCATION.BELOW); } },
+      { icon: 'tree',         text: "place as child ",  action: () => { moveItem(LOCATION.CHILD); } },
     ],
 
     // prettier-ignore
     markedForMove: [
-      { Icon: CancelIcon, text: "cancel move", action: () => { $movingItem = null; } },
+      { icon: 'cancel',       text: "cancel move",      action: () => { $movingItem = null; } },
     ],
   };
 
