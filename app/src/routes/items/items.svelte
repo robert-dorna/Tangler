@@ -1,13 +1,12 @@
 <script>
   import ItemTree from "./item-tree.svelte";
-  import { displayConfigAvailable, newItem } from "../stores";
+  import { displayConfigAvailable } from "../stores";
 
   export let items = [];
 </script>
 
 <div class="container">
   <div class="items">
-    {JSON.stringify($newItem)}
     {#if $displayConfigAvailable}
       {#each items as item, index (item._what + item._id)}
         <ItemTree {item} on:refresh />
