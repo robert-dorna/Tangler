@@ -28,8 +28,9 @@
     client
       .create({
         ...newItemFields,
-        _aboveId: item["_id"],
-        _aboveWhat: item["_what"],
+        _location: newItemLocation,
+        _anchorId: item["_id"],
+        _anchorWhat: item["_what"],
       })
       .then(() => {
         dispatch('refresh');
