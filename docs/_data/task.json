@@ -39,39 +39,11 @@
         "title": "ability to create first item of some kind"
     },
     {
-        "_id": 1,
-        "due_date": "2 hours",
-        "label": "refactor",
-        "project": "pwa",
-        "title": "disable options while creating as global setting?"
-    },
-    {
-        "_id": 2,
-        "due_date": "3 hours",
-        "label": "refactor",
-        "project": "pwa",
-        "title": "server controller"
-    },
-    {
         "_id": 3,
         "due_date": "3 hours",
         "label": "refactor",
         "project": "pwa",
-        "title": "chapter - store"
-    },
-    {
-        "_id": 4,
-        "due_date": "6 hours",
-        "label": "refactor",
-        "project": "pwa",
-        "title": "single source of truth?"
-    },
-    {
-        "_id": 5,
-        "due_date": "2 hours",
-        "label": "refactor",
-        "project": "pwa",
-        "title": "item as workingItem"
+        "title": "refactor all components"
     },
     {
         "_id": 6,
@@ -80,14 +52,6 @@
         "label": "feat",
         "project": "pwa",
         "title": "focus and keyboard navigation"
-    },
-    {
-        "_id": 7,
-        "body": "lifecycle: onMount() and tick() jako solve dla body button?",
-        "due_date": "3 hours",
-        "label": "refactor",
-        "project": "pwa",
-        "title": "chapter - lifecycle"
     },
     {
         "_id": 8,
@@ -205,7 +169,7 @@
         "due_date": "2 hours",
         "label": "feat",
         "project": "pwa",
-        "title": "types order editing"
+        "title": "types move operations"
     },
     {
         "_id": 28,
