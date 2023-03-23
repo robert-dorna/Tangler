@@ -77,11 +77,12 @@
       type="text"
       bind:value={item[name]}
       on:focusout={submitChange}
+      on:click|stopPropagation={() => undefined}
     />
   {:else}
     <span
       class="field"
-      on:click={() => (editing = name)}
+      on:click|stopPropagation={() => (editing = name)}
       on:keypress={undefined}
     >
       {value}
