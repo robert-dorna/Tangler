@@ -22,7 +22,7 @@ types:
         style: "width: 90px; font-size: 22px; color: #8A817C; margin-left: 35px;"
         colors:
           'feat': 'teal'
-          'bug': 'burlywood'
+          'bug': 'crimson'
           'refactor': 'dodgerblue'
       - name: due_date
         style: "width: 130px; font-size: 22px; color: #8A817C; margin-left: 35px;"
