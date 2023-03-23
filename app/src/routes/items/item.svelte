@@ -18,11 +18,11 @@
     movingItem,
   } from "../stores";
 
-  export let item = {
-    _children: [],
-    _id: "new",
-    _what: $newItem.anchorWhat,
-  };
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
+
+  export let item;
   export let indent = 0;
   export let open = undefined;
 
@@ -73,7 +73,7 @@
     emoji: $displayConfigTypes[typeName].emoji,
     text: typeName,
     action: () => (v = typeName),
-  })); 
+  }));
 </script>
 
 <Hovering cls="g-item-container" {elevated} bind:hover on:click={toggleOpen}>
@@ -106,7 +106,7 @@
     {/each}
 
     {#if creatingNewItem}
-      <ConfirmButton on:click={() => options(item)} />
+      <ConfirmButton on:click={() => dispatch('create')} />
     {:else}
       <Menu
         cls="g-item-menu-container"

@@ -1,7 +1,11 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import Item from "./item.svelte";
   import Prompt from "../prompt.svelte";
   import { LOCATION, newItem } from "../stores";
+  import client from "../client";
+
+  const dispatch = createEventDispatcher()
 
   export let item;
   export let indent = 0;
@@ -17,10 +21,25 @@
   $: children = item._children;
   $: len = children.length;
   $: open = len > 0 ? true : undefined;
+
+  $: newItemFields = {_id: 'new', _what: $newItem.anchorWhat}
+
+  function create() {
+    client
+      .create({
+        ...newItemFields,
+        _aboveId: item["_id"],
+        _aboveWhat: item["_what"],
+      })
+      .then(() => {
+        dispatch('refresh');
+        newItem.discard();
+      });
+  }
 </script>
 
 {#if newItemLocation === LOCATION.ABOVE}
-  <Item {indent} />
+  <Item item={newItemFields} {indent} on:create={create} />
 {/if}
 
 <Item {item} {indent} bind:open on:refresh />
@@ -31,14 +50,16 @@
   {/each}
 {/if}
 
-<!-- {#if newItemLocation === LOCATION.BELOW || newItemLocation === LOCATION.CHILD}
-  <Item indent={indent + (newItemLocation === LOCATION.CHILD ? 32 : 0)} />
-{/if} -->
-
-<!-- TODO: move prompts to options? -->
+{#if newItemLocation === LOCATION.BELOW || newItemLocation === LOCATION.CHILD}
+  <Item
+    item={newItemFields}
+    indent={indent + (newItemLocation === LOCATION.CHILD ? 32 : 0)}
+    on:create={create}
+  />
+{/if}
 
 {#if newItemLocation}
-  <Prompt on:create={() => undefined} on:discard={() => newItem.discard()} />
+  <Prompt on:create={create} on:discard={() => newItem.discard()} />
 {/if}
 
 <!-- 

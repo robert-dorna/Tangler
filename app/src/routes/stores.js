@@ -3,7 +3,7 @@ import client from './client';
 
 
 function createDisplayConfig() {
-  const { subscribe, set, update } = writable({});
+  const { subscribe, set } = writable({});
 
   function fetch() {
     client.displayConfig().then((json) => {
@@ -17,8 +17,6 @@ function createDisplayConfig() {
 
   return {
     subscribe,
-    set,
-    update,
     fetch,
   };
 }
@@ -36,36 +34,16 @@ export const LOCATION = Object.freeze({
 export const movingItem = writable(null)
 
 function createNewItem() {
-  const plain = {
-    _children: [],
-    // _what: $newItem.anchorWhat,
-    _what: null,
-    title: "new item",
-  };
-
   const nothingSelected = {
-    location: false, // createMode
+    location: false,
     anchorId: null,
     anchorWhat: null,
-    fields: plain,
   }
 
-  const { subscribe, set, update } = writable(nothingSelected)
+  const { subscribe, set } = writable(nothingSelected)
 
   function select(anchor, location) {
-    set({ location, anchorId: anchor._id, anchorWhat: anchor._what, fields: plain })
-  }
-
-  function create(fields) {
-    client
-      .create({
-        ...fields,
-        _aboveId: item["_id"],
-        _aboveWhat: item["_what"],
-      })
-      .then(() => {
-        newItem.discard();
-      });
+    set({ location, anchorId: anchor._id, anchorWhat: anchor._what })
   }
 
   function discard() {
@@ -73,13 +51,8 @@ function createNewItem() {
   }
 
   return {
-    LOCATION,
-    plain,
     subscribe,
-    set,
-    update,
     select,
-    create,
     discard,
   };
 }

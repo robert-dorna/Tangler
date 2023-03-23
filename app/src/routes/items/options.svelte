@@ -8,8 +8,8 @@
 
   export let item;
 
+  // prettier-ignore
   export const allOptions = {
-    // prettier-ignore
     normal: [
       { icon: 'hand-outline',   text: "move",           action: () => { $movingItem = { what: item._what, _id: item._id }; } },
       { icon: 'up',             text: "create above",   action: () => { newItem.select(item, LOCATION.ABOVE) } },
@@ -18,16 +18,12 @@
       { icon: 'top',            text: "detach top",     action: () => { detachItem() } },
       { icon: 'trash',          text: "delete",         action: () => { deleteItem() } },
     ],
-
-    // prettier-ignore
     moveTarget: [
       { icon: 'cancel',       text: "cancel move",      action: () => { $movingItem = null; } },
       { icon: 'up',           text: "place above",      action: () => { moveItem(LOCATION.ABOVE); } },
       { icon: 'down',         text: "place below",      action: () => { moveItem(LOCATION.BELOW); } },
       { icon: 'tree',         text: "place as child ",  action: () => { moveItem(LOCATION.CHILD); } },
     ],
-
-    // prettier-ignore
     markedForMove: [
       { icon: 'cancel',       text: "cancel move",      action: () => { $movingItem = null; } },
     ],

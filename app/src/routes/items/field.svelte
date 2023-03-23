@@ -1,12 +1,11 @@
 <script>
-  import client from "../client";
-
-  import Menu from "../lib/menu.svelte";
-
   import { createEventDispatcher } from "svelte";
+  import Menu from "../lib/menu.svelte";
+  import client from "../client";
 
   const dispatch = createEventDispatcher();
 
+  // those 3 are from _gui.yaml (displayConfig)
   export let name;
   export let style = undefined;
   export let colors = undefined;
@@ -15,12 +14,11 @@
   export let editing;
 
   let originalValue = item[name];
-
   let input = null;
 
   function submitChange() {
     editing = false;
-    if (item[name] !== originalValue && "_id" in item) {
+    if (item[name] !== originalValue && item["_id"] !== 'new') {
       client
         .update({
           what: item["_what"],

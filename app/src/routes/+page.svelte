@@ -5,7 +5,7 @@
   import Items from "./items/items.svelte";
 
   import client from "./client";
-  import { displayConfig, newItem } from "./stores";
+  import { displayConfig } from "./stores";
 
   import { onMount } from "svelte";
 
@@ -25,7 +25,6 @@
 
   // TODO: check is this good or does it have e.g. SSR problems?
   $: if (selected) refreshItems();
-  $: if ($newItem.anchorId === null) refreshItems();
 </script>
 
 <div class="container">

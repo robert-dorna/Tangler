@@ -103,7 +103,7 @@ def update():
 def create():
     args = {**request.args}
 
-    args.pop('_children')
+    args.pop('_id')
 
     what = args.pop('_what')
     above = {
