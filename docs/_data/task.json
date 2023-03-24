@@ -5,7 +5,7 @@
         "due_date": "46 hours",
         "label": "feat",
         "project": "pwa",
-        "title": "local mvp version"
+        "title": "\"CRUD\" version"
     },
     {
         "_id": 24,
@@ -13,7 +13,14 @@
         "due_date": "5 days",
         "label": "feat",
         "project": "pwa",
-        "title": "project board version"
+        "title": "\"Project Board\" version"
+    },
+    {
+        "_id": 45,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "\"Users\" version (mvp)"
     },
     {
         "_id": 25,
@@ -29,7 +36,7 @@
         "due_date": "2023",
         "label": "feat",
         "project": "pwa",
-        "title": "list views"
+        "title": "more views"
     },
     {
         "_id": 0,
@@ -91,10 +98,10 @@
     },
     {
         "_id": 14,
-        "due_date": "2 days",
+        "due_date": "1 day",
         "label": "feat",
         "project": "pwa",
-        "title": "filtering and searching"
+        "title": "filtering"
     },
     {
         "_id": 15,
@@ -122,17 +129,18 @@
         "_id": 18,
         "body": "",
         "due_date": "1 hour",
-        "label": "feat",
+        "label": "bug",
         "project": "pwa",
         "title": "recursion protection"
     },
     {
+        " organization)": "",
         "_id": 19,
         "body": "this means local, later releasing public (hosted) versions to users will also require solid security, tests and other safety precautions",
         "due_date": "2023",
         "label": "feat",
         "project": "pwa",
-        "title": "Profile/Organization settings"
+        "title": "profiles and settings (personal and org)"
     },
     {
         "_id": 20,
@@ -193,7 +201,7 @@
         "due_date": "2023",
         "label": "feat",
         "project": "pwa",
-        "title": "edit history"
+        "title": "history of changes"
     },
     {
         "_id": 31,
@@ -215,8 +223,93 @@
         "_id": 33,
         "body": "now everything is a div, replace that with correct elements and test resulting accessibility (switch devices, screen readers,...) link: https://web.dev/learn/html/semantic-html/",
         "due_date": "2023",
-        "label": "feat",
+        "label": "refactor",
         "project": "pwa",
         "title": "use semantic elements"
+    },
+    {
+        "_id": 34,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "items operations"
+    },
+    {
+        "_id": 35,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "types operations"
+    },
+    {
+        "_id": 36,
+        "body": "",
+        "label": "refactor",
+        "project": "pwa",
+        "title": "unify all buttons"
+    },
+    {
+        "_id": 37,
+        "body": "",
+        "label": "refactor",
+        "project": "pwa",
+        "title": "unify all fields"
+    },
+    {
+        "_id": 38,
+        "body": "",
+        "label": "refactor",
+        "project": "pwa",
+        "title": "unify all prompts"
+    },
+    {
+        "_id": 39,
+        "body": "",
+        "label": "refactor",
+        "project": "pwa",
+        "title": "implement design system"
+    },
+    {
+        "_id": 40,
+        "body": "",
+        "due_date": "1 day",
+        "label": "feat",
+        "project": "pwa",
+        "title": "searching"
+    },
+    {
+        "_id": 41,
+        "body": "",
+        "label": "refactor",
+        "project": "cli",
+        "title": "refactor server"
+    },
+    {
+        "_id": 42,
+        "body": "",
+        "label": "refactor",
+        "project": "cli",
+        "title": "setup server tests"
+    },
+    {
+        "_id": 43,
+        "body": "",
+        "label": "refactor",
+        "project": "cloud",
+        "title": "items operations tests"
+    },
+    {
+        "_id": 44,
+        "body": "",
+        "label": "refactor",
+        "project": "cloud",
+        "title": "types operations tests"
+    },
+    {
+        "_id": 46,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "basic animations"
     }
 ]
