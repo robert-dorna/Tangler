@@ -1,6 +1,6 @@
 from flask import abort, Flask, jsonify, request, Response
-from .api import Api
-from .core.files import read_yaml, CONFIG_PATH
+from .lib.api import Api
+from .lib.core.files import read_yaml, CONFIG_PATH
 from logging.config import dictConfig
 from os import path, listdir
 from werkzeug.exceptions import BadRequest

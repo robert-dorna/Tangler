@@ -5,7 +5,7 @@
   import Items from "./items/items.svelte";
 
   import client from "./client";
-  import { displayConfig } from "./stores";
+  import { displayConfig, displayConfigAvailable } from "./stores";
 
   import { onMount } from "svelte";
 
@@ -13,7 +13,7 @@
     displayConfig.fetch();
   });
 
-  // TODO: deduce it or load from config
+  // // TODO: deduce it or load from config
   let selected = "task";
   let items = [];
 
@@ -23,8 +23,8 @@
     });
   }
 
-  // TODO: check is this good or does it have e.g. SSR problems?
-  $: if (selected) refreshItems();
+  // // TODO: check is this good or does it have e.g. SSR problems?
+  $: if (selected && $displayConfigAvailable) refreshItems();
 </script>
 
 <div class="container">

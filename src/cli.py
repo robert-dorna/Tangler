@@ -1,6 +1,6 @@
-from .core.validation import validated_values
-from .output.terminal import Formatter
-from .api import Api
+from .lib.core.validation import validated_values
+from .lib.output.terminal import Formatter
+from .lib.api import Api
 
 
 api = Api()

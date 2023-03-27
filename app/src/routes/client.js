@@ -20,12 +20,12 @@ const req = async (url, args = []) => {
 }
 
 const client = {
-  get: async (args) => req(`http://0.0.0.0:5000/data`, args),
-  update: async (args) => req(`http://0.0.0.0:5000/update`, args),
-  create: async (args) => req(`http://0.0.0.0:5000/create`, args),
-  move: async (args) => req(`http://0.0.0.0:5000/move`, args),
-  unlink: async (args) => req(`http://0.0.0.0:5000/unlink`, args),
-  displayConfig: async () => req(`http://0.0.0.0:5000/display`),
+  get: async (args) => req(`${window.location.href}api/data`, args),
+  update: async (args) => req(`${window.location.href}api/update`, args),
+  create: async (args) => req(`${window.location.href}api/create`, args),
+  move: async (args) => req(`${window.location.href}api/move`, args),
+  unlink: async (args) => req(`${window.location.href}api/unlink`, args),
+  displayConfig: async () => req(`${window.location.href}api/display`),
 }
 
 export default client

@@ -1,8 +1,5 @@
 __pycache__/
-storage/
-storage
-
 .venv
-
+playground/
 mbank/
 gmail/
