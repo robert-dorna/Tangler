@@ -6,5 +6,6 @@ COPY src/ ./src/
 COPY docs/ ./docs/
 COPY tangle.yaml ./
 COPY tangle.py ./
+STOPSIGNAL SIGINT
 CMD [ "python", "./tangle.py", "server" ]
 EXPOSE 8000

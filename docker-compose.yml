@@ -6,27 +6,13 @@ services:
       - ./app:/app
     ports:
       - 5173:5173
-  server:
+  srv:
     build: .
     ports:
       - 8000:8000
-    stop_signal: SIGINT
   proxy:
     image: nginx
     ports:
       - 9000:80
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-  # demo-app:
-  #   build: ./playground/app
-  #   volumes:
-  #     - ./playground/app:/app
-  #   ports:
-  #     - 5700:5700
-  # demo-server:
-  #   build: ./playground/server
-  #   ports:
-  #     - 8000:8000
-  #   stop_signal: SIGINT
-  # redis:
-  #   image: "redis:alpine"
+      - ./proxy/nginx.conf:/etc/nginx/nginx.conf:ro
