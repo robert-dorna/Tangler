@@ -1,6 +1,7 @@
 <img title="" src="docs/logo.svg" alt="s" width="838">
 
 > **Note**
+>
 > This project is not ready for general use:
 > 
 > - `terminal app` is unfinished
@@ -8,6 +9,11 @@
 > - `web app` is unfinished
 > - no `Tangle Cloud` yet
 > - no `web browser extension` yet
+>
+> Build of the latest commit `web app`+`data server`<br/>
+> FOR PREVIEW ONLY ("AS IS", WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND)<br/>
+> is available at: http://tangler.space<br/>
+> (you can play with it to see how the code works right now)
 
 ---
 
