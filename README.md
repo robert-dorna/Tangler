@@ -25,7 +25,7 @@ Common item types are pre-defined, optional, alterable and restorable so you don
 
 E.g. you can define such items to use in your lists :
 
-* **`✉️ email`**  --  *(btw. Tangle can sync with your email or just replace if, if you want)*
+* **`✉️ email`**  --  *(btw. Tangle can sync with your email or just replace it, if you want)*
 * **`👤 contact`**
 * **`📁 file`**  --  *(btw. Tangle can sync with your local storage as well as cloud, if you want)*
 * **`✅ task`**
