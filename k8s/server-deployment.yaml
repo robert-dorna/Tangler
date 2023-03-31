@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.component: backend
+  name: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.component: backend
+  template:
+    metadata:
+      labels:
+        app.component: backend
+    spec:
+      containers:
+        - image: ssurrealism/tangler-server
+          name: server
+          ports:
+            - name: http
+              containerPort: 8000
