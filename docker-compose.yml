@@ -8,6 +8,8 @@ services:
   srv:
     # image: ssurrealism/tangler-server
     build: .
+    volumes:
+      - ./docs/:/usr/src/app/docs/
   proxy:
     # image: ssurrealism/tangler-proxy
     image: nginx
