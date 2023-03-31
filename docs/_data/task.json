@@ -311,5 +311,19 @@
         "label": "feat",
         "project": "pwa",
         "title": "basic animations"
+    },
+    {
+        "_id": 47,
+        "body": "",
+        "label": "feat",
+        "project": "cloud",
+        "title": "maybe one DNS record should be a redirect, use SSL/TSL"
+    },
+    {
+        "_id": 48,
+        "body": "",
+        "label": "bug",
+        "project": "pwa",
+        "title": "fix and polish tangler CRUD and other data operations"
     }
 ]
