@@ -7,7 +7,7 @@
 > - `terminal app` is unfinished
 > - `data server` is unfinished
 > - `web app` is unfinished
-> - no `Tangle Cloud` yet
+> - no `Tangler Cloud` yet
 > - no `web browser extension` yet
 >
 > Build of the latest commit `web app`+`data server`<br/>
@@ -25,14 +25,14 @@ Common item types are pre-defined, optional, alterable and restorable so you don
 
 E.g. you can define such items to use in your lists :
 
-* **`✉️ email`**  --  *(btw. Tangle can sync with your email or just replace it, if you want)*
+* **`✉️ email`**  --  *(btw. Tangler can sync with your email or just replace it, if you want)*
 * **`👤 contact`**
-* **`📁 file`**  --  *(btw. Tangle can sync with your local storage as well as cloud, if you want)*
+* **`📁 file`**  --  *(btw. Tangler can sync with your local storage as well as cloud, if you want)*
 * **`✅ task`**
 * **`🔁 routine`**
 * **`✍️ note`**
 * **`📅 goal`**
-* **`🔑 account`**  --  *(btw. Tangle browser plugin can handle your online accounts, if you want)*
+* **`🔑 account`**  --  *(btw. Tangler browser plugin can handle your online accounts, if you want)*
 * **`🧳 equipment`**
 * **`💲 transaction`**
 * **`🏦 loan`**
@@ -50,7 +50,7 @@ E.g. you can define such items to use in your lists :
 * Every item can have required and optional fields, with content (full or some part) encrypted & protected if needed.
 * What kind of content is allowed where (date, check, text, number etc.) is also definable.
 * Items and lists can be self updating, sync with external programs and be used interchangeably with those programs.
-* Instead of syncing with external programs and services you can sync with [Tangle Cloud](https://cyber.harvard.edu/projectvrm/Privacy_Manifesto) to be sure your data is yours and only yours.
+* Instead of syncing with external programs and services you can sync with [Tangler Cloud](https://cyber.harvard.edu/projectvrm/Privacy_Manifesto) to be sure your data is yours and only yours.
 
 #### Example use cases
 
@@ -59,13 +59,13 @@ E.g. you can define such items to use in your lists :
 
 ## How to run it and see project board/roadmap
 
-Instead of using GitHub Issues, GitHub Projects, JIRA or something else Tangle tasks, docs and everything else is managed by Tangle itself. If you want to see what is going on right now in this project or how it already looks like in action, run below. 
+Instead of using GitHub Issues, GitHub Projects, JIRA or something else Tangler tasks, docs and everything else is managed by Tangler itself. If you want to see what is going on right now in this project or how it already looks like in action, run below. 
 
 ### clone project
 
 ```bash
-git clone https://github.com/ssurrealism/Tangle
-cd Tangle
+git clone https://github.com/ssurrealism/Tangler
+cd Tangler
 ```
 
 ### run webapp and server
@@ -85,19 +85,19 @@ source .venv/bin/activate
 pip -r requirements.txt
 
 # run some commands (help not implemented yet)
-python tangle.py
-python tangle.py read note
-python tangle.py read task
-python tangle.py create task label 'feat' due_date '2023-03-13' project 'cli' title 'implement help command'
+python tangler.py
+python tangler.py read note
+python tangler.py read task
+python tangler.py create task label 'feat' due_date '2023-03-13' project 'cli' title 'implement help command'
 
-# Tangle uses json and yaml files as database right now so you can also read those manually if you want
+# Tangler uses json and yaml files as database right now so you can also read those manually if you want
 cat docs/_data/_config/task.yaml
 cat docs/_data/task.json
 ```
 
 ## Technical details
 
-#### Parts of tangle ecosystem
+#### Parts of tangler ecosystem
 
 * **Data directory**
   
@@ -109,11 +109,11 @@ cat docs/_data/task.json
 
 * **Website and mobile app (PWA)**
   
-  Self explanatory. Can work on any data exposed by **Data server**. Has build in support for **Tangle Cloud**.
+  Self explanatory. Can work on any data exposed by **Data server**. Has build in support for **Tangler Cloud**.
 
-* **Tangle Cloud**
+* **Tangler Cloud**
   
-  For people that just want to use **PWA** working out of the box with data synced and accessible across all of their devices. It's an instance of **Data server** managed by tangle authors. **Data directory** for each user in Tangle Cloud is fully encrypted so that nobody who has access to Tangle Cloud can access user data.
+  For people that just want to use **PWA** working out of the box with data synced and accessible across all of their devices. It's an instance of **Data server** managed by tangler authors. **Data directory** for each user in Tangler Cloud is fully encrypted so that nobody who has access to Tangler Cloud can access user data.
 
 * **Terminal app**
   

@@ -41,11 +41,11 @@ def read_json(path):
 
 
 project_path = path.dirname(path.realpath(sys.argv[0]))
-config_file_path = path.join(project_path, 'tangle.yaml')
+config_file_path = path.join(project_path, 'tangler.yaml')
 config = read_yaml(config_file_path)
 
 
-TANGLE_PATH = config['directories']['storage'].replace(
+TANGLER_PATH = config['directories']['storage'].replace(
     '$PROJECT', project_path)
 DATADIR_PATH = config['directories']['data'].replace(
     '$PROJECT', project_path)
@@ -53,6 +53,6 @@ CONFIG_PATH = config['directories']['config'].replace(
     '$PROJECT', project_path)
 
 
-# TANGLE_PATH = path.join(environ['HOME'], 'Tangle')
-# DATADIR_PATH = path.join(TANGLE_PATH, '_data')
+# TANGLER_PATH = path.join(environ['HOME'], 'Tangler')
+# DATADIR_PATH = path.join(TANGLER_PATH, '_data')
 # CONFIG_PATH = path.join(DATADIR_PATH, '_config')

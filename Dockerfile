@@ -4,8 +4,8 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ ./src/
 COPY docs/ ./docs/
-COPY tangle.yaml ./
-COPY tangle.py ./
+COPY tangler.yaml ./
+COPY tangler.py ./
 STOPSIGNAL SIGINT
-CMD [ "python", "./tangle.py", "server" ]
+CMD [ "python", "./tangler.py", "server" ]
 EXPOSE 8000
