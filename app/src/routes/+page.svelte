@@ -4,8 +4,7 @@
   import Panel from "../components/panel/panel.svelte"
   import Items from "../components/items/items.svelte";
 
-  import client from "../client";
-  import { displayConfig, displayConfigAvailable } from "../stores";
+  import { client, displayConfig, displayConfigAvailable } from "../utils"
 
   import { onMount } from "svelte";
 

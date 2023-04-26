@@ -1,6 +1,6 @@
 <script>
   import ItemTree from "./item-tree.svelte";
-  import { displayConfigAvailable } from "../../stores";
+  import { displayConfigAvailable } from "../../utils";
 
   export let items = [];
 </script>

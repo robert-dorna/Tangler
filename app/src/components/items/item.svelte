@@ -16,7 +16,7 @@
     displayConfigTypes,
     newItem,
     movingItem,
-  } from "../../stores";
+  } from "../../utils";
 
   import { createEventDispatcher } from "svelte";
 
