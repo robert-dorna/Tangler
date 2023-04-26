@@ -2,7 +2,7 @@
   import "./styles.svelte";
 
   import Panel from "../components/panel/panel.svelte"
-  import Items from "./items/items.svelte";
+  import Items from "../components/items/items.svelte";
 
   import client from "../client";
   import { displayConfig, displayConfigAvailable } from "../stores";
