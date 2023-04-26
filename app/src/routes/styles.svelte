@@ -8,6 +8,7 @@
     /* sizes */
     --font-small: 18px;
     --font-medium: 20px;
+    --font-large: 22px;
 
     --gap-line: 1px;
     --gap-tiny: 2px;
@@ -21,6 +22,7 @@
 
     --panel-width: 20vw;
     --prompt-width: 40vw;
+    --menu-height: 40vh;
 
     /* --width-chunk */
 
@@ -59,6 +61,11 @@
 
   :global(div.g-elevated) {
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  }
+
+  :global(div.g-floating) {
+    position: absolute;
+    z-index: 1;
   }
 
   :global(div.g-flex) {

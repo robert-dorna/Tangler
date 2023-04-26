@@ -12,7 +12,7 @@
 
 <!-- TODO: fix open menu on options change -->
 <div
-  class="option"
+  class="g-row-aligned option"
   class:first-option={index === 0}
   class:last-option={index === count - 1}
   on:click|stopPropagation={action}
@@ -34,24 +34,22 @@
 
 <style>
   div.option {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    gap: 10px;
+    padding: var(--gap-medium);
+    gap: var(--gap-medium);
   }
   div.option:hover {
-    background-color: #f4f3ee;
+    background-color: var(--color-isabelline);
   }
   div.first-option {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: var(--radius-small);
+    border-top-right-radius: var(--radius-small);
   }
   div.last-option {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: var(--radius-small);
+    border-bottom-right-radius: var(--radius-small);
   }
   div.emoji {
-    font-size: 22px;
-    padding: 5px;
+    font-size: var(--font-large);
+    padding: var(--gap-small);
   }
 </style>
