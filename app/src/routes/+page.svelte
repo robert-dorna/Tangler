@@ -1,7 +1,7 @@
 <script>
   import "./styles.svelte";
 
-  import Panel from "./panel/panel.svelte";
+  import Panel from "../components/panel/panel.svelte"
   import Items from "./items/items.svelte";
 
   import client from "../client";
