@@ -5,6 +5,9 @@ const lang = {
       title: 'What to do with new item?',
       create: 'Create',
       discard: 'Discard'
+    },
+    items: {
+      no_items: "No items"
     }
   }
 }

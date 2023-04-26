@@ -21,6 +21,8 @@
     --radius-large: 40px;
 
     --panel-width: 20vw;
+    --items-width: 700px;
+    --item-width: 65vw;
     --prompt-width: 40vw;
     --menu-height: 40vh;
 
@@ -28,6 +30,7 @@
 
     /* palette */
     --color-white: white;
+    --color-black: black;
 
     --color-mint-cream: #F5FFFA;
     --color-anti-flash-white: #EEF0F2;
@@ -107,6 +110,12 @@
   :global(div.g-column) {
     display: flex;
     flex-direction: column;
+  }
+
+  :global(div.g-column-flex) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   :global(div.g-column-aligned) {

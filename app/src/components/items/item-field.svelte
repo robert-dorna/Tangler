@@ -98,19 +98,19 @@
   }
   input {
     all: unset;
-    padding: 4px;
-    padding-left: 9px;
+    padding: calc(var(--gap-small) - var(--gap-line));
+    padding-left: calc(var(--gap-medium) - var(--gap-line));
     border-radius: var(--radius-small);
-    border: 1px solid #bcb8b1;
-    color: black;
+    border: var(--gap-line) solid var(--color-silver);
+    color: var(--color-black)
   }
   span.field {
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: var(--gap-small);
+    padding-left: var(--gap-medium);
+    padding-right: var(--gap-medium);
   }
   span.field:hover {
     border-radius: var(--radius-small);
-    background-color: #bcb8b1;
+    background-color: var(--color-silver);
   }
 </style>

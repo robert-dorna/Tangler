@@ -1,19 +1,21 @@
 <script>
   import ItemTree from "./item-tree.svelte";
-  import { displayConfigAvailable } from "../../utils";
+  import { lang, displayConfigAvailable } from "../../utils";
+
+  const texts = lang.components.items;
 
   export let items = [];
 </script>
 
-<div class="container">
-  <div class="items">
+<div class="g-row container">
+  <div class="g-column-flex items">
     {#if $displayConfigAvailable}
       {#each items as item, index (item._what + item._id)}
         <ItemTree {item} on:refresh />
       {/each}
     {/if}
     {#if Array.isArray(items) && items.length === 0}
-      <div class="noitems">No items</div>
+      <div class="g-row-centered noitems">{texts.no_items}</div>
     {/if}
     <!-- TODO: replace below with some css e.g. in div.items -->
     <div class="space">space</div>
@@ -23,33 +25,23 @@
 
 <style>
   div.container {
-    display: flex;
-    flex-direction: row;
-    min-width: 700px;
-    overflow: scroll;
+    min-width: var(--items-width);
     height: 100vh;
     width: 100%;
-    padding-right: 30px;
+    overflow: scroll;
   }
   div.items {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
     align-items: flex-start;
-    padding-left: 30px;
-    padding-top: 30px;
-    margin-bottom: 50px;
+    padding-left: var(--gap-max);
+    padding-top: var(--gap-max);
+  }
+  div.noitems {
+    margin: var(--gap-large);
+    padding: var(--gap-medium);
   }
   div.space {
     display: flex;
     font-size: 128px;
     visibility: hidden;
-  }
-  div.noitems {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 15px;
-    padding: 10px;
   }
 </style>

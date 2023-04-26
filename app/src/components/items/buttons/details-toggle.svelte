@@ -10,7 +10,7 @@
   let hover = false;
 
   $: currentColor = hoverColor && hover ? hoverColor : color;
-  $: cls = `g-details-toggle-container ${!detailed ? "g-details-toggle-extra-padding" : ""}`;
+  $: cls = `g-row-centered g-details-toggle-container ${!detailed ? "g-details-toggle-extra-padding" : ""}`;
 </script>
 
 <Hovering {cls} bind:hover on:click={() => (detailed = !detailed)}>
@@ -25,18 +25,15 @@
 <!-- TODO: figure out a way to avoid global classes here or complicated names -->
 <style>
   :global(div.g-details-toggle-container) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: var(--gap-small);
+    padding-bottom: var(--gap-small);
   }
   :global(div.g-details-toggle-container:hover) {
     border-radius: var(--radius-small);
-    background-color: #bcb8b1;
+    background-color: var(--color-silver);
   }
   :global(div.g-details-toggle-extra-padding) {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: var(--gap-small);
+    padding-right: var(--gap-small);
   }
 </style>

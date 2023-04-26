@@ -76,8 +76,13 @@
   }));
 </script>
 
-<Hovering cls="g-item-container" {elevated} bind:hover on:click={toggleOpen}>
-  <div class="fields">
+<Hovering
+  cls="g-column g-item-container g-clickable"
+  {elevated}
+  bind:hover
+  on:click={toggleOpen}
+>
+  <div class="g-row-flex-aligned fields">
     <div class="indent" style="width: {indent}px;" />
     <Icon
       name={open === undefined ? "dot" : open ? "expanded" : "expand"}
@@ -87,7 +92,7 @@
 
     {#if creatingNewItem}
       <Menu cls="g-item-emoji-menu" options={emojiOptions} bind:focus={editing}>
-        <span class="emoji-button"> {layout.emoji} </span>
+        <span class="g-row-centered emoji-button"> {layout.emoji} </span>
       </Menu>
     {:else}
       <span class="emoji"> {layout.emoji} </span>
@@ -106,10 +111,10 @@
     {/each}
 
     {#if creatingNewItem}
-      <ConfirmButton on:click={() => dispatch('create')} />
+      <ConfirmButton on:click={() => dispatch("create")} />
     {:else}
       <Menu
-        cls="g-item-menu-container"
+        cls="g-row-centered g-item-menu-container"
         hide={!hover || $newItem.anchorId !== null}
         bind:focus={editing}
         {options}
@@ -125,75 +130,48 @@
 
 <Options {item} bind:options on:refresh />
 
-<!-- removing padding gives nice compact view -->
 <style>
   :global(div.g-item-container) {
-    display: flex;
-    flex-direction: column;
     width: 100%;
-    max-width: 65vw;
+    max-width: var(--item-width);
     border-radius: var(--radius-small);
-    margin: 3px;
-    user-select: none;
-    cursor: pointer;
-    font-size: 22px;
+    margin: var(--gap-tiny);
+    font-size: var(--font-large);
   }
   :global(div.g-item-container:hover) {
-    background-color: #eef0f2;
+    background-color: var(--color-anti-flash-white);
   }
 
   div.fields {
-    display: flex;
-    flex: 1;
     flex-wrap: wrap-reverse;
-    flex-direction: row;
-    align-items: center;
-    /* padding: 15px; */
   }
   span.emoji {
-    margin-left: 5px;
-    margin-right: 10px;
+    margin-left: var(--gap-small);
+    margin-right: var(--gap-medium);
   }
   span.emoji-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 5px;
-    padding: 5px;
+    margin-right: var(--gap-small);
+    padding: var(--gap-small);
     border-radius: var(--radius-small);
   }
   span.emoji-button:hover {
-    background-color: #bcb8b1;
+    background-color: var(--color-silver);
   }
-  /* to bylo w emoji menu container */
-  /* :global(div.g-emoji-container) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 5px;
-    padding: 5px;
-  }
-  :global(div.g-emoji-container:hover) {
-    border-radius: var(--radius-small);
-    background-color: #bcb8b1;
-  } */
 
   :global(div.g-item-emoji-menu) {
-    margin-left: 5px;
-    margin-right: 10px;
+    margin-left: var(--gap-small);
+    margin-right: var(--gap-medium);
   }
 
   /* Menu styles */
 
   :global(div.g-item-menu-container) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
+    padding: var(--gap-small);
     border-radius: var(--radius-small);
 
-    /* TODO: this is global and will fuck up other menus? */
-    background-color: var(--menu-is-visible, var(--color-silver))
+    /* prettier-ignore */
+    background-color:
+      var(--menu-is-visible, var(--color-silver))
       var(--menu-is-not-visible, inherit);
   }
   :global(div.g-item-menu-container:hover) {

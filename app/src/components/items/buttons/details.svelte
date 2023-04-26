@@ -10,7 +10,7 @@
   $: style = visible ? "" : "visibility: hidden;";
 </script>
 
-<Hovering cls="g-details-container" {style} on:click let:hover>
+<Hovering cls="g-row-centered g-details-container" {style} on:click let:hover>
   <Icon
     name="pencil-plus"
     color={hoverColor && hover ? hoverColor : color}
@@ -20,13 +20,10 @@
 
 <style>
   :global(div.g-details-container) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
+    padding: var(--gap-small);
   }
   :global(div.g-details-container:hover) {
     border-radius: var(--radius-small);
-    background-color: #bcb8b1;
+    background-color: var(--color-silver);
   }
 </style>
