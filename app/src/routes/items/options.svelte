@@ -1,6 +1,6 @@
 <script>
-  import client from "../client";
-  import { LOCATION, movingItem, newItem } from "../stores";
+  import client from "../../client";
+  import { LOCATION, movingItem, newItem } from "../../stores";
 
   import { createEventDispatcher } from "svelte";
 

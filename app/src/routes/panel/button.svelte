@@ -1,5 +1,5 @@
 <script>
-  import Icon from "../lib/icon.svelte";
+  import Icon from "../../components/icon.svelte";
 
   export let name;
   export let color;

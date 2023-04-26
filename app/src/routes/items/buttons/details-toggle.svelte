@@ -1,6 +1,6 @@
 <script>
-  import Hovering from "../../lib/hovering.svelte";
-  import Icon from "../../lib/icon.svelte";
+  import Hovering from "../../../components/hovering.svelte";
+  import Icon from "../../../components/icon.svelte";
 
   export let detailed = false;
   export let color = "darkgoldenrod";

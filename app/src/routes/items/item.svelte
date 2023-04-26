@@ -1,8 +1,8 @@
 <script>
-  import Hovering from "../lib/hovering.svelte";
+  import Hovering from "../../components/hovering.svelte";
 
-  import Icon from "../lib/icon.svelte";
-  import Menu from "../lib/menu.svelte";
+  import Icon from "../../components/icon.svelte";
+  import Menu from "../../components/menu.svelte";
 
   import DetailsToggle from "./buttons/details-toggle.svelte";
   import DetailsButton from "./buttons/details.svelte";
@@ -16,7 +16,7 @@
     displayConfigTypes,
     newItem,
     movingItem,
-  } from "../stores";
+  } from "../../stores";
 
   import { createEventDispatcher } from "svelte";
 

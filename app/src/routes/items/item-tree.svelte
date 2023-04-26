@@ -2,8 +2,8 @@
   import { createEventDispatcher } from "svelte";
   import Item from "./item.svelte";
   import Prompt from "../prompt.svelte";
-  import { LOCATION, newItem } from "../stores";
-  import client from "../client";
+  import { LOCATION, newItem } from "../../stores";
+  import client from "../../client";
 
   const dispatch = createEventDispatcher()
 

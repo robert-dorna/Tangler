@@ -1,7 +1,7 @@
 <script>
   import Item from "./item.svelte";
   import Button from "./button.svelte";
-  import { displayConfig } from "../stores";
+  import { displayConfig } from "../../stores";
 
   export let selected;
 
