@@ -1,5 +1,5 @@
 <script>
-  import Hovering from "./hovering.svelte";
+  import Hovering from "../hovering.svelte";
   import MenuOption from "./menu-option.svelte";
 
   export let cls = "";

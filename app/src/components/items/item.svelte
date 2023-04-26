@@ -1,8 +1,9 @@
 <script>
   import Hovering from "../../components/hovering.svelte";
 
+
   import Icon from "../../components/icon.svelte";
-  import Menu from "../../components/menu.svelte";
+  import Menu from "../menu/menu.svelte";
 
   import DetailsToggle from "./buttons/details-toggle.svelte";
   import DetailsButton from "./buttons/details.svelte";

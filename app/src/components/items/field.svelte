@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import Menu from "../../components/menu.svelte";
+  import Menu from "../menu/menu.svelte";
   import { client } from "../../utils";
 
   const dispatch = createEventDispatcher();
