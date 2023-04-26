@@ -1,68 +1,60 @@
 <script>
   import Icon from "./icon.svelte";
   import { createEventDispatcher } from "svelte";
+  import { lang } from "../utils";
+
+  const texts = lang.components.prompt;
+
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="container">
-  <div class="prompt g-elevated">
-    <div class="title">What to do with new item?</div>
+<div class="g-row-justified container">
+  <div class="g-row-aligned prompt g-elevated">
+    <div class="g-row-flex-aligned title">{texts.title}</div>
     <div
-      class="option"
+      class="g-row-centered option g-clickable"
       on:click|stopPropagation={() => dispatch("create")}
       on:keypress={undefined}
     >
       <Icon name="check" color="black" size={30} />
-      Create
+      {texts.create}
     </div>
     <div
-      class="option"
+      class="g-row-centered option g-clickable"
       on:click|stopPropagation={() => dispatch("discard")}
       on:keypress={undefined}
     >
       <Icon name="close" color="black" size={30} />
-      Discard
+      {texts.discard}
     </div>
   </div>
 </div>
 
 <style>
   div.container {
-    display: flex;
-    z-index: 1;
-    bottom: 30px;
-    left: 0px;
     position: absolute;
+    z-index: 1;
+    left: 0px;
+    bottom: var(--gap-max);
     width: 100%;
-    justify-content: center;
   }
   div.prompt {
-    display: flex;
-    width: 40vw;
-    padding-left: 40px;
-    padding-right: 40px;
-    align-items: center;
+    width: var(--prompt-width);
+    padding-left: var(--gap-max);
+    padding-right: var(--gap-max);
     border-radius: var(--radius-large);
-    background-color: white;
+    background-color: var(--color-white);
   }
   div.title {
-    display: flex;
-    flex: 1;
-    font-size: 20px;
-    align-items: center;
+    font-size: var(--font-medium);
   }
   div.option {
-    display: flex;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    user-select: none;
+    padding-left: var(--gap-max);
+    padding-right: var(--gap-max);
+    padding-top: var(--gap-large); /* was 15 */
+    padding-bottom: var(--gap-large);
   }
   div.option:hover {
-    background-color: #eef0f2;
+    background-color: var(--color-anti-flash-white);
   }
 </style>

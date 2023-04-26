@@ -38,7 +38,7 @@
     padding: var(--gap-medium);
     padding-left: var(--gap-large);
     padding-right: var(--gap-large);
-    font-size: var(--font-medium);
+    font-size: var(--font-small);
     border-radius: var(--radius-small);
   }
   div.item:hover {

@@ -6,23 +6,29 @@
       sans-serif;
 
     /* sizes */
-    --font-medium: 18px;
+    --font-small: 18px;
+    --font-medium: 20px;
 
     --gap-line: 1px;
     --gap-tiny: 2px;
     --gap-small: 5px;
     --gap-medium: 10px;
     --gap-large: 20px;
+    --gap-max: 30px;
 
     --radius-small: 8px;
     --radius-large: 40px;
 
     --panel-width: 20vw;
+    --prompt-width: 40vw;
 
     /* --width-chunk */
 
     /* palette */
+    --color-white: white;
+
     --color-mint-cream: #F5FFFA;
+    --color-anti-flash-white: #EEF0F2;
     --color-nyanza: #E9FFDB;
     --color-tea-green: #D0F0C0;
     --color-pistachio: #93C572;
@@ -69,6 +75,19 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+  }
+
+  :global(div.g-row-flex-aligned) {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+  }
+
+  :global(div.g-row-justified) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 
   :global(div.g-row-centered) {
