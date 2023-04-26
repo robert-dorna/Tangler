@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import Item from "./item.svelte";
-  import Prompt from "../../components/prompt.svelte";
+  import Prompt from "../prompt.svelte";
   import { client, LOCATION, newItem } from "../../utils";
 
   const dispatch = createEventDispatcher()

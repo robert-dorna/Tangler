@@ -1,16 +1,15 @@
 <script>
-  import Hovering from "../../components/hovering.svelte";
+  import Hovering from "../hovering.svelte";
 
-
-  import Icon from "../../components/icon.svelte";
+  import Icon from "../icon.svelte";
   import Menu from "../menu/menu.svelte";
 
   import DetailsToggle from "./buttons/details-toggle.svelte";
   import DetailsButton from "./buttons/details.svelte";
   import ConfirmButton from "./buttons/confirm.svelte";
 
-  import Field from "./field.svelte";
-  import Options from "./options.svelte";
+  import Field from "./item-field.svelte";
+  import Options from "./item-options.svelte";
 
   import {
     displayConfig,
