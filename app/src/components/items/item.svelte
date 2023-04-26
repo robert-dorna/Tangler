@@ -87,7 +87,7 @@
     <Icon
       name={open === undefined ? "dot" : open ? "expanded" : "expand"}
       color={chevronColor}
-      size={30}
+      size="large"
     />
 
     {#if creatingNewItem}
@@ -119,7 +119,7 @@
         bind:focus={editing}
         {options}
       >
-        <Icon name="dots-v" color="grey" size={30} />
+        <Icon name="dots-v" color="grey" size="large" />
       </Menu>
     {/if}
   </div>

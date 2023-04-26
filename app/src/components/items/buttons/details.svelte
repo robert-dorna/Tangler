@@ -4,7 +4,6 @@
 
   export let color = "darkgoldenrod";
   export let hoverColor = "brown";
-  export let size = 24;
   export let visible = false;
 
   $: style = visible ? "" : "visibility: hidden;";
@@ -14,7 +13,7 @@
   <Icon
     name="pencil-plus"
     color={hoverColor && hover ? hoverColor : color}
-    {size}
+    size="medium"
   />
 </Hovering>
 

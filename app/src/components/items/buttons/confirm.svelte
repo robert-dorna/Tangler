@@ -7,7 +7,7 @@
   on:click|stopPropagation
   on:keypress={undefined}
 >
-  <Icon name="check" color="grey" size={30} />
+  <Icon name="check" color="grey" size="large" />
 </div>
 
 <style>

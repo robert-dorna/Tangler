@@ -23,7 +23,7 @@
       {emoji}
     </div>
   {:else}
-    <Icon name={icon} color="black" size={24} />
+    <Icon name={icon} color="black" size="medium" />
   {/if}
   {#if textColor !== undefined}
     <span style="color: {textColor};">{text}</span>

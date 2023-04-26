@@ -51,10 +51,17 @@
   export let color;
   export let size;
 
+  const sizes = {
+    small: 20,
+    medium: 24,
+    large: 30,
+  }
+
   $: icon = icons[name]
+  $: actualSize = sizes[size] || sizes.large;
 </script>
 
 
-<svelte:component this={icon} {color} {size} />
+<svelte:component this={icon} {color} size={actualSize} />
 
 

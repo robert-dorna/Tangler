@@ -10,7 +10,7 @@
   on:click|stopPropagation
   on:keypress={undefined}
 >
-  <Icon {name} {color} size={20} />
+  <Icon {name} {color} size="small" />
 </div>
 
 <style>

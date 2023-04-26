@@ -5,7 +5,6 @@
   export let detailed = false;
   export let color = "darkgoldenrod";
   export let hoverColor = "brown";
-  export let size = 24;
 
   let hover = false;
 
@@ -15,10 +14,10 @@
 
 <Hovering {cls} bind:hover on:click={() => (detailed = !detailed)}>
   {#if detailed}
-    <Icon name="dot" color={currentColor} {size} />
-    <Icon name="dot" color={currentColor} {size} />
+    <Icon name="dot" color={currentColor} size="medium" />
+    <Icon name="dot" color={currentColor} size="medium" />
   {:else}
-    <Icon name="dots-h" color={currentColor} {size} />
+    <Icon name="dots-h" color={currentColor} size="medium" />
   {/if}
 </Hovering>
 

@@ -16,7 +16,7 @@
       on:click|stopPropagation={() => dispatch("create")}
       on:keypress={undefined}
     >
-      <Icon name="check" color="black" size={30} />
+      <Icon name="check" color="black" size="large" />
       {texts.create}
     </div>
     <div
@@ -24,7 +24,7 @@
       on:click|stopPropagation={() => dispatch("discard")}
       on:keypress={undefined}
     >
-      <Icon name="close" color="black" size={30} />
+      <Icon name="close" color="black" size="large" />
       {texts.discard}
     </div>
   </div>
