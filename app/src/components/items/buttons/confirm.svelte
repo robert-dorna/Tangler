@@ -15,7 +15,7 @@
     margin-left: 19px;
   }
   div.container:hover {
-    border-radius: 8px;
+    border-radius: var(--radius-small);
     background-color: #bcb8b1;
   }
 </style>

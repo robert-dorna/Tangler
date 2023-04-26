@@ -100,7 +100,7 @@
     all: unset;
     padding: 4px;
     padding-left: 9px;
-    border-radius: 8px;
+    border-radius: var(--radius-small);
     border: 1px solid #bcb8b1;
     color: black;
   }
@@ -110,7 +110,7 @@
     padding-right: 10px;
   }
   span.field:hover {
-    border-radius: 8px;
+    border-radius: var(--radius-small);
     background-color: #bcb8b1;
   }
 </style>

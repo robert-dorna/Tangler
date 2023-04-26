@@ -32,7 +32,7 @@
     padding-bottom: 5px;
   }
   :global(div.g-details-toggle-container:hover) {
-    border-radius: 8px;
+    border-radius: var(--radius-small);
     background-color: #bcb8b1;
   }
   :global(div.g-details-toggle-extra-padding) {

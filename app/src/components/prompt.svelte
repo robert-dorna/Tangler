@@ -42,7 +42,7 @@
     padding-left: 40px;
     padding-right: 40px;
     align-items: center;
-    border-radius: 40px;
+    border-radius: var(--radius-large);
     background-color: white;
   }
   div.title {

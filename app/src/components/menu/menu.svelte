@@ -42,7 +42,7 @@
     display: flex;
     flex-direction: column;
     background-color: white;
-    border-radius: 8px;
+    border-radius: var(--radius-small);
     position: absolute;
     z-index: 1;
 

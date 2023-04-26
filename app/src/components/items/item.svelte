@@ -132,7 +132,7 @@
     flex-direction: column;
     width: 100%;
     max-width: 65vw;
-    border-radius: 8px;
+    border-radius: var(--radius-small);
     margin: 3px;
     user-select: none;
     cursor: pointer;
@@ -160,7 +160,7 @@
     align-items: center;
     margin-right: 5px;
     padding: 5px;
-    border-radius: 8px;
+    border-radius: var(--radius-small);
   }
   span.emoji-button:hover {
     background-color: #bcb8b1;
@@ -174,7 +174,7 @@
     padding: 5px;
   }
   :global(div.g-emoji-container:hover) {
-    border-radius: 8px;
+    border-radius: var(--radius-small);
     background-color: #bcb8b1;
   } */
 
@@ -190,7 +190,7 @@
     justify-content: center;
     align-items: center;
     padding: 5px;
-    border-radius: 8px;
+    border-radius: var(--radius-small);
 
     /* TODO: this is global and will fuck up other menus? */
     background-color: var(--menu-is-visible, var(--color-silver))
