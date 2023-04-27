@@ -23,6 +23,8 @@
 
   $: emojis = $displayConfig.emojis || [];
   $: types = $displayConfig.order || [];
+
+  const buttonStyling = { cls: "g-row-centered l-button", color: "black", size: "small" };
 </script>
 
 <div class="g-column panel">
@@ -30,23 +32,10 @@
     <IconButton {...buttonStyling} name="plus" color="grey" on:click={onCreate} />
   </Item>
   {#each types as typeName, i (typeName)}
-    <Item
-      emoji={emojis[i]}
-      name={typeName}
-      selected={typeName === selected}
-      on:click={() => (selected = typeName)}
-    >
+    <Item emoji={emojis[i]} name={typeName} selected={typeName === selected} on:click={() => (selected = typeName)}>
       <div class="g-row-aligned buttons">
-        <IconButton
-          {...buttonStyling}
-          name="cog-outline"
-          on:click={() => onEdit(typeName, i)}
-        />
-        <IconButton
-          {...buttonStyling}
-          name="hand-outline"
-          on:click={() => onMove(typeName, i)}
-        />
+        <IconButton {...buttonStyling} name="cog-outline" on:click={() => onEdit(typeName, i)} />
+        <IconButton {...buttonStyling} name="hand-outline" on:click={() => onMove(typeName, i)} />
       </div>
     </Item>
   {/each}
@@ -56,14 +45,6 @@
     </Item>
   {/if} -->
 </div>
-
-<script context="module">
-  const buttonStyling = {
-    cls: "g-row-centered l-button",
-    color: "black",
-    size: "small",
-  };
-</script>
 
 <style>
   div.panel {
