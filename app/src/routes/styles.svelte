@@ -71,6 +71,10 @@
     z-index: 1;
   }
 
+  :global(div.g-hidden) {
+    visibility: hidden;
+  }
+
   :global(div.g-flex) {
     display: flex;
     flex: 1;

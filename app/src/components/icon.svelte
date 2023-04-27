@@ -22,6 +22,7 @@
   import Hand from "svelte-material-icons/HandFrontLeft.svelte";
   import HandOutline from "svelte-material-icons/HandFrontLeftOutline.svelte";
 
+  // prettier-ignore
   const icons = {
     'expanded': Expanded,
     'expand': Expand,
@@ -55,13 +56,15 @@
     small: 20,
     medium: 24,
     large: 30,
-  }
+  };
 
-  $: icon = icons[name]
+  $: icon = name === "dots" ? undefined : icons[name];
   $: actualSize = sizes[size] || sizes.large;
 </script>
 
-
-<svelte:component this={icon} {color} size={actualSize} />
-
-
+{#if name === "dots"}
+  <Dot {color} size={actualSize} />
+  <Dot {color} size={actualSize} />
+{:else}
+  <svelte:component this={icon} {color} size={actualSize} />
+{/if}

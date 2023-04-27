@@ -4,19 +4,13 @@
   import Icon from "../icon.svelte";
   import Menu from "../menu/menu.svelte";
 
-  import DetailsToggle from "./buttons/details-toggle.svelte";
-  import DetailsButton from "./buttons/details.svelte";
-  import ConfirmButton from "./buttons/confirm.svelte";
+  import IconButton from "../icon-button.svelte";
+  import IconSwitch from "../icon-switch.svelte";
 
   import Field from "./item-field.svelte";
   import Options from "./item-options.svelte";
 
-  import {
-    displayConfig,
-    displayConfigTypes,
-    newItem,
-    movingItem,
-  } from "../../utils";
+  import { displayConfig, displayConfigTypes, newItem, movingItem } from "../../utils";
 
   import { createEventDispatcher } from "svelte";
 
@@ -55,17 +49,12 @@
 
   $: creatingNewItem = item._id === "new";
 
-  $: elevated =
-    creatingNewItem ||
-    ($movingItem !== null &&
-      $movingItem.what === item._what &&
-      $movingItem._id === item._id);
+  $: elevated = creatingNewItem || ($movingItem !== null && $movingItem.what === item._what && $movingItem._id === item._id);
 
   $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
   $: if (!hover) editing = false;
 
-  const bodyStyleConst =
-    "padding-top: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px; color: darkgoldenrod; max-width: 40vw;";
+  const bodyStyleConst = "padding-top: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px; color: darkgoldenrod; max-width: 40vw;";
 
   $: bodyStyle = `margin-left: ${indent + 80}px; ${bodyStyleConst}`;
 
@@ -76,19 +65,10 @@
   }));
 </script>
 
-<Hovering
-  cls="g-column g-item-container g-clickable"
-  {elevated}
-  bind:hover
-  on:click={toggleOpen}
->
+<Hovering cls="g-column g-item-container g-clickable" {elevated} bind:hover on:click={toggleOpen}>
   <div class="g-row-flex-aligned fields">
     <div class="indent" style="width: {indent}px;" />
-    <Icon
-      name={open === undefined ? "dot" : open ? "expanded" : "expand"}
-      color={chevronColor}
-      size="large"
-    />
+    <Icon name={open === undefined ? "dot" : open ? "expanded" : "expand"} color={chevronColor} size="large" />
 
     {#if creatingNewItem}
       <Menu cls="g-item-emoji-menu" options={emojiOptions} bind:focus={editing}>
@@ -102,23 +82,18 @@
       <Field {...field} {item} bind:editing on:refresh>
         {#if field.name === "title"}
           {#if item.body}
-            <DetailsToggle bind:detailed />
+            <IconSwitch cls="g-row-centered l-details-switch" nameOn="dots" nameOff="dots-h" color="darkgoldenrod" size="medium" bind:toggled={detailed} />
           {:else}
-            <DetailsButton visible={hover} on:click={createBody} />
+            <IconButton cls="g-row-centered l-details-add" name="pencil-plus" color="darkgoldenrod" size="medium" hidden={!hover} on:click={createBody} />
           {/if}
         {/if}
       </Field>
     {/each}
 
     {#if creatingNewItem}
-      <ConfirmButton on:click={() => dispatch("create")} />
+      <IconButton cls="g-row-centered l-confirm-button" name="check" color="grey" size="large" on:click={() => dispatch("create")} />
     {:else}
-      <Menu
-        cls="g-row-centered g-item-menu-container"
-        hide={!hover || $newItem.anchorId !== null}
-        bind:focus={editing}
-        {options}
-      >
+      <Menu cls="g-row-centered g-item-menu-container" hide={!hover || $newItem.anchorId !== null} bind:focus={editing} {options}>
         <Icon name="dots-v" color="grey" size="large" />
       </Menu>
     {/if}
@@ -175,6 +150,42 @@
       var(--menu-is-not-visible, inherit);
   }
   :global(div.g-item-menu-container:hover) {
+    background-color: var(--color-silver);
+  }
+
+  :global(div.l-confirm-button) {
+    padding: var(--gap-small);
+    margin-left: var(--gap-large);
+  }
+  :global(div.l-confirm-button:hover) {
+    border-radius: var(--radius-small);
+    background-color: var(--color-silver);
+  }
+
+  :global(div.l-details-switch) {
+    padding-top: var(--gap-small);
+    padding-bottom: var(--gap-small);
+
+    /* prettier-ignore */
+    padding-left: 
+      var(--button-switch-is-on, inherit)
+      var(--button-switch-is-off, var(--gap-small));
+
+    /* prettier-ignore */
+    padding-right:
+      var(--button-switch-is-on, inherit)
+      var(--button-switch-is-off, var(--gap-small));
+  }
+  :global(div.l-details-switch:hover) {
+    border-radius: var(--radius-small);
+    background-color: var(--color-silver);
+  }
+
+  :global(div.l-details-add) {
+    padding: var(--gap-small);
+  }
+  :global(div.l-details-add:hover) {
+    border-radius: var(--radius-small);
     background-color: var(--color-silver);
   }
 </style>

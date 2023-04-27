@@ -2,6 +2,7 @@
   import Icon from "./icon.svelte";
 
   export let cls = "";
+  export let hidden = false;
 
   export let name;
   export let color;
@@ -10,6 +11,7 @@
 
 <div
   class={cls}
+  class:g-hidden={hidden}
   on:click|stopPropagation
   on:keypress={undefined}
 >
