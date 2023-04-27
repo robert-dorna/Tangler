@@ -9,11 +9,6 @@
   export let size;
 </script>
 
-<div
-  class={cls}
-  class:g-hidden={hidden}
-  on:click|stopPropagation
-  on:keypress={undefined}
->
+<div class={cls} class:g-hidden={hidden} on:click|stopPropagation on:keypress={undefined}>
   <Icon {name} {color} {size} />
 </div>

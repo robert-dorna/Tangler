@@ -5,13 +5,7 @@
   export let title = false;
 </script>
 
-<div
-  class="g-row-aligned item g-clickable"
-  class:hover-highlight={!title}
-  class:selected
-  on:click
-  on:keypress={undefined}
->
+<div class="g-row-aligned item g-clickable" class:hover-highlight={!title} class:selected on:click on:keypress={undefined}>
   {emoji}
   <div class="name" class:title>{name}</div>
   <div class="g-flex" />

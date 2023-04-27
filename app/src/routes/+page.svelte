@@ -1,10 +1,10 @@
 <script>
   import "./styles.svelte";
 
-  import Panel from "../components/panel/panel.svelte"
+  import Panel from "../components/panel/panel.svelte";
   import Items from "../components/items/items.svelte";
 
-  import { client, displayConfig, displayConfigAvailable } from "../utils"
+  import { client, displayConfig, displayConfigAvailable } from "../utils";
 
   import { onMount } from "svelte";
 

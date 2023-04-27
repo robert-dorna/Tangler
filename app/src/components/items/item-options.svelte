@@ -30,18 +30,11 @@
 
   export let options = allOptions.normal;
 
-  $: itemIsMarkedForMove =
-    $movingItem !== null &&
-    $movingItem.what === item._what &&
-    $movingItem._id === item._id;
+  $: itemIsMarkedForMove = $movingItem !== null && $movingItem.what === item._what && $movingItem._id === item._id;
 
   $: itemIsMoveTarget = $movingItem !== null && !itemIsMarkedForMove;
 
-  $: options = itemIsMoveTarget
-    ? allOptions.moveTarget
-    : itemIsMarkedForMove
-    ? allOptions.markedForMove
-    : allOptions.normal;
+  $: options = itemIsMoveTarget ? allOptions.moveTarget : itemIsMarkedForMove ? allOptions.markedForMove : allOptions.normal;
 
   function detachItem() {
     client
@@ -60,12 +53,7 @@
   function moveItem(location) {
     client
       .move({
-        location:
-          location === LOCATION.ABOVE
-            ? "above"
-            : location === LOCATION.BELOW
-            ? "below"
-            : "child",
+        location: location === LOCATION.ABOVE ? "above" : location === LOCATION.BELOW ? "below" : "child",
         what: $movingItem.what,
         id: $movingItem._id,
         to_what: item._what,

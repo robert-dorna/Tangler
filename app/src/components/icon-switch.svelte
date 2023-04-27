@@ -11,13 +11,7 @@
   export let toggled = false;
 </script>
 
-<IconButton
-  cls="{cls} {toggled ? 'toggle-true' : 'toggle-false'}"
-  name={toggled ? nameOn : nameOff}
-  {color}
-  {size}
-  on:click={() => (toggled = !toggled)}
-/>
+<IconButton cls="{cls} {toggled ? 'toggle-true' : 'toggle-false'}" name={toggled ? nameOn : nameOff} {color} {size} on:click={() => (toggled = !toggled)} />
 
 <style>
   :global(div.toggle-true) {

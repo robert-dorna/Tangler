@@ -18,7 +18,7 @@
 
   function submitChange() {
     editing = false;
-    if (item[name] !== originalValue && item["_id"] !== 'new') {
+    if (item[name] !== originalValue && item["_id"] !== "new") {
       client
         .update({
           what: item["_what"],
@@ -59,11 +59,7 @@
 </script>
 
 <svelte:window on:keyup={handleKeyPress} />
-<div
-  class="container"
-  style="{style} {colors && value in colors ? `color: ${colors[value]};` : ''}"
-  on:keypress={undefined}
->
+<div class="container" style="{style} {colors && value in colors ? `color: ${colors[value]};` : ''}" on:keypress={undefined}>
   {#if colors !== undefined}
     <Menu bind:focus={editing} {options}>
       <span class="field">
@@ -80,11 +76,7 @@
       on:click|stopPropagation={() => undefined}
     />
   {:else}
-    <span
-      class="field"
-      on:click|stopPropagation={() => (editing = name)}
-      on:keypress={undefined}
-    >
+    <span class="field" on:click|stopPropagation={() => (editing = name)} on:keypress={undefined}>
       {value}
     </span>
   {/if}
@@ -102,7 +94,7 @@
     padding-left: calc(var(--gap-medium) - var(--gap-line));
     border-radius: var(--radius-small);
     border: var(--gap-line) solid var(--color-silver);
-    color: var(--color-black)
+    color: var(--color-black);
   }
   span.field {
     padding: var(--gap-small);

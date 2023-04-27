@@ -4,7 +4,7 @@
   import Prompt from "../prompt.svelte";
   import { client, LOCATION, newItem } from "../../utils";
 
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher();
 
   export let item;
   export let indent = 0;
@@ -12,16 +12,13 @@
   $: anchorId = $newItem.anchorId;
   $: anchorWhat = $newItem.anchorWhat;
 
-  $: newItemLocation =
-    anchorId === item._id && anchorWhat === item._what
-      ? $newItem.location
-      : false;
+  $: newItemLocation = anchorId === item._id && anchorWhat === item._what ? $newItem.location : false;
 
   $: children = item._children;
   $: len = children.length;
   $: open = len > 0 ? true : undefined;
 
-  $: newItemFields = {_id: 'new', _what: $newItem.anchorWhat}
+  $: newItemFields = { _id: "new", _what: $newItem.anchorWhat };
 
   function create() {
     client
@@ -32,7 +29,7 @@
         _anchorWhat: item["_what"],
       })
       .then(() => {
-        dispatch('refresh');
+        dispatch("refresh");
         newItem.discard();
       });
   }
@@ -51,11 +48,7 @@
 {/if}
 
 {#if newItemLocation === LOCATION.BELOW || newItemLocation === LOCATION.CHILD}
-  <Item
-    item={newItemFields}
-    indent={indent + (newItemLocation === LOCATION.CHILD ? 32 : 0)}
-    on:create={create}
-  />
+  <Item item={newItemFields} indent={indent + (newItemLocation === LOCATION.CHILD ? 32 : 0)} on:create={create} />
 {/if}
 
 {#if newItemLocation}

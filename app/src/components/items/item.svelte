@@ -54,7 +54,8 @@
   $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
   $: if (!hover) editing = false;
 
-  const bodyStyleConst = "padding-top: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px; color: darkgoldenrod; max-width: 40vw;";
+  const bodyStyleConst =
+    "padding-top: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px; color: darkgoldenrod; max-width: 40vw;";
 
   $: bodyStyle = `margin-left: ${indent + 80}px; ${bodyStyleConst}`;
 
