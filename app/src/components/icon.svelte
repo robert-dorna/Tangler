@@ -13,6 +13,7 @@
   import Plus from "svelte-material-icons/PlusThick.svelte";
   import PencilPlus from "svelte-material-icons/PencilPlus.svelte";
   import PencilOutline from "svelte-material-icons/PencilOutline.svelte";
+  import SelectColor from "svelte-material-icons/SelectColor.svelte";
   import Trash from "svelte-material-icons/DeleteForeverOutline.svelte";
   import Cancel from "svelte-material-icons/Cancel.svelte";
   import Close from "svelte-material-icons/Close.svelte";
@@ -21,6 +22,7 @@
   import CogOutline from "svelte-material-icons/CogOutline.svelte";
   import Hand from "svelte-material-icons/HandFrontLeft.svelte";
   import HandOutline from "svelte-material-icons/HandFrontLeftOutline.svelte";
+
 
   // prettier-ignore
   const icons = {
@@ -38,6 +40,7 @@
     'plus': Plus,
     'pencil-plus': PencilPlus,
     'pencil-outline': PencilOutline,
+    'color-picker': SelectColor,
     'trash': Trash,
     'cancel': Cancel,
     'close': Close,

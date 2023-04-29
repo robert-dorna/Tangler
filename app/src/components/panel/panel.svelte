@@ -3,6 +3,10 @@
   import IconButton from "../icon-button.svelte";
   import { displayConfig } from "../../utils";
 
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
+
   export let selected;
 
   let newItem = false;
@@ -14,7 +18,7 @@
   }
 
   function onEdit(typeName, i) {
-    alert("edit");
+    dispatch("edit", { what: typeName });
   }
 
   function onMove(typeName, i) {

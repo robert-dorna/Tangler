@@ -5,10 +5,14 @@
 
   const dispatch = createEventDispatcher();
 
-  // those 3 are from _gui.yaml (displayConfig)
   export let name;
   export let style = undefined;
-  export let colors = undefined;
+  export let values = undefined;
+
+  export let width = undefined;
+
+  $: widthStyle = width === 0 ? 'display: flex; flex: 1' : `width: ${width}px; margin-left: 35px`
+  $: actualStyle = style !== undefined ? style : (width === undefined) ? '' : `${widthStyle}; font-size: 22px;`
 
   export let item;
   export let editing;
@@ -43,13 +47,15 @@
   $: value = item[name] || "?";
   $: if (input) input.focus();
 
-  const options =
-    colors === undefined
+  $: isEnum = values !== undefined && typeof(values) === 'object'
+
+  $: options =
+    !isEnum
       ? []
-      : Object.keys(colors).map((value) => {
+      : Object.keys(values).map((value) => {
           return {
             text: value,
-            textColor: colors[value],
+            textColor: values[value],
             action: () => {
               item[name] = value;
               submitChange();
@@ -59,8 +65,8 @@
 </script>
 
 <svelte:window on:keyup={handleKeyPress} />
-<div class="container" style="{style} {colors && value in colors ? `color: ${colors[value]};` : ''}" on:keypress={undefined}>
-  {#if colors !== undefined}
+<div class="container" style="{actualStyle} {isEnum && value in values ? `color: ${values[value]};` : ''}" on:keypress={undefined}>
+  {#if isEnum}
     <Menu bind:focus={editing} {options}>
       <span class="field">
         {value}
