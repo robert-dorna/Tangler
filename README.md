@@ -73,7 +73,7 @@ cd Tangler
 ```bash
 docker compose up
 # now visit localhost:9000 in your web browser
-# or make curl request, e.g. http://localhost:9000/api/display
+# or make curl request, e.g. http://localhost:9000/api/config
 ```
 
 ### install dependencies and run cli (cli is serverless)

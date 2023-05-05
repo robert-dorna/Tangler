@@ -35,6 +35,11 @@ def read_yaml(path):
         return yaml.safe_load(f)
 
 
+def write_yaml(path, data):
+    with open(path, 'w') as f:
+        yaml.safe_dump(data, f)
+
+
 def read_json(path):
     with open(path, 'r') as f:
         return json.load(f)

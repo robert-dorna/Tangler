@@ -2,10 +2,9 @@ from flask import Flask
 from werkzeug.exceptions import BadRequest
 from logging.config import dictConfig
 
-from .routes.data import data_route_handler
-from .routes.display import display_route_handler
-from .routes.update import update_route_handler
-from .routes.create import create_route_handler
+from .routes.data import data_request_handler, data_update_request_handler, data_create_request_handler
+from .routes.config import config_read_request_handler, config_patch_request_handler
+
 from .routes.move import move_route_handler
 from .routes.unlink import unlink_route_handler
 
@@ -25,17 +24,17 @@ def handle_exception(e):
 
 @app.route("/data")
 def update_task():
-    return data_route_handler(app)
+    return data_request_handler(app)
 
 
-@app.route('/update')
+@app.route("/data", methods=['POST'])
 def update():
-    return update_route_handler()
+    return data_update_request_handler()
 
 
-@app.route('/create')
+@app.route("/data", methods=['PUT'])
 def create():
-    return create_route_handler()
+    return data_create_request_handler()
 
 
 @app.route("/move")
@@ -48,14 +47,14 @@ def unlink():
     return unlink_route_handler()
 
 
-@app.route("/display")
-def get_display():
-    return display_route_handler()
-
-
 @app.route("/config")
-def config():
-    return display_route_handler()
+def read_config():
+    return config_read_request_handler()
+
+
+@app.route("/config", methods=["POST"])
+def patch_display():
+    return config_patch_request_handler()
 
 
 def run():
