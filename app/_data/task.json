@@ -325,5 +325,29 @@
         "label": "bug",
         "project": "pwa",
         "title": "fix and polish tangler CRUD and other data operations"
+    },
+    {
+        "_id": 49,
+        "body": "like e.g. wttr.in",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "server",
+        "title": "curl interface"
+    },
+    {
+        "_id": 50,
+        "body": "",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "JS desktop app (Windows, MacOS, Linux)"
+    },
+    {
+        "_id": 51,
+        "body": "(enables excellent, easy and powerful troubleshooting on production)",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "server",
+        "title": "great logging"
     }
 ]
