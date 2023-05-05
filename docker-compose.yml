@@ -1,15 +1,15 @@
 version: "3.9"
 services:
   app:
-    # image: ssurrealism/tangler-app
-    build: ./app
+    image: ssurrealism/tangler-app
+    # build: ./app-web
     volumes:
-      - ./app:/app
+      - ./app-web:/app
   srv:
-    # image: ssurrealism/tangler-server
-    build: .
+    image: ssurrealism/tangler-server
+    # build: ./app
     volumes:
-      - ./docs/:/usr/src/app/docs/
+      - ./app/:/usr/src/app
   proxy:
     # image: ssurrealism/tangler-proxy
     image: nginx

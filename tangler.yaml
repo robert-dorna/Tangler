@@ -1,5 +1,0 @@
-
-directories: 
-  storage: '$PROJECT/docs'
-  data: '$PROJECT/docs/_data'
-  config: '$PROJECT/docs/_data/_config'
