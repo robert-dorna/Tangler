@@ -2,27 +2,28 @@
 types:
   'note':
     emoji: "✍️"
-    x-template: '{_id:dot:>3} {title:<14}     {body:body:nn:orange}'
+    template: '{_id:dot:>3} {title:<14}     {body:body:nn:orange}'
     fields:
       - name: title
         width: 0
         values: text
-        x-required: true
+        required: true
 
-      # - name: date
-      #   width: 0
-      #   values: text
-      #   x-required: true
-      #   x-hidden: true  # (do not display)
+      - name: date
+        width: false
+        values: text
+        required: true
+
+      # note: body has 'values: markdown'
 
   'task':
     emoji: "✅"
-    x-template: '{_id:dot:>3} {title:<57} : {project:>4:project} {label:<7:label}  {due_date} {body:body:nn:orange}'
+    template: '{_id:dot:>3} {title:<57} : {project:>4:project} {label:<7:label}  {due_date} {body:body:nn:orange}'
     fields:
       - name: title
         width: 0
         values: any
-        x-required: true 
+        required: true 
 
       - name: project
         width: 40
@@ -32,7 +33,7 @@ types:
           'pwa': 'burlywood'
           'server': 'red'
           'cloud': 'green'
-        x-required: false 
+        required: false 
 
       - name: label
         width: 90
@@ -40,18 +41,18 @@ types:
           'feat': 'teal'
           'bug': 'crimson'
           'refactor': 'dodgerblue'
-        x-required: false 
+        required: false 
 
       - name: due_date
         width: 130
         values: date
-        x-required: false 
+        required: false 
   
 order:
   - task
   - note
 
-x-formatters:
+formatters:
   dot: '={v}.'
   nn: "?\n{v}"
   project:

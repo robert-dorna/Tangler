@@ -1,4 +1,4 @@
-from os import environ, path
+from os import path
 import json
 import yaml
 import sys
@@ -45,14 +45,5 @@ config_file_path = path.join(project_path, 'tangler.yaml')
 config = read_yaml(config_file_path)
 
 
-TANGLER_PATH = config['directories']['storage'].replace(
-    '$PROJECT', project_path)
-DATADIR_PATH = config['directories']['data'].replace(
-    '$PROJECT', project_path)
-CONFIG_PATH = config['directories']['config'].replace(
-    '$PROJECT', project_path)
-
-
-# TANGLER_PATH = path.join(environ['HOME'], 'Tangler')
-# DATADIR_PATH = path.join(TANGLER_PATH, '_data')
-# CONFIG_PATH = path.join(DATADIR_PATH, '_config')
+DATADIR_PATH = config['directories']['data']
+CONFIG_PATH = path.join(DATADIR_PATH, "_config.yaml")

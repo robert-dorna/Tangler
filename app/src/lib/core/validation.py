@@ -1,4 +1,4 @@
-from .datadir import read_config
+from .files import read_yaml, CONFIG_PATH
 
 
 def parse_value(name, value, value_type, *, required):
@@ -21,7 +21,7 @@ def parse_value(name, value, value_type, *, required):
         # optional: true
     }
 
-    text_types = ['text', 'text_protected', 'date', 'file', 'html', 'markdown']
+    text_types = ['text', 'text_protected', 'date', 'file', 'html', 'markdown', 'any']
 
     if type(value_type) is list:
         assert value is None or value in value_type, f'{name} must be one of {value_type}, not: {value}'
@@ -39,23 +39,24 @@ def parse_value(name, value, value_type, *, required):
 
 
 def validated_values(what, values, *, enforce_required):
-    config = read_config(what)
+    config = read_yaml(CONFIG_PATH)['types'][what]
+    fields = {field['name']: field for field in config['fields']}
+
     names_to_check = set(values)
 
     if enforce_required:
-        names_to_check.update(config['required'])
+        names_to_check.update([name for name, spec in fields.items() if spec['required']])
 
     validated = {}
 
     for name in names_to_check:
-        required = name in config['required']
-        specs = config['required'] if required else config['optional']
+        value_type = fields[name]['values']
 
         validated[name] = parse_value(
             name = name,
             value = values[name],
-            value_type = specs[name],
-            required = required
+            value_type = list(value_type) if type(value_type) is dict else value_type,
+            required = fields[name]['required'] 
         )
 
     return validated

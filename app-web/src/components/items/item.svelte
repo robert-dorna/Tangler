@@ -80,15 +80,17 @@
     {/if}
 
     {#each fields as field (field.name)}
-      <Field {...field} {item} bind:editing on:refresh>
-        {#if field.name === "title"}
-          {#if item.body}
-            <IconSwitch cls="g-row-centered l-details-switch" nameOn="dots" nameOff="dots-h" color="darkgoldenrod" size="medium" bind:toggled={detailed} />
-          {:else}
-            <IconButton cls="g-row-centered l-details-add" name="pencil-plus" color="darkgoldenrod" size="medium" hidden={!hover} on:click={createBody} />
+      {#if field.width !== false}
+        <Field {...field} {item} bind:editing on:refresh>
+          {#if field.name === "title"}
+            {#if item.body}
+              <IconSwitch cls="g-row-centered l-details-switch" nameOn="dots" nameOff="dots-h" color="darkgoldenrod" size="medium" bind:toggled={detailed} />
+            {:else}
+              <IconButton cls="g-row-centered l-details-add" name="pencil-plus" color="darkgoldenrod" size="medium" hidden={!hover} on:click={createBody} />
+            {/if}
           {/if}
-        {/if}
-      </Field>
+        </Field>
+      {/if}
     {/each}
 
     {#if creatingNewItem}

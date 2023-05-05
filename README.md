@@ -79,6 +79,9 @@ docker compose up
 ### install dependencies and run cli (cli is serverless)
 
 ```bash
+# enter cli/server directory
+cd app
+
 # install dependencies
 python -m venv .venv
 source .venv/bin/activate
@@ -91,8 +94,8 @@ python tangler.py read task
 python tangler.py create task label 'feat' due_date '2023-03-13' project 'cli' title 'implement help command'
 
 # Tangler uses json and yaml files as database right now so you can also read those manually if you want
-cat docs/_data/_config/task.yaml
-cat docs/_data/task.json
+cat _data/_config.yaml  # this file defines all item types and how to display them
+cat _data/task.json  # this file holds all items of type "task" ("task" is defined in _config.yaml)
 ```
 
 ## Technical details

@@ -1,9 +1,5 @@
 from os import path
-from .files import JsonFile, read_yaml, DATADIR_PATH, CONFIG_PATH
-
-
-def read_config(what):
-    return read_yaml(path.join(CONFIG_PATH, f'{what}.yaml'))
+from .files import JsonFile, DATADIR_PATH
 
 
 # List of same type items, handles storage I/O

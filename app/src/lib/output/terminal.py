@@ -48,7 +48,7 @@ def body(v, all_v, width=70):
 
 class Formatter:
     def __init__(self):
-        config = read_yaml(path.join(CONFIG_PATH, '_terminal.yaml'))
+        config = read_yaml(CONFIG_PATH)
 
         self.buildin_formatters = {
             'red': lambda v, _=None: colors.red(v),
@@ -64,7 +64,7 @@ class Formatter:
             'indent': indent,
         }
 
-        self.templates = config['templates']
+        self.templates = { name: spec['template'] for name, spec in config['types'].items() }
         self.formatters = { name: self.formatter(name, spec)
             for name, spec in config['formatters'].items()
         }

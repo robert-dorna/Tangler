@@ -1,5 +1,3 @@
 
 directories: 
-  storage: '/usr/src/app/unused_anyway'
   data: '/usr/src/app/_data'
-  config: '/usr/src/app/_data/_config'

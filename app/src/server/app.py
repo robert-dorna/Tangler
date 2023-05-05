@@ -50,12 +50,12 @@ def unlink():
 
 @app.route("/display")
 def get_display():
-    return display_route_handler(app)
+    return display_route_handler()
 
 
 @app.route("/config")
 def config():
-    return display_route_handler(app)
+    return display_route_handler()
 
 
 def run():
