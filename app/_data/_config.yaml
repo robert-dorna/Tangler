@@ -1,67 +1,60 @@
-
-types:
-  'note':
-    emoji: "✍️"
-    template: '{_id:dot:>3} {title:<14}     {body:body:nn:orange}'
-    fields:
-      - name: title
-        width: 0
-        values: text
-        required: true
-
-      - name: date
-        width: false
-        values: text
-        required: true
-
-      # note: body has 'values: markdown'
-
-  'task':
-    emoji: "✅"
-    template: '{_id:dot:>3} {title:<57} : {project:>4:project} {label:<7:label}  {due_date} {body:body:nn:orange}'
-    fields:
-      - name: title
-        width: 0
-        values: any
-        required: true 
-
-      - name: project
-        width: 40
-        values:
-          'library': 'cornflowerblue'
-          'cli': 'red'
-          'pwa': 'burlywood'
-          'server': 'red'
-          'cloud': 'green'
-        required: false 
-
-      - name: label
-        width: 90
-        values:
-          'feat': 'teal'
-          'bug': 'crimson'
-          'refactor': 'dodgerblue'
-        required: false 
-
-      - name: due_date
-        width: 130
-        values: date
-        required: false 
-  
-order:
-  - task
-  - note
-
 formatters:
-  dot: '={v}.'
-  nn: "?\n{v}"
-  project:
-    'library': 'red'
-    'cli': 'purple'
-    'pwa': 'blue'
-    'server': 'white'
-    'cloud': 'cyan'
+  dot: ={v}.
   label:
-    'bug': 'red'
-    'feat': 'green'
-    'refactor': 'blue'
+    bug: red
+    feat: green
+    refactor: blue
+  nn: '?
+
+    {v}'
+  project:
+    cli: purple
+    cloud: cyan
+    library: red
+    pwa: blue
+    server: white
+order:
+- task
+- note
+types:
+  note:
+    emoji: "\u270D\uFE0F"
+    fields:
+    - name: title
+      required: true
+      values: text
+      width: 0
+    - name: date
+      required: true
+      values: text
+      width: false
+    template: '{_id:dot:>3} {title:<14}     {body:body:nn:orange}'
+  task:
+    emoji: "\u2705"
+    fields:
+    - name: title
+      required: true
+      values: any
+      width: 0
+    - name: project
+      required: false
+      values:
+        cli: red
+        cloud: green
+        library: cornflowerblue
+        pwa: burlywood
+        server: red
+      width: 40
+    - name: label
+      required: false
+      values:
+        bug: crimson
+        feat: teal
+        refactor: dodgerblue
+      width: 90
+    - name: due_date
+      required: false
+      values: date
+      width: 130
+    template: '{_id:dot:>3} {title:<57} : {project:>4:project} {label:<7:label}  {due_date}
+      {body:body:nn:orange}'
