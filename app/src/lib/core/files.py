@@ -1,7 +1,6 @@
-from os import path
+from os import path, environ
 import json
 import yaml
-import sys
 
 
 class JsonFile:
@@ -45,10 +44,5 @@ def read_json(path):
         return json.load(f)
 
 
-project_path = path.dirname(path.realpath(sys.argv[0]))
-config_file_path = path.join(project_path, 'tangler.yaml')
-config = read_yaml(config_file_path)
-
-
-DATADIR_PATH = config['directories']['data']
+DATADIR_PATH = environ['TANGLER_DATA_DIR']
 CONFIG_PATH = path.join(DATADIR_PATH, "_config.yaml")
