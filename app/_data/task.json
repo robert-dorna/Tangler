@@ -349,5 +349,13 @@
         "label": "feat",
         "project": "server",
         "title": "great logging"
+    },
+    {
+        "_id": 52,
+        "body": "",
+        "due_date": "2023",
+        "label": "feat",
+        "project": "pwa",
+        "title": "use cookies to remember last open list and expands"
     }
 ]
