@@ -2,6 +2,7 @@
   :global(:root) {
 
     /* fonts */
+
     --app-font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
       sans-serif;
 
@@ -63,6 +64,7 @@
     --panel-color-button-hover: var(--color-pistachio);
   }
 
+  /* effects */
   :global(div.g-elevated) {
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
   }
@@ -76,67 +78,50 @@
     visibility: hidden;
   }
 
-  :global(div.g-flex) {
-    display: flex;
-    flex: 1;
-  }
-
-  :global(div.g-row) {
-    display: flex;
-    flex-direction: row;
-  }
-
-  :global(div.g-row-reverse-aligned) {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-  }
-
-  :global(div.g-row-aligned) {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  :global(div.g-row-flex-aligned) {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    align-items: center;
-  }
-
-  :global(div.g-row-justified) {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  :global(div.g-row-centered) {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-
-  :global(div.g-column) {
-    display: flex;
-    flex-direction: column;
-  }
-
-  :global(div.g-column-flex) {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  :global(div.g-column-aligned) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
   :global(div.g-clickable) {
     user-select: none;
     cursor: pointer;
+  }
+
+  /* layout */
+  :global(.qq-flex) {
+    display: flex;
+    flex: 1;
+  }
+
+  :global(.qq-row) {
+    display: flex;
+    flex-direction: row;
+  }
+
+  :global(.qq-row-reverse) {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  :global(.qq-column) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.qq-align) {
+    align-items: center;
+  }
+
+  :global(.qq-justify) {
+    justify-content: center;
+  }
+
+  :global(.qq-center) {
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.qq-aligned) {
+    align-self: center;
+  }
+
+  :global(.qq-stretched) {
+    align-self: stretch;
   }
 </style>

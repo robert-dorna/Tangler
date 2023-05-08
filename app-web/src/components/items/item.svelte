@@ -66,14 +66,14 @@
   }));
 </script>
 
-<Hovering cls="g-column g-item-container g-clickable" {elevated} bind:hover on:click={toggleOpen}>
-  <div class="g-row-flex-aligned fields">
+<Hovering cls="qq-column l-item-container g-clickable" {elevated} bind:hover on:click={toggleOpen}>
+  <div class="qq-row qq-flex qq-align fields">
     <div class="indent" style="width: {indent}px;" />
     <Icon name={open === undefined ? "dot" : open ? "expanded" : "expand"} color={chevronColor} size="large" />
 
     {#if creatingNewItem}
-      <Menu cls="g-item-emoji-menu" options={emojiOptions} bind:focus={editing}>
-        <span class="g-row-centered emoji-button"> {layout.emoji} </span>
+      <Menu cls="l-item-emoji-menu" options={emojiOptions} bind:focus={editing}>
+        <span class="qq-row qq-center emoji-button"> {layout.emoji} </span>
       </Menu>
     {:else}
       <span class="emoji"> {layout.emoji} </span>
@@ -84,9 +84,9 @@
         <Field {...field} {item} bind:editing on:refresh>
           {#if field.name === "title"}
             {#if item.body}
-              <IconSwitch cls="g-row-centered l-details-switch" nameOn="dots" nameOff="dots-h" color="darkgoldenrod" size="medium" bind:toggled={detailed} />
+              <IconSwitch cls="qq-row qq-center l-details-switch" nameOn="dots" nameOff="dots-h" color="darkgoldenrod" size="medium" bind:toggled={detailed} />
             {:else}
-              <IconButton cls="g-row-centered l-details-add" name="pencil-plus" color="darkgoldenrod" size="medium" hidden={!hover} on:click={createBody} />
+              <IconButton cls="qq-row qq-center l-details-add" name="pencil-plus" color="darkgoldenrod" size="medium" hidden={!hover} on:click={createBody} />
             {/if}
           {/if}
         </Field>
@@ -94,9 +94,9 @@
     {/each}
 
     {#if creatingNewItem}
-      <IconButton cls="g-row-centered l-confirm-button" name="check" color="grey" size="large" on:click={() => dispatch("create")} />
+      <IconButton cls="qq-row qq-center l-confirm-button" name="check" color="grey" size="large" on:click={() => dispatch("create")} />
     {:else}
-      <Menu cls="g-row-centered g-item-menu-container" hide={!hover || $newItem.anchorId !== null} bind:focus={editing} {options}>
+      <Menu cls="qq-row qq-center l-item-menu-container" hide={!hover || $newItem.anchorId !== null} bind:focus={editing} {options}>
         <Icon name="dots-v" color="grey" size="large" />
       </Menu>
     {/if}
@@ -109,14 +109,14 @@
 <Options {item} bind:options on:refresh />
 
 <style>
-  :global(div.g-item-container) {
+  :global(div.l-item-container) {
     width: 100%;
     max-width: var(--item-width);
     border-radius: var(--radius-small);
     margin: var(--gap-tiny);
     font-size: var(--font-large);
   }
-  :global(div.g-item-container:hover) {
+  :global(div.l-item-container:hover) {
     background-color: var(--color-anti-flash-white);
   }
 
@@ -136,14 +136,14 @@
     background-color: var(--color-silver);
   }
 
-  :global(div.g-item-emoji-menu) {
+  :global(div.l-item-emoji-menu) {
     margin-left: var(--gap-small);
     margin-right: var(--gap-medium);
   }
 
   /* Menu styles */
 
-  :global(div.g-item-menu-container) {
+  :global(div.l-item-menu-container) {
     padding: var(--gap-small);
     border-radius: var(--radius-small);
 
@@ -152,7 +152,7 @@
       var(--menu-is-visible, var(--color-silver))
       var(--menu-is-not-visible, inherit);
   }
-  :global(div.g-item-menu-container:hover) {
+  :global(div.l-item-menu-container:hover) {
     background-color: var(--color-silver);
   }
 

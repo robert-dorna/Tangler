@@ -12,7 +12,7 @@
 
 <!-- TODO: fix open menu on options change -->
 <div
-  class="g-row-aligned option"
+  class="qq-row qq-align option"
   class:first-option={index === 0}
   class:last-option={index === count - 1}
   on:click|stopPropagation={action}

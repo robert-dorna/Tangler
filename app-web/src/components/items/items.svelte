@@ -7,15 +7,15 @@
   export let items = [];
 </script>
 
-<div class="g-row container">
-  <div class="g-column-flex items">
+<div class="qq-row container">
+  <div class="qq-column qq-flex items">
     {#if $displayConfigAvailable}
       {#each items as item, index (item._what + item._id)}
         <ItemTree {item} on:refresh />
       {/each}
     {/if}
     {#if Array.isArray(items) && items.length === 0}
-      <div class="g-row-centered noitems">{texts.no_items}</div>
+      <div class="qq-row qq-center noitems">{texts.no_items}</div>
     {/if}
     <!-- TODO: replace below with some css e.g. in div.items -->
     <div class="space">space</div>

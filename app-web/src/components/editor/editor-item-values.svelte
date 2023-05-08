@@ -12,10 +12,10 @@
   ];
 </script>
 
-<div class="g-row-aligned values">
+<div class="qq-row qq-align values">
   {#if values}
     {#each Object.keys(values) as value (value)}
-      <div class="g-row-aligned value l-value" style:--color={values[value]} style="color: {values[value]}; border: 1px solid {values[value]}">
+      <div class="qq-row qq-align value l-value" style:--color={values[value]} style="color: {values[value]}; border: 1px solid {values[value]}">
         <!-- <Menu {options} loseFocus> -->
           <div class="name" style:--color={values[value]}>{value}</div>
         <!-- </Menu> -->

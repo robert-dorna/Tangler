@@ -18,40 +18,38 @@
   $: fields = config !== undefined && config.fields;
 </script>
 
-<div class="editor g-elevated">
-  <div class="g-row-aligned g-flex">
+<div class="qq-column editor g-elevated">
+  <div class="qq-row qq-align qq-flex">
     <div class="title">Fields editor</div>
-    <div class="g-row-aligned header g-clickable">
+    <div class="qq-row qq-align header g-clickable">
       <Icon name="expanded" color="silver" size="medium" />
       {config.emoji}
       {what}
     </div>
-    <IconButton cls="g-row-centered" name="pencil-outline" color="silver" size="medium" />
-    <div class="g-row-reverse-aligned g-flex">
+    <IconButton cls="qq-row qq-center" name="pencil-outline" color="silver" size="medium" />
+    <div class="qq-row-reverse qq-align qq-flex">
       <Button name="trash" color="silver" size="medium" text="Delete" on:click={() => alert('delete operation is not supported yet')}/>
     </div>
   </div>
   {#if fields}
-    <div class="g-column fields">
+    <div class="qq-column fields">
       <Item legend />
       <DragDropList data={fields} let:item>
         <Item field={item} />
       </DragDropList>
     </div>
   {/if}
-  <div class="g-row-flex-aligned buttons">
+  <div class="qq-row qq-align qq-flex buttons">
     <Button name="close" color="black" size="medium" text="Close" on:click={() => dispatch("discard")}/>
     <Button name="check" color="black" size="medium" text="Save" on:click={() => undefined}/>
     <Button name="eraser" color="black" size="medium" text="Clear changes" on:click={() => undefined}/>
-    <div class="g-flex" />
+    <div class="qq-flex" />
     <Button name="eye-outline" color="black" size="medium" text="Preview (on)" on:click={() => undefined}/>
   </div>
 </div>
 
 <style>
   div.editor {
-    display: flex;
-    flex-direction: column;
     background-color: var(--color-white);
     border-radius: var(--radius-large);
     padding: var(--gap-max);

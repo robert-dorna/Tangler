@@ -7,7 +7,7 @@
   export let text;
 </script>
 
-<div class="g-row-aligned g-clickable button" on:click|preventDefault on:keypress={undefined}>
+<div class="qq-row qq-align g-clickable button" on:click|preventDefault on:keypress={undefined}>
   <Icon {name} {color} {size} />
   {text}
 </div>

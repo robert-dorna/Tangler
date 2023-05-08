@@ -8,14 +8,14 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="g-row-justified container">
-  <div class="g-row-aligned prompt g-elevated">
-    <div class="g-row-flex-aligned title">{texts.title}</div>
-    <div class="g-row-centered option g-clickable" on:click|stopPropagation={() => dispatch("create")} on:keypress={undefined}>
+<div class="qq-row qq-justify container">
+  <div class="qq-row qq-align prompt g-elevated">
+    <div class="qq-row qq-flex qq-align title">{texts.title}</div>
+    <div class="qq-row qq-center option g-clickable" on:click|stopPropagation={() => dispatch("create")} on:keypress={undefined}>
       <Icon name="check" color="black" size="large" />
       {texts.create}
     </div>
-    <div class="g-row-centered option g-clickable" on:click|stopPropagation={() => dispatch("discard")} on:keypress={undefined}>
+    <div class="qq-row qq-center option g-clickable" on:click|stopPropagation={() => dispatch("discard")} on:keypress={undefined}>
       <Icon name="close" color="black" size="large" />
       {texts.discard}
     </div>

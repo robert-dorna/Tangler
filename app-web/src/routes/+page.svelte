@@ -27,15 +27,15 @@
   // // TODO: check is this good or does it have e.g. SSR problems?
   $: if (selected && $displayConfigAvailable) refreshItems();
 
-  let edit = 'task';
+  let edit = null;
 </script>
 
 <div class="container">
   <Panel bind:selected on:edit={({ detail: { what } }) => (edit = what)} />
   <Items {items} on:refresh={refreshItems} />
   {#if edit !== null}
-    <div class="g-floating g-flex modal">
-      <div class="g-flex g-row-centered">
+    <div class="g-floating qq-flex modal">
+      <div class="qq-flex qq-row qq-center">
         {#if displayConfigAvailable}
           <Editor what={edit} on:discard={() => (edit = null)} />
         {/if}
