@@ -86,6 +86,12 @@
     flex-direction: row;
   }
 
+  :global(div.g-row-reverse-aligned) {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
   :global(div.g-row-aligned) {
     display: flex;
     flex-direction: row;
