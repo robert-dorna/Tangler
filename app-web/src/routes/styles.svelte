@@ -84,6 +84,11 @@
   }
 
   /* layout */
+  :global(.screen-size) {
+    width: 100vw;
+    height: 100vh;
+  }
+
   :global(.flex) {
     display: flex;
     flex: 1;

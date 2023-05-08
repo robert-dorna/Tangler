@@ -30,12 +30,12 @@
   let edit = null;
 </script>
 
-<div class="container">
+<div class="row flex screen-size container">
   <Panel bind:selected on:edit={({ detail: { what } }) => (edit = what)} />
   <Items {items} on:refresh={refreshItems} />
   {#if edit !== null}
-    <div class="floating flex modal">
-      <div class="flex row center">
+    <div class="flex screen-size floating">
+      <div class="row flex center">
         {#if displayConfigAvailable}
           <Editor what={edit} on:discard={() => (edit = null)} />
         {/if}
@@ -45,18 +45,8 @@
 </div>
 
 <style>
-  div.container {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    width: 100vw;
-    height: 100vh;
+  .container {
     font-family: var(--app-font-family);
     background-color: var(--page-color-bg);
-  }
-
-  div.modal {
-    width: 100vw;
-    height: 100vh;
   }
 </style>
