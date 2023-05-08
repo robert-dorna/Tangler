@@ -9,18 +9,16 @@
   export let legend = false;
 
   let hover;
-  let expanded = false;
 
   $: hoverClass = legend || !hover ? "" : "l-hover";
   $: isEnum = field !== undefined && typeof field.values === "object";
-
-  $: iconName = !isEnum ? "dot" : expanded ? "expanded" : "expand";
 </script>
 
-<Hovering cls="g-column l-field {legend ? 'l-legend' : ''} g-clickable {hoverClass}" bind:hover on:click={() => (expanded = !expanded)}>
+<!-- <Hovering cls="g-column g-flex l-field {legend ? 'l-legend' : ''} g-clickable {hoverClass}" bind:hover> -->
+<div class="g-column g-flex l-field {legend ? 'l-legend' : ''} g-clickable {hoverClass}">
   <div class="g-row-centered g-flex">
     <div class="g-row-centered icon" class:g-hidden={legend}>
-      <Icon name={iconName} color="black" size="small" />
+      <Icon name="dot" color="black" size="small" />
     </div>
     <Field>{legend ? "name" : field.name}</Field>
     <Field>{legend ? "width" : field.width} {!legend && field.width === 0 ? "(expanded)" : ""}</Field>
@@ -29,14 +27,14 @@
       <Icon name="hand-outline" color="black" size="small" />
     </div>
   </div>
-  {#if expanded}
+  {#if isEnum}
     <Values values={field.values} />
   {/if}
-</Hovering>
+</div>
+<!-- </Hovering> -->
 
 <style>
   :global(div.l-field) {
-    display: flex;
     padding-top: var(--gap-small);
     padding-bottom: var(--gap-small);
     border-radius: var(--radius-small);

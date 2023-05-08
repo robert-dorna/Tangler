@@ -109,6 +109,7 @@
   }
   span.field:hover {
     border-radius: var(--radius-small);
-    background-color: var(--color-silver);
+    border: 1px solid var(--color-silver);
+    /* background-color: var(--color-silver); */
   }
 </style>

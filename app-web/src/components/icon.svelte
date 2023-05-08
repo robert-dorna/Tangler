@@ -23,6 +23,10 @@
   import Hand from "svelte-material-icons/HandFrontLeft.svelte";
   import HandOutline from "svelte-material-icons/HandFrontLeftOutline.svelte";
 
+  import Eraser from "svelte-material-icons/Eraser.svelte"
+  import Eye from "svelte-material-icons/Eye.svelte"
+  import EyeOutline from "svelte-material-icons/EyeOutline.svelte"
+
 
   // prettier-ignore
   const icons = {
@@ -49,6 +53,10 @@
     'cog-outline': CogOutline,
     'hand': Hand,
     'hand-outline': HandOutline,
+
+    'eraser': Eraser,
+    'eye': Eye,
+    'eye-outline': EyeOutline,
   };
 
   export let name;

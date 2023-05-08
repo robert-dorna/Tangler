@@ -27,7 +27,7 @@
   // // TODO: check is this good or does it have e.g. SSR problems?
   $: if (selected && $displayConfigAvailable) refreshItems();
 
-  let edit = null;
+  let edit = 'task';
 </script>
 
 <div class="container">

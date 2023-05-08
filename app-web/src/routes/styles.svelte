@@ -9,6 +9,7 @@
     --font-small: 18px;
     --font-medium: 20px;
     --font-large: 22px;
+    --font-header: 26px;
 
     --gap-line: 1px;
     --gap-tiny: 2px;

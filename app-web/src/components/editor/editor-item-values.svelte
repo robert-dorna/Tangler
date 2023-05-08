@@ -16,9 +16,9 @@
   {#if values}
     {#each Object.keys(values) as value (value)}
       <div class="g-row-aligned value l-value" style:--color={values[value]} style="color: {values[value]}; border: 1px solid {values[value]}">
-        <Menu {options} loseFocus>
+        <!-- <Menu {options} loseFocus> -->
           <div class="name" style:--color={values[value]}>{value}</div>
-        </Menu>
+        <!-- </Menu> -->
       </div>
     {/each}
   {/if}
