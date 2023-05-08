@@ -34,8 +34,8 @@
   <Panel bind:selected on:edit={({ detail: { what } }) => (edit = what)} />
   <Items {items} on:refresh={refreshItems} />
   {#if edit !== null}
-    <div class="g-floating qq-flex modal">
-      <div class="qq-flex qq-row qq-center">
+    <div class="floating flex modal">
+      <div class="flex row center">
         {#if displayConfigAvailable}
           <Editor what={edit} on:discard={() => (edit = null)} />
         {/if}

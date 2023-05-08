@@ -5,10 +5,10 @@
   export let title = false;
 </script>
 
-<div class="qq-row qq-align item g-clickable" class:hover-highlight={!title} class:selected on:click on:keypress={undefined}>
+<div class="row align item clickable" class:hover-highlight={!title} class:selected on:click on:keypress={undefined}>
   {emoji}
   <div class="name" class:title>{name}</div>
-  <div class="qq-flex" />
+  <div class="flex" />
   <slot />
 </div>
 

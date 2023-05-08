@@ -23,7 +23,7 @@
 
 <div
   class={cls}
-  class:g-elevated={elevated}
+  class:elevated={elevated}
   style="{style} {hide ? 'visibility: hidden;' : ''}"
   on:click|stopPropagation
   on:keypress={undefined}

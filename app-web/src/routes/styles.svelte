@@ -65,63 +65,55 @@
   }
 
   /* effects */
-  :global(div.g-elevated) {
+  :global(div.elevated) {
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
   }
 
-  :global(div.g-floating) {
+  :global(div.floating) {
     position: absolute;
     z-index: 1;
   }
 
-  :global(div.g-hidden) {
+  :global(div.hidden) {
     visibility: hidden;
   }
 
-  :global(div.g-clickable) {
+  :global(div.clickable) {
     user-select: none;
     cursor: pointer;
   }
 
   /* layout */
-  :global(.qq-flex) {
+  :global(.flex) {
     display: flex;
     flex: 1;
   }
 
-  :global(.qq-row) {
+  :global(.row) {
     display: flex;
     flex-direction: row;
   }
 
-  :global(.qq-row-reverse) {
+  :global(.row-reverse) {
     display: flex;
     flex-direction: row-reverse;
   }
 
-  :global(.qq-column) {
+  :global(.column) {
     display: flex;
     flex-direction: column;
   }
 
-  :global(.qq-align) {
+  :global(.align) {
     align-items: center;
   }
 
-  :global(.qq-justify) {
+  :global(.justify) {
     justify-content: center;
   }
 
-  :global(.qq-center) {
+  :global(.center) {
     align-items: center;
     justify-content: center;
-  }
-
-  :global(.qq-aligned) {
-    align-self: center;
-  }
-
-  :global(.qq-stretched) {
-    align-self: stretch;
   }
 </style>

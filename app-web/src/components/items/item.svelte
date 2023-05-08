@@ -66,14 +66,14 @@
   }));
 </script>
 
-<Hovering cls="qq-column l-item-container g-clickable" {elevated} bind:hover on:click={toggleOpen}>
-  <div class="qq-row qq-flex qq-align fields">
+<Hovering cls="column l-item-container clickable" {elevated} bind:hover on:click={toggleOpen}>
+  <div class="row flex align fields">
     <div class="indent" style="width: {indent}px;" />
     <Icon name={open === undefined ? "dot" : open ? "expanded" : "expand"} color={chevronColor} size="large" />
 
     {#if creatingNewItem}
       <Menu cls="l-item-emoji-menu" options={emojiOptions} bind:focus={editing}>
-        <span class="qq-row qq-center emoji-button"> {layout.emoji} </span>
+        <span class="row center emoji-button"> {layout.emoji} </span>
       </Menu>
     {:else}
       <span class="emoji"> {layout.emoji} </span>
@@ -84,9 +84,9 @@
         <Field {...field} {item} bind:editing on:refresh>
           {#if field.name === "title"}
             {#if item.body}
-              <IconSwitch cls="qq-row qq-center l-details-switch" nameOn="dots" nameOff="dots-h" color="darkgoldenrod" size="medium" bind:toggled={detailed} />
+              <IconSwitch cls="row center l-details-switch" nameOn="dots" nameOff="dots-h" color="darkgoldenrod" size="medium" bind:toggled={detailed} />
             {:else}
-              <IconButton cls="qq-row qq-center l-details-add" name="pencil-plus" color="darkgoldenrod" size="medium" hidden={!hover} on:click={createBody} />
+              <IconButton cls="row center l-details-add" name="pencil-plus" color="darkgoldenrod" size="medium" hidden={!hover} on:click={createBody} />
             {/if}
           {/if}
         </Field>
@@ -94,9 +94,9 @@
     {/each}
 
     {#if creatingNewItem}
-      <IconButton cls="qq-row qq-center l-confirm-button" name="check" color="grey" size="large" on:click={() => dispatch("create")} />
+      <IconButton cls="row center l-confirm-button" name="check" color="grey" size="large" on:click={() => dispatch("create")} />
     {:else}
-      <Menu cls="qq-row qq-center l-item-menu-container" hide={!hover || $newItem.anchorId !== null} bind:focus={editing} {options}>
+      <Menu cls="row center l-item-menu-container" hide={!hover || $newItem.anchorId !== null} bind:focus={editing} {options}>
         <Icon name="dots-v" color="grey" size="large" />
       </Menu>
     {/if}

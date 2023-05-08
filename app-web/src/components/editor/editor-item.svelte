@@ -14,16 +14,16 @@
   $: isEnum = field !== undefined && typeof field.values === "object";
 </script>
 
-<!-- <Hovering cls="g-column g-flex l-field {legend ? 'l-legend' : ''} g-clickable {hoverClass}" bind:hover> -->
-<div class="qq-column qq-flex l-field {legend ? 'l-legend' : ''} g-clickable {hoverClass}">
-  <div class="qq-row qq-center qq-flex">
-    <div class="qq-row qq-center icon" class:g-hidden={legend}>
+<!-- <Hovering cls="g-column g-flex l-field {legend ? 'l-legend' : ''} clickable {hoverClass}" bind:hover> -->
+<div class="column flex l-field {legend ? 'l-legend' : ''} clickable {hoverClass}">
+  <div class="row center flex">
+    <div class="row center icon" class:hidden={legend}>
       <Icon name="dot" color="black" size="small" />
     </div>
     <Field>{legend ? "name" : field.name}</Field>
     <Field>{legend ? "width" : field.width} {!legend && field.width === 0 ? "(expanded)" : ""}</Field>
     <Field>{legend ? "values" : isEnum ? "one of given values" : field.values}</Field>
-    <div class="qq-row qq-center icon" class:g-hidden={legend || !hover}>
+    <div class="row center icon" class:hidden={legend || !hover}>
       <Icon name="hand-outline" color="black" size="small" />
     </div>
   </div>

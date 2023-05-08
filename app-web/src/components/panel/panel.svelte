@@ -28,16 +28,16 @@
   $: emojis = $displayConfig.emojis || [];
   $: types = $displayConfig.order || [];
 
-  const buttonStyling = { cls: "qq-row qq-center l-button", color: "black", size: "small" };
+  const buttonStyling = { cls: "row center l-button", color: "black", size: "small" };
 </script>
 
-<div class="qq-column panel">
+<div class="column panel">
   <Item emoji="" name="Items" title>
     <IconButton {...buttonStyling} name="plus" color="grey" on:click={onCreate} />
   </Item>
   {#each types as typeName, i (typeName)}
     <Item emoji={emojis[i]} name={typeName} selected={typeName === selected} on:click={() => (selected = typeName)}>
-      <div class="qq-row qq-align buttons">
+      <div class="row align buttons">
         <IconButton {...buttonStyling} name="cog-outline" on:click={() => onEdit(typeName, i)} />
         <IconButton {...buttonStyling} name="hand-outline" on:click={() => onMove(typeName, i)} />
       </div>

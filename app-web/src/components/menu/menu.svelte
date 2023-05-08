@@ -29,7 +29,7 @@
 <Hovering cls="{cls} {visible ? 'visible-true' : 'visible-false'}" {style} {hide} bind:position on:click={handleClick} bind:hover>
   <slot />
   {#if visible}
-    <div class="qq-column g-floating options g-elevated" style={menuPosition}>
+    <div class="column floating options elevated" style={menuPosition}>
       {#each options as option, i (option.text)}
         <MenuOption {...option} index={i} count={options.length} />
       {/each}
