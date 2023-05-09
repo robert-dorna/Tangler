@@ -1,16 +1,23 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { displayConfig, displayConfigTypes, displayConfigAvailable } from "../../utils";
+  import { displayConfig, displayConfigAvailable, displayConfigTypes } from "../../utils";
   import DragDropList from "../drag-drop-list.svelte";
   import IconButton from "../icon-button.svelte";
   import Icon from "../icon.svelte";
+  import Menu from "../menu/menu.svelte";
   import EditorButton from "./editor-button.svelte";
   import EditorItem from "./editor-item.svelte";
-  import Menu from "../menu/menu.svelte";
+  import EditorTypeEditor from "./editor-type-editor.svelte";
 
   const dispatch = createEventDispatcher();
 
   export let what = "task";
+
+  let editingTypeName = true;
+
+  function switchTypeNameEditing() {
+    editingTypeName = !editingTypeName;
+  }
 
   $: configs = $displayConfig.types;
   $: config = configs !== undefined && configs[what];
@@ -23,17 +30,28 @@
       text: typeName,
       action: () => dispatch("edit", { what: typeName }),
     }));
+
+  $: emoji = config.emoji;
+
+  function onSave(event) {
+    console.log(event.detail);
+    editingTypeName = false;
+  }
 </script>
 
 <div class="column elevated editor">
   <div class="row align flex">
     <div class="title">Fields editor</div>
-    <Menu cls="row align clickable type-picker" options={emojiOptions} loseFocus>
-      <Icon name="expanded" color="silver" size="medium" />
-      {config.emoji}
-      {what}
-    </Menu>
-    <IconButton name="pencil-outline" color="silver" size="medium" />
+    {#if editingTypeName}
+      <EditorTypeEditor cls="row align type-picker" {emoji} {what} on:save={onSave} on:close={switchTypeNameEditing} />
+    {:else}
+      <Menu cls="row align clickable type-picker" options={emojiOptions} loseFocus>
+        <Icon name="expanded" color="silver" size="medium" />
+        {emoji}
+        {what}
+      </Menu>
+      <IconButton name="pencil-outline" color="silver" size="medium" on:click={switchTypeNameEditing} />
+    {/if}
     <div class="row-reverse align flex">
       <EditorButton name="trash" color="silver" size="medium" text="Delete" on:click={() => alert("delete operation is not supported yet")} />
     </div>

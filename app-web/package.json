@@ -15,6 +15,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"picmo": "^5.8.4",
 		"svelte-material-icons": "^2.0.4",
 		"yaml": "^2.1.3"
 	}

@@ -71,6 +71,8 @@
 
   $: icon = name === "dots" ? undefined : icons[name];
   $: actualSize = sizes[size] || sizes.large;
+
+  $: if(icon === undefined && name !== "dots") console.warn('Icon.svelte: unknown icon name:', name)
 </script>
 
 {#if name === "dots"}

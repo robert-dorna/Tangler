@@ -1,62 +1,35 @@
 <script>
-  import Hovering from "../hovering.svelte";
+  import Tooltip from "../tooltip.svelte";
   import MenuOption from "./menu-option.svelte";
 
   export let cls = "";
   export let style = "";
   export let hide = false;
 
-  export let options = [];
   export let focus = undefined;
   export let loseFocus = false;
 
-  const focusKey = Symbol();
-
-  let hover = false;
-
-  let position = { x: 0, y: 0 };
-  let menuPosition = "";
-
-  function handleClick() {
-    focus = focusKey;
-    menuPosition = `left: ${position.x}px; top: ${position.y}px;`;
-  }
-
-  $: visible = focus === focusKey;
-  $: if (!hover && loseFocus) focus = undefined;
+  export let options = [];
 </script>
 
-<Hovering
-  cls="menu {cls} {visible ? 'menu-options-visible-true' : 'menu-options-visible-false'}"
-  {style}
-  hidden={hide}
-  bind:position
-  on:click={handleClick}
-  bind:hover
->
+<Tooltip cls="menu {cls}" {style} {hide} bind:focus {loseFocus}>
   <slot />
-  {#if visible}
-    <div class="column floating-menu elevated options" style={menuPosition}>
-      {#each options as option (option.text)}
-        <MenuOption {...option} bind:focus />
-      {/each}
-    </div>
-  {/if}
-</Hovering>
+  <div slot="tooltip" class="column floating-menu elevated options" let:menuPosition style={menuPosition} >
+    {#each options as option (option.text)}
+      <MenuOption {...option} bind:focus />
+    {/each}
+  </div>
+</Tooltip>
 
 <style>
+  :global(.menu) {
+    --menu-options-visible: --tooltip-visible;
+    --menu-options-not-visible: --tooltip-not-visible;
+  }
   .options {
     background-color: var(--color-white);
     border-radius: var(--radius-small);
     max-height: var(--menu-height);
     overflow: scroll;
-  }
-  :global(.menu-options-visible-true) {
-    --menu-options-visible: initial;
-    --menu-options-not-visible: ;
-  }
-  :global(.menu-options-visible-false) {
-    --menu-options-visible: ;
-    --menu-options-not-visible: initial;
   }
 </style>
