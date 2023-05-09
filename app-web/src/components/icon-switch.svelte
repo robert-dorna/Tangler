@@ -11,15 +11,21 @@
   export let toggled = false;
 </script>
 
-<IconButton cls="{cls} {toggled ? 'toggle-true' : 'toggle-false'}" name={toggled ? nameOn : nameOff} {color} {size} on:click={() => (toggled = !toggled)} />
+<IconButton
+  cls="icon-switch {cls} {toggled ? 'icon-switch-is-toggled' : 'icon-switch-is-not-toggled'}"
+  name={toggled ? nameOn : nameOff}
+  {color}
+  {size}
+  on:click={() => (toggled = !toggled)}
+/>
 
 <style>
-  :global(div.toggle-true) {
-    --button-switch-is-on: initial;
-    --button-switch-is-off: ;
+  :global(.icon-switch-is-toggled) {
+    --icon-switch-is-on: initial;
+    --icon-switch-is-off: ;
   }
-  :global(div.toggle-false) {
-    --button-switch-is-on: ;
-    --button-switch-is-off: initial;
+  :global(.icon-switch-is-not-toggled) {
+    --icon-switch-is-on: ;
+    --icon-switch-is-off: initial;
   }
 </style>

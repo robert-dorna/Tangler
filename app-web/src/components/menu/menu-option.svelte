@@ -6,18 +6,10 @@
   export let text;
   export let textColor = undefined;
   export let action;
-  export let index;
-  export let count;
 </script>
 
 <!-- TODO: fix open menu on options change -->
-<div
-  class="row align option"
-  class:first-option={index === 0}
-  class:last-option={index === count - 1}
-  on:click|stopPropagation={action}
-  on:keypress={undefined}
->
+<div class="row align menu-option" on:click|stopPropagation={action} on:keypress={undefined}>
   {#if emoji !== undefined}
     <div class="emoji">
       {emoji}
@@ -33,22 +25,14 @@
 </div>
 
 <style>
-  div.option {
+  .menu-option {
     padding: var(--gap-medium);
     gap: var(--gap-medium);
   }
-  div.option:hover {
+  .menu-option:hover {
     background-color: var(--color-isabelline);
   }
-  div.first-option {
-    border-top-left-radius: var(--radius-small);
-    border-top-right-radius: var(--radius-small);
-  }
-  div.last-option {
-    border-bottom-left-radius: var(--radius-small);
-    border-bottom-right-radius: var(--radius-small);
-  }
-  div.emoji {
+  .emoji {
     font-size: var(--font-large);
     padding: var(--gap-small);
   }

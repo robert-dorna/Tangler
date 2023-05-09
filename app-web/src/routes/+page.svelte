@@ -27,10 +27,10 @@
   // // TODO: check is this good or does it have e.g. SSR problems?
   $: if (selected && $displayConfigAvailable) refreshItems();
 
-  let edit = null;
+  let edit = 'task';
 </script>
 
-<div class="row flex screen-size container">
+<div class="row flex screen-size application">
   <Panel bind:selected on:edit={({ detail: { what } }) => (edit = what)} />
   <Items {items} on:refresh={refreshItems} />
   {#if edit !== null}
@@ -45,7 +45,7 @@
 </div>
 
 <style>
-  .container {
+  .application {
     font-family: var(--app-font-family);
     background-color: var(--page-color-bg);
   }

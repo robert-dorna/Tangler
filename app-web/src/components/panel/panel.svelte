@@ -1,5 +1,5 @@
 <script>
-  import Item from "./panel-item.svelte";
+  import PanelItem from "./panel-item.svelte";
   import IconButton from "../icon-button.svelte";
   import { displayConfig } from "../../utils";
 
@@ -9,65 +9,67 @@
 
   export let selected;
 
-  let newItem = false;
-
   function onCreate() {
     alert("create");
-    return;
-    newItem = { emoji: "🌋", name: "xd" };
   }
-
   function onEdit(typeName, i) {
     dispatch("edit", { what: typeName });
   }
-
   function onMove(typeName, i) {
     alert("move");
   }
 
   $: emojis = $displayConfig.emojis || [];
   $: types = $displayConfig.order || [];
-
-  const buttonStyling = { cls: "row center l-button", color: "black", size: "small" };
 </script>
 
 <div class="column panel">
-  <Item emoji="" name="Items" title>
-    <IconButton {...buttonStyling} name="plus" color="grey" on:click={onCreate} />
-  </Item>
+  <PanelItem id="title" emoji="" name="Items">
+    <IconButton name="plus" color="grey" size="small" on:click={onCreate} />
+  </PanelItem>
   {#each types as typeName, i (typeName)}
-    <Item emoji={emojis[i]} name={typeName} selected={typeName === selected} on:click={() => (selected = typeName)}>
+    <PanelItem emoji={emojis[i]} name={typeName} selected={typeName === selected} on:click={() => (selected = typeName)}>
       <div class="row align buttons">
-        <IconButton {...buttonStyling} name="cog-outline" on:click={() => onEdit(typeName, i)} />
-        <IconButton {...buttonStyling} name="hand-outline" on:click={() => onMove(typeName, i)} />
+        <IconButton name="cog-outline" color="black" size="small" on:click={() => onEdit(typeName, i)} />
+        <IconButton name="hand-outline" color="black" size="small" on:click={() => onMove(typeName, i)} />
       </div>
-    </Item>
+    </PanelItem>
   {/each}
-  <!-- {#if newItem}
-    <Item emoji={newItem.emoji} bind:name={newItem.name} edit>
-      <Button name="plus" color="grey" on:click={() => dispatch("plus")} />
-    </Item>
-  {/if} -->
 </div>
 
 <style>
-  div.panel {
+  .panel {
     background-color: var(--panel-color-bg);
     border-right: var(--gap-tiny) solid var(--panel-color-border);
     padding-left: var(--gap-large);
     padding-top: var(--gap-large);
     width: var(--panel-width);
   }
-  div.buttons {
+  .buttons {
     gap: var(--gap-medium);
-    visibility: var(--x-buttons-visibility);
+
+    /* prettier-ignore */
+    visibility:
+      var(--panel-item-hover-true, visible)
+      var(--panel-item-hover-false, hidden);
   }
 
-  :global(div.l-button) {
+  :global(.panel .panel-item#title > .name) {
+    font-weight: bold;
+    margin-left: 0px;
+  }
+
+  :global(.panel .panel-item:not(#title):hover) {
+    background-color: var(--panel-color-hover);
+    opacity: var(--opacity-hover);
+  }
+
+  :global(.panel .icon-button) {
     border-radius: var(--radius-small);
     padding: var(--gap-small);
   }
-  :global(div.l-button:hover) {
+
+  :global(.panel .icon-button:hover) {
     background-color: var(--panel-color-button-hover);
   }
 </style>

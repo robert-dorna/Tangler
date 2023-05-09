@@ -89,6 +89,10 @@
     height: 100vh;
   }
 
+  :global(.max-width) {
+    width: 100%;
+  }
+
   :global(.flex) {
     display: flex;
     flex: 1;
@@ -120,5 +124,9 @@
   :global(.center) {
     align-items: center;
     justify-content: center;
+  }
+
+  :global(.wrap-reverse) {
+    flex-wrap: wrap-reverse;
   }
 </style>

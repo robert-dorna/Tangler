@@ -12,12 +12,12 @@
   ];
 </script>
 
-<div class="row align values">
+<div class="row align editor-item-values">
   {#if values}
     {#each Object.keys(values) as value (value)}
-      <div class="row align value l-value" style:--color={values[value]} style="color: {values[value]}; border: 1px solid {values[value]}">
+      <div class="row align value-container" style:--color={values[value]}>
         <!-- <Menu {options} loseFocus> -->
-          <div class="name" style:--color={values[value]}>{value}</div>
+        <div class="value">{value}</div>
         <!-- </Menu> -->
       </div>
     {/each}
@@ -25,30 +25,33 @@
 </div>
 
 <style>
-  .values {
+  .editor-item-values {
     padding: var(--gap-large);
     flex-wrap: wrap;
   }
-  :global(.l-value) {
+  .value-container {
+    /* even with Menu, this is probably useless. Just set color and it will be inherited
+    by the menu-option text */
     --value-hover-true: ;
     --value-hover-false: inherit;
-  }
-  :global(.l-value:hover) {
-    --value-hover-true: inherit;
-    --value-hover-false: ;
-  }
-  .value {
+
+    border: var(--gap-line) solid var(--color);
+    color: var(--color);
+
     border-radius: var(--radius-small);
     background-color: var(--color-white);
     margin: var(--gap-small);
     padding: var(--gap-medium);
     gap: var(--gap-small);
   }
-  .value:hover {
+  .value-container:hover {
+    --value-hover-true: inherit;
+    --value-hover-false: ;
+
     /* TODO: figure out a way to make --color lighter and use it without inverted text color */
     background-color: var(--color);
   }
-  .name {
+  .value {
     /* prettier-ignore */
     color: 
       var(--value-hover-true, white)

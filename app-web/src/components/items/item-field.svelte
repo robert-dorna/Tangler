@@ -11,8 +11,8 @@
 
   export let width = undefined;
 
-  $: widthStyle = width === 0 ? 'display: flex; flex: 1' : `width: ${width}px; margin-left: 35px`
-  $: actualStyle = style !== undefined ? style : (width === undefined) ? '' : `${widthStyle}; font-size: 22px;`
+  $: widthStyle = width === 0 ? "display: flex; flex: 1" : `width: ${width}px; margin-left: 35px`;
+  $: actualStyle = style !== undefined ? style : width === undefined ? "" : `${widthStyle}; font-size: 22px;`;
 
   export let item;
   export let editing;
@@ -47,28 +47,27 @@
   $: value = item[name] || "?";
   $: if (input) input.focus();
 
-  $: isEnum = values !== undefined && typeof(values) === 'object'
+  $: isEnum = values !== undefined && typeof values === "object";
 
-  $: options =
-    !isEnum
-      ? []
-      : Object.keys(values).map((value) => {
-          return {
-            text: value,
-            textColor: values[value],
-            action: () => {
-              item[name] = value;
-              submitChange();
-            },
-          };
-        });
+  $: options = !isEnum
+    ? []
+    : Object.keys(values).map((value) => {
+        return {
+          text: value,
+          textColor: values[value],
+          action: () => {
+            item[name] = value;
+            submitChange();
+          },
+        };
+      });
 </script>
 
 <svelte:window on:keyup={handleKeyPress} />
-<div class="container" style="{actualStyle} {isEnum && value in values ? `color: ${values[value]};` : ''}" on:keypress={undefined}>
+<div class="field" style="{actualStyle} {isEnum && value in values ? `color: ${values[value]};` : ''}" on:keypress={undefined}>
   {#if isEnum}
     <Menu bind:focus={editing} {options}>
-      <span class="field">
+      <span class="value">
         {value}
       </span>
     </Menu>
@@ -82,7 +81,7 @@
       on:click|stopPropagation={() => undefined}
     />
   {:else}
-    <span class="field" on:click|stopPropagation={() => (editing = name)} on:keypress={undefined}>
+    <span class="value" on:click|stopPropagation={() => (editing = name)} on:keypress={undefined}>
       {value}
     </span>
   {/if}
@@ -90,7 +89,7 @@
 </div>
 
 <style>
-  div.container {
+  .field {
     display: flex;
     align-items: center;
   }
@@ -102,12 +101,12 @@
     border: var(--gap-line) solid var(--color-silver);
     color: var(--color-black);
   }
-  span.field {
+  span.value {
     padding: var(--gap-small);
     padding-left: var(--gap-medium);
     padding-right: var(--gap-medium);
   }
-  span.field:hover {
+  span.value:hover {
     border-radius: var(--radius-small);
     border: 1px solid var(--color-silver);
     /* background-color: var(--color-silver); */

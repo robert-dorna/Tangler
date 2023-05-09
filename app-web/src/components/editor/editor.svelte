@@ -1,13 +1,11 @@
 <script>
-  import DragDropList from "../drag-drop-list.svelte";
-  import Button from "./editor-button.svelte";
-
-  import Icon from "../icon.svelte";
-  import Item from "./editor-item.svelte";
-  import { displayConfig, displayConfigTypes } from "../../utils";
-
   import { createEventDispatcher } from "svelte";
+  import { displayConfig } from "../../utils";
+  import DragDropList from "../drag-drop-list.svelte";
   import IconButton from "../icon-button.svelte";
+  import Icon from "../icon.svelte";
+  import EditorButton from "./editor-button.svelte";
+  import EditorItem from "./editor-item.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -18,49 +16,49 @@
   $: fields = config !== undefined && config.fields;
 </script>
 
-<div class="column editor elevated">
+<div class="column elevated editor">
   <div class="row align flex">
     <div class="title">Fields editor</div>
-    <div class="row align header clickable">
+    <div class="row align clickable type-picker">
       <Icon name="expanded" color="silver" size="medium" />
       {config.emoji}
       {what}
     </div>
-    <IconButton cls="row center" name="pencil-outline" color="silver" size="medium" />
+    <IconButton name="pencil-outline" color="silver" size="medium" />
     <div class="row-reverse align flex">
-      <Button name="trash" color="silver" size="medium" text="Delete" on:click={() => alert('delete operation is not supported yet')}/>
+      <EditorButton name="trash" color="silver" size="medium" text="Delete" on:click={() => alert("delete operation is not supported yet")} />
     </div>
   </div>
   {#if fields}
     <div class="column fields">
-      <Item legend />
+      <EditorItem legend />
       <DragDropList data={fields} let:item>
-        <Item field={item} />
+        <EditorItem field={item} />
       </DragDropList>
     </div>
   {/if}
   <div class="row align flex buttons">
-    <Button name="close" color="black" size="medium" text="Close" on:click={() => dispatch("discard")}/>
-    <Button name="check" color="black" size="medium" text="Save" on:click={() => undefined}/>
-    <Button name="eraser" color="black" size="medium" text="Clear changes" on:click={() => undefined}/>
+    <EditorButton name="close" color="black" size="medium" text="Close" on:click={() => dispatch("discard")} />
+    <EditorButton name="check" color="black" size="medium" text="Save" on:click={() => undefined} />
+    <EditorButton name="eraser" color="black" size="medium" text="Clear changes" on:click={() => undefined} />
     <div class="flex" />
-    <Button name="eye-outline" color="black" size="medium" text="Preview (on)" on:click={() => undefined}/>
+    <EditorButton name="eye-outline" color="black" size="medium" text="Preview (on)" on:click={() => undefined} />
   </div>
 </div>
 
 <style>
-  div.editor {
+  .editor {
     background-color: var(--color-white);
     border-radius: var(--radius-large);
     padding: var(--gap-max);
     min-width: 40vw;
   }
-  div.title {
+  .title {
     font-size: var(--font-header);
     font-weight: bold;
     margin: var(--gap-medium);
   }
-  div.header {
+  .type-picker {
     margin-left: var(--gap-max);
     margin-right: var(--gap-medium);
     padding: var(--gap-small);
@@ -71,12 +69,15 @@
     font-size: var(--font-large);
     gap: var(--gap-tiny);
   }
-  div.fields {
+  .fields {
     margin-top: var(--gap-large);
     margin-bottom: var(--gap-large);
     gap: var(--gap-medium);
   }
-  div.buttons {
+  :global(.fields > .editor-item) {
+    color: grey;
+  }
+  .buttons {
     flex-direction: row-reverse;
     padding-top: var(--gap-large);
     gap: var(--gap-large);

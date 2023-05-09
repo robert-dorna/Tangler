@@ -8,14 +8,14 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="row justify container">
-  <div class="row align prompt elevated">
+<div class="row justify floating max-width prompt-container">
+  <div class="row align elevated prompt">
     <div class="row flex align title">{texts.title}</div>
-    <div class="row center option clickable" on:click|stopPropagation={() => dispatch("create")} on:keypress={undefined}>
+    <div class="row center clickable option" on:click|stopPropagation={() => dispatch("create")} on:keypress={undefined}>
       <Icon name="check" color="black" size="large" />
       {texts.create}
     </div>
-    <div class="row center option clickable" on:click|stopPropagation={() => dispatch("discard")} on:keypress={undefined}>
+    <div class="row center clickable option" on:click|stopPropagation={() => dispatch("discard")} on:keypress={undefined}>
       <Icon name="close" color="black" size="large" />
       {texts.discard}
     </div>
@@ -23,30 +23,27 @@
 </div>
 
 <style>
-  div.container {
-    position: absolute;
-    z-index: 1;
+  .prompt-container {
     left: 0px;
     bottom: var(--gap-max);
-    width: 100%;
   }
-  div.prompt {
+  .prompt {
     width: var(--prompt-width);
     padding-left: var(--gap-max);
     padding-right: var(--gap-max);
     border-radius: var(--radius-large);
     background-color: var(--color-white);
   }
-  div.title {
+  .title {
     font-size: var(--font-medium);
   }
-  div.option {
+  .option {
     padding-left: var(--gap-max);
     padding-right: var(--gap-max);
-    padding-top: var(--gap-large); /* was 15 */
+    padding-top: var(--gap-large);
     padding-bottom: var(--gap-large);
   }
-  div.option:hover {
+  .option:hover {
     background-color: var(--color-anti-flash-white);
   }
 </style>

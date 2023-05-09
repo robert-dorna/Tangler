@@ -1,7 +1,7 @@
 <script>
   export let cls = "";
   export let style = "";
-  export let hide = false;
+  export let hidden = false;
   export let elevated = false;
 
   export let position = { x: 0, y: 0 };
@@ -22,9 +22,10 @@
 </script>
 
 <div
-  class={cls}
-  class:elevated={elevated}
-  style="{style} {hide ? 'visibility: hidden;' : ''}"
+  class="hovering {cls}"
+  class:elevated
+  class:hidden
+  {style}
   on:click|stopPropagation
   on:keypress={undefined}
   on:mousemove={handleMouseMove}
@@ -33,3 +34,15 @@
 >
   <slot {hover} {position} />
 </div>
+
+<style>
+  /* overriding this clears variables? */
+  .hovering {
+    --hover-true: ; 
+    --hover-false: inherit;
+  }
+  .hovering:hover {
+    --hover-true: inherit; 
+    --hover-false: ;
+  }
+</style>

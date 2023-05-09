@@ -7,7 +7,7 @@
   export let items = [];
 </script>
 
-<div class="row container">
+<div class="row items-container">
   <div class="column flex items">
     {#if $displayConfigAvailable}
       {#each items as item, index (item._what + item._id)}
@@ -24,22 +24,22 @@
 </div>
 
 <style>
-  div.container {
+  .items-container {
     min-width: var(--items-width);
     height: 100vh;
     width: 100%;
     overflow: scroll;
   }
-  div.items {
+  .items {
     align-items: flex-start;
     padding-left: var(--gap-max);
     padding-top: var(--gap-max);
   }
-  div.noitems {
+  .noitems {
     margin: var(--gap-large);
     padding: var(--gap-medium);
   }
-  div.space {
+  .space {
     display: flex;
     font-size: 128px;
     visibility: hidden;

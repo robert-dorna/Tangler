@@ -26,30 +26,37 @@
   $: if (!hover && loseFocus) focus = undefined;
 </script>
 
-<Hovering cls="{cls} {visible ? 'visible-true' : 'visible-false'}" {style} {hide} bind:position on:click={handleClick} bind:hover>
+<Hovering
+  cls="menu {cls} {visible ? 'menu-options-visible-true' : 'menu-options-visible-false'}"
+  {style}
+  hidden={hide}
+  bind:position
+  on:click={handleClick}
+  bind:hover
+>
   <slot />
   {#if visible}
-    <div class="column floating options elevated" style={menuPosition}>
-      {#each options as option, i (option.text)}
-        <MenuOption {...option} index={i} count={options.length} />
+    <div class="column floating elevated options" style={menuPosition}>
+      {#each options as option (option.text)}
+        <MenuOption {...option}/>
       {/each}
     </div>
   {/if}
 </Hovering>
 
 <style>
-  div.options {
+  .options {
     background-color: var(--color-white);
     border-radius: var(--radius-small);
     max-height: var(--menu-height);
     overflow: scroll;
   }
-  :global(div.visible-true) {
-    --menu-is-visible: initial;
-    --menu-is-not-visible: ;
+  :global(.menu-options-visible-true) {
+    --menu-options-visible: initial;
+    --menu-options-not-visible: ;
   }
-  :global(div.visible-false) {
-    --menu-is-visible: ;
-    --menu-is-not-visible: initial;
+  :global(.menu-options-visible-false) {
+    --menu-options-visible: ;
+    --menu-options-not-visible: initial;
   }
 </style>

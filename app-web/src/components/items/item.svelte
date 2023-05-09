@@ -54,11 +54,6 @@
   $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
   $: if (!hover) editing = false;
 
-  const bodyStyleConst =
-    "padding-top: 5px; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px; color: darkgoldenrod; max-width: 40vw;";
-
-  $: bodyStyle = `margin-left: ${indent + 80}px; ${bodyStyleConst}`;
-
   const emojiOptions = $displayConfig.order.map((typeName) => ({
     emoji: $displayConfigTypes[typeName].emoji,
     text: typeName,
@@ -66,13 +61,13 @@
   }));
 </script>
 
-<Hovering cls="column l-item-container clickable" {elevated} bind:hover on:click={toggleOpen}>
-  <div class="row flex align fields">
-    <div class="indent" style="width: {indent}px;" />
+<Hovering cls="column clickable item" {elevated} bind:hover on:click={toggleOpen}>
+  <div class="row flex align wrap-reverse item-fields">
+    <div style="width: {indent}px;" />
     <Icon name={open === undefined ? "dot" : open ? "expanded" : "expand"} color={chevronColor} size="large" />
 
     {#if creatingNewItem}
-      <Menu cls="l-item-emoji-menu" options={emojiOptions} bind:focus={editing}>
+      <Menu cls="emoji" options={emojiOptions} bind:focus={editing}>
         <span class="row center emoji-button"> {layout.emoji} </span>
       </Menu>
     {:else}
@@ -84,9 +79,9 @@
         <Field {...field} {item} bind:editing on:refresh>
           {#if field.name === "title"}
             {#if item.body}
-              <IconSwitch cls="row center l-details-switch" nameOn="dots" nameOff="dots-h" color="darkgoldenrod" size="medium" bind:toggled={detailed} />
+              <IconSwitch nameOn="dots" nameOff="dots-h" color="darkgoldenrod" size="medium" bind:toggled={detailed} />
             {:else}
-              <IconButton cls="row center l-details-add" name="pencil-plus" color="darkgoldenrod" size="medium" hidden={!hover} on:click={createBody} />
+              <IconButton name="pencil-plus" color="darkgoldenrod" size="medium" hidden={!hover} on:click={createBody} />
             {/if}
           {/if}
         </Field>
@@ -94,56 +89,77 @@
     {/each}
 
     {#if creatingNewItem}
-      <IconButton cls="row center l-confirm-button" name="check" color="grey" size="large" on:click={() => dispatch("create")} />
+      <IconButton name="check" color="grey" size="large" on:click={() => dispatch("create")} />
     {:else}
-      <Menu cls="row center l-item-menu-container" hide={!hover || $newItem.anchorId !== null} bind:focus={editing} {options}>
+      <Menu cls="row center" hide={!hover || $newItem.anchorId !== null} bind:focus={editing} {options}>
         <Icon name="dots-v" color="grey" size="large" />
       </Menu>
     {/if}
   </div>
   {#if item.body && detailed}
-    <Field name="body" {item} bind:editing style={bodyStyle} on:refresh />
+    <Field style="margin-left: {indent + 80}px;" name="body" {item} bind:editing on:refresh />
   {/if}
 </Hovering>
 
 <Options {item} bind:options on:refresh />
 
 <style>
-  :global(div.l-item-container) {
+  :global(.item) {
     width: 100%;
     max-width: var(--item-width);
     border-radius: var(--radius-small);
     margin: var(--gap-tiny);
     font-size: var(--font-large);
   }
-  :global(div.l-item-container:hover) {
+  :global(.item:hover) {
     background-color: var(--color-anti-flash-white);
   }
 
-  div.fields {
-    flex-wrap: wrap-reverse;
-  }
-  span.emoji {
+  :global(.item-fields > .emoji) {
     margin-left: var(--gap-small);
     margin-right: var(--gap-medium);
   }
-  span.emoji-button {
+
+  .emoji-button {
     margin-right: var(--gap-small);
     padding: var(--gap-small);
     border-radius: var(--radius-small);
   }
-  span.emoji-button:hover {
+  .emoji-button:hover {
     background-color: var(--color-silver);
   }
 
-  :global(div.l-item-emoji-menu) {
-    margin-left: var(--gap-small);
-    margin-right: var(--gap-medium);
+  :global(.field > .icon-button) {
+    padding: var(--gap-small);
   }
 
-  /* Menu styles */
+  :global(.field > .icon-button:hover) {
+    border-radius: var(--radius-small);
+    background-color: var(--color-silver);
+  }
 
-  :global(div.l-item-menu-container) {
+  :global(.field > .icon-switch) {
+    /* prettier-ignore */
+    padding-left: 
+      var(--icon-switch-is-on, inherit)
+      var(--icon-switch-is-off, var(--gap-small));
+
+    /* prettier-ignore */
+    padding-right:
+      var(--icon-switch-is-on, inherit)
+      var(--icon-switch-is-off, var(--gap-small));
+  }
+
+  :global(.item-fields > .icon-button) {
+    padding: var(--gap-small);
+    margin-left: var(--gap-large);
+  }
+  :global(.item-fields > .icon-button:hover) {
+    border-radius: var(--radius-small);
+    background-color: var(--color-silver);
+  }
+
+  :global(.item-fields > .menu:last-child) {
     padding: var(--gap-small);
     border-radius: var(--radius-small);
 
@@ -152,43 +168,17 @@
       var(--menu-is-visible, var(--color-silver))
       var(--menu-is-not-visible, inherit);
   }
-  :global(div.l-item-menu-container:hover) {
+  :global(.item-fields > .menu:last-child:hover) {
     background-color: var(--color-silver);
   }
 
-  :global(div.l-confirm-button) {
-    padding: var(--gap-small);
-    margin-left: var(--gap-large);
-  }
-  :global(div.l-confirm-button:hover) {
-    border-radius: var(--radius-small);
-    background-color: var(--color-silver);
-  }
-
-  :global(div.l-details-switch) {
+  :global(.item > .field) {
     padding-top: var(--gap-small);
+    padding-left: var(--gap-medium);
+    padding-right: var(--gap-medium);
     padding-bottom: var(--gap-small);
-
-    /* prettier-ignore */
-    padding-left: 
-      var(--button-switch-is-on, inherit)
-      var(--button-switch-is-off, var(--gap-small));
-
-    /* prettier-ignore */
-    padding-right:
-      var(--button-switch-is-on, inherit)
-      var(--button-switch-is-off, var(--gap-small));
-  }
-  :global(div.l-details-switch:hover) {
-    border-radius: var(--radius-small);
-    background-color: var(--color-silver);
-  }
-
-  :global(div.l-details-add) {
-    padding: var(--gap-small);
-  }
-  :global(div.l-details-add:hover) {
-    border-radius: var(--radius-small);
-    background-color: var(--color-silver);
+    margin-bottom: var(--gap-medium);
+    color: darkgoldenrod;
+    max-width: 40vw;
   }
 </style>
