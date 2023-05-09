@@ -1,14 +1,10 @@
 <script>
-  import "./styles.svelte";
-
-  import Panel from "../components/panel/panel.svelte";
-  import Items from "../components/items/items.svelte";
-
-  import Editor from "../components/editor/editor.svelte";
-
-  import { client, displayConfig, displayConfigAvailable } from "../utils";
-
   import { onMount } from "svelte";
+  import Editor from "../components/editor/editor.svelte";
+  import Items from "../components/items/items.svelte";
+  import Panel from "../components/panel/panel.svelte";
+  import { client, displayConfig, displayConfigAvailable } from "../utils";
+  import "./styles.svelte";
 
   onMount(() => {
     displayConfig.fetch();
