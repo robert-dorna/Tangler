@@ -1,11 +1,12 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { displayConfig } from "../../utils";
+  import { displayConfig, displayConfigTypes, displayConfigAvailable } from "../../utils";
   import DragDropList from "../drag-drop-list.svelte";
   import IconButton from "../icon-button.svelte";
   import Icon from "../icon.svelte";
   import EditorButton from "./editor-button.svelte";
   import EditorItem from "./editor-item.svelte";
+  import Menu from "../menu/menu.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -14,16 +15,24 @@
   $: configs = $displayConfig.types;
   $: config = configs !== undefined && configs[what];
   $: fields = config !== undefined && config.fields;
+
+  $: emojiOptions =
+    $displayConfigAvailable &&
+    $displayConfig.order.map((typeName) => ({
+      emoji: $displayConfigTypes[typeName].emoji,
+      text: typeName,
+      action: () => dispatch("edit", { what: typeName }),
+    }));
 </script>
 
 <div class="column elevated editor">
   <div class="row align flex">
     <div class="title">Fields editor</div>
-    <div class="row align clickable type-picker">
+    <Menu cls="row align clickable type-picker" options={emojiOptions} loseFocus>
       <Icon name="expanded" color="silver" size="medium" />
       {config.emoji}
       {what}
-    </div>
+    </Menu>
     <IconButton name="pencil-outline" color="silver" size="medium" />
     <div class="row-reverse align flex">
       <EditorButton name="trash" color="silver" size="medium" text="Delete" on:click={() => alert("delete operation is not supported yet")} />
@@ -58,7 +67,7 @@
     font-weight: bold;
     margin: var(--gap-medium);
   }
-  .type-picker {
+  :global(.type-picker) {
     margin-left: var(--gap-max);
     margin-right: var(--gap-medium);
     padding: var(--gap-small);

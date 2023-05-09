@@ -27,17 +27,21 @@
   // // TODO: check is this good or does it have e.g. SSR problems?
   $: if (selected && $displayConfigAvailable) refreshItems();
 
-  let edit = 'task';
+  let edit = null;
+
+  function onEdit(event) {
+    edit = event.detail.what;
+  }
 </script>
 
 <div class="row flex screen-size application">
-  <Panel bind:selected on:edit={({ detail: { what } }) => (edit = what)} />
+  <Panel bind:selected on:edit={onEdit} />
   <Items {items} on:refresh={refreshItems} />
   {#if edit !== null}
-    <div class="flex screen-size floating">
+    <div class="flex screen-size floating-editor">
       <div class="row flex center">
         {#if displayConfigAvailable}
-          <Editor what={edit} on:discard={() => (edit = null)} />
+          <Editor what={edit} on:discard={() => (edit = null)} on:edit={onEdit} />
         {/if}
       </div>
     </div>

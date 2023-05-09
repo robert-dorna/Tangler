@@ -1,10 +1,8 @@
 <style>
   :global(:root) {
-
     /* fonts */
 
-    --app-font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif;
+    --app-font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 
     /* sizes */
     --font-small: 18px;
@@ -34,22 +32,22 @@
     --color-white: white;
     --color-black: black;
 
-    --color-mint-cream: #F5FFFA;
-    --color-anti-flash-white: #EEF0F2;
-    --color-nyanza: #E9FFDB;
-    --color-tea-green: #D0F0C0;
-    --color-pistachio: #93C572;
+    --color-mint-cream: #f5fffa;
+    --color-anti-flash-white: #eef0f2;
+    --color-nyanza: #e9ffdb;
+    --color-tea-green: #d0f0c0;
+    --color-pistachio: #93c572;
 
-    --color-taupe: #463F3A;
-    --color-battleship-grey: #8A817C;
-    --color-silver: #BCB8B1;
-    --color-isabelline: #F4F3EE;
-    --color-melon: #E0AFA0;
+    --color-taupe: #463f3a;
+    --color-battleship-grey: #8a817c;
+    --color-silver: #bcb8b1;
+    --color-isabelline: #f4f3ee;
+    --color-melon: #e0afa0;
 
-    --color-sandy-brown: #FC9E4F;
-    --color-cinnabar: #F4442E;
-    --color-field-drab: #6A5837;
-    --color-prussian-blue: #172A3A;
+    --color-sandy-brown: #fc9e4f;
+    --color-cinnabar: #f4442e;
+    --color-field-drab: #6a5837;
+    --color-prussian-blue: #172a3a;
 
     /* effects */
     --opacity-hover: 80%;
@@ -69,9 +67,19 @@
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
   }
 
-  :global(div.floating) {
+  :global(div.floating-panel) {
     position: absolute;
     z-index: 1;
+  }
+
+  :global(div.floating-editor) {
+    position: absolute;
+    z-index: 2;
+  }
+
+  :global(div.floating-menu) {
+    position: absolute;
+    z-index: 30;
   }
 
   :global(div.hidden) {

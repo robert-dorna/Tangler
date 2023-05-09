@@ -8,7 +8,7 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="row justify floating max-width prompt-container">
+<div class="row justify floating-panel max-width prompt-container">
   <div class="row align elevated prompt">
     <div class="row flex align title">{texts.title}</div>
     <div class="row center clickable option" on:click|stopPropagation={() => dispatch("create")} on:keypress={undefined}>

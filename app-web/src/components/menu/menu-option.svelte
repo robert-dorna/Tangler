@@ -6,10 +6,16 @@
   export let text;
   export let textColor = undefined;
   export let action;
+
+  export let focus = undefined;
+
+  function onClick() {
+    action();
+    focus = null;
+  }
 </script>
 
-<!-- TODO: fix open menu on options change -->
-<div class="row align menu-option" on:click|stopPropagation={action} on:keypress={undefined}>
+<div class="row align menu-option" on:click|stopPropagation={onClick} on:keypress={undefined}>
   {#if emoji !== undefined}
     <div class="emoji">
       {emoji}

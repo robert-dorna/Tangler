@@ -36,9 +36,9 @@
 >
   <slot />
   {#if visible}
-    <div class="column floating elevated options" style={menuPosition}>
+    <div class="column floating-menu elevated options" style={menuPosition}>
       {#each options as option (option.text)}
-        <MenuOption {...option}/>
+        <MenuOption {...option} bind:focus />
       {/each}
     </div>
   {/if}
