@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from sys import argv
 from src.cli import parse_args, run_command
-from src.server.app import run, app
+from src.server import run, app
 
 
 if __name__ == "__main__":

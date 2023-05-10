@@ -1,10 +1,10 @@
 from flask import request, jsonify
+from ..app import app
 from ...lib.api import Api
 
 
-# SOCKETS, WebSockets/Socket.IO,
-# RAW, RPC, SOAP, REST, GraphQL
-def data_request_handler(app):
+@app.route("/data", methods=['GET'])
+def data_read():  # not really, now it callls arbitrary function
 
     args = {**request.args}
 
@@ -44,7 +44,8 @@ def data_request_handler(app):
     return response
 
 
-def data_update_request_handler():
+@app.route("/data", methods=['POST'])
+def data_update():
     args = {**request.args}
 
     what = args.pop('what')
@@ -58,7 +59,8 @@ def data_update_request_handler():
     return response
 
 
-def data_create_request_handler():
+@app.route("/data", methods=['PUT'])
+def data_create():
     args = {**request.args}
 
     args.pop('_id')

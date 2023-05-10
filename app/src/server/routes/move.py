@@ -1,8 +1,10 @@
 from flask import request, abort, jsonify
+from ..app import app
 from ...lib.api import Api
 
 
-def move_route_handler(app):
+@app.route("/move")
+def move_data():
     args = {**request.args}
 
     location = args.pop('location')

@@ -1,16 +1,19 @@
 import os
 from flask import request, jsonify
+from ..app import app
 from ...lib.core.files import read_yaml, write_yaml, read_json, write_json, DATADIR_PATH, CONFIG_PATH
 
 
-def config_read_request_handler():
+@app.route("/config")
+def read_config():
     display = read_yaml(CONFIG_PATH)
     response = jsonify(display)
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
 
-def config_patch_request_handler():
+@app.route("/config", methods=["POST"])
+def patch_config():
     config = read_yaml(CONFIG_PATH)
 
     args = {**request.json}

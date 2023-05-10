@@ -1,8 +1,10 @@
 from flask import request, jsonify
+from ..app import app
 from ...lib.api import Api
 
 
-def unlink_route_handler():
+@app.route("/unlink")
+def unlink_data():
     args = {**request.args}
 
     what = args.pop('what')
