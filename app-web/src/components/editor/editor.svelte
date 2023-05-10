@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { displayConfig, displayConfigAvailable, displayConfigTypes } from "../../utils";
+  import { client, displayConfig, displayConfigAvailable, displayConfigTypes } from "../../utils";
   import DragDropList from "../drag-drop-list.svelte";
   import IconButton from "../icon-button.svelte";
   import Icon from "../icon.svelte";
@@ -11,7 +11,7 @@
 
   const dispatch = createEventDispatcher();
 
-  export let what = "task";
+  export let what;
 
   let editingTypeName = true;
 
@@ -32,10 +32,34 @@
     }));
 
   $: emoji = config.emoji;
+  $: name = what;
 
-  function onSave(event) {
-    console.log(event.detail);
+  function onRename(event) {
+    console.log("saving config: ", event.detail);
+    emoji = event.detail.emoji;
+    name = event.detail.what;
     editingTypeName = false;
+  }
+
+  function onSave() {
+    if (emoji !== config.emoji && name === what) {
+      client.patchConfig({
+        target: "emoji",
+        type_name: what,
+        new_value: emoji,
+      });
+    } else if (name !== what) {
+      let new_value = { name };
+      if (emoji !== config.emoji) {
+        new_value.emoji = emoji;
+      }
+      client.patchConfig({
+        target: "name",
+        type_name: what,
+        new_value,
+      });
+    }
+    dispatch('refresh')
   }
 </script>
 
@@ -43,12 +67,12 @@
   <div class="row align flex">
     <div class="title">Fields editor</div>
     {#if editingTypeName}
-      <EditorTypeEditor cls="row align type-picker" {emoji} {what} on:save={onSave} on:close={switchTypeNameEditing} />
+      <EditorTypeEditor cls="row align type-picker" {emoji} what={name} on:save={onRename} on:close={switchTypeNameEditing} />
     {:else}
       <Menu cls="row align clickable type-picker" options={emojiOptions} loseFocus>
         <Icon name="expanded" color="silver" size="medium" />
         {emoji}
-        {what}
+        {name}
       </Menu>
       <IconButton name="pencil-outline" color="silver" size="medium" on:click={switchTypeNameEditing} />
     {/if}
@@ -66,7 +90,7 @@
   {/if}
   <div class="row align flex buttons">
     <EditorButton name="close" color="black" size="medium" text="Close" on:click={() => dispatch("discard")} />
-    <EditorButton name="check" color="black" size="medium" text="Save" on:click={() => undefined} />
+    <EditorButton name="check" color="black" size="medium" text="Save" on:click={onSave} />
     <EditorButton name="eraser" color="black" size="medium" text="Clear changes" on:click={() => undefined} />
     <div class="flex" />
     <EditorButton name="eye-outline" color="black" size="medium" text="Preview (on)" on:click={() => undefined} />

@@ -44,5 +44,10 @@ def read_json(path):
         return json.load(f)
 
 
+def write_json(path, data):
+    with open(path, 'w') as f:
+        f.write(json.dumps(data, indent=4))
+
+
 DATADIR_PATH = environ['TANGLER_DATA_DIR']
 CONFIG_PATH = path.join(DATADIR_PATH, "_config.yaml")

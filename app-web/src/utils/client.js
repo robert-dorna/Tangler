@@ -1,5 +1,7 @@
 
-const req = async (method, url, args = []) => {
+const req = async (url, options, args = []) => {
+  url = `${window.location.href}${url}`
+
   const shouldOmmit = value => value === null || value === undefined || String(value).toUpperCase() === "NULL";
   const encode = value => String(value).replace(' ', '%20')
 
@@ -16,16 +18,21 @@ const req = async (method, url, args = []) => {
     url += `?${urlArgs}`
   }
 
-  return fetch(url, { method }).then((res) => res.json());
+  return fetch(url, options).then((res) => res.json());
 }
 
 const client = {
-  get: async (args) => req('GET', `${window.location.href}api/data`, args),
-  update: async (args) => req('POST', `${window.location.href}api/data`, args),
-  create: async (args) => req('PUT', `${window.location.href}api/data`, args),
-  move: async (args) => req('GET', `${window.location.href}api/move`, args),
-  unlink: async (args) => req('GET', `${window.location.href}api/unlink`, args),
-  config: async () => req('GET', `${window.location.href}api/config`),
+  get: async (args) => req('api/data', { method: 'GET' }, args),
+  update: async (args) => req('api/data', { method: 'POST' }, args),
+  create: async (args) => req('api/data', { method: 'PUT' }, args),
+  move: async (args) => req('api/move', { method: 'GET' }, args),
+  unlink: async (args) => req('api/unlink', { method: 'GET' }, args),
+  config: async () => req('api/config', { method: 'GET' }),
+  patchConfig: async (data) => req('api/config', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
 }
 
 export default client

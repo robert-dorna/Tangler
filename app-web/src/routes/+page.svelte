@@ -11,7 +11,7 @@
   });
 
   // // TODO: deduce it or load from config
-  let selected = "task";
+  let selected = null;
   let items = [];
 
   function refreshItems() {
@@ -20,6 +20,7 @@
     });
   }
 
+  $: if ($displayConfigAvailable && selected === null) selected = $displayConfig.order[0]
   // // TODO: check is this good or does it have e.g. SSR problems?
   $: if (selected && $displayConfigAvailable) refreshItems();
 
@@ -37,7 +38,7 @@
     <div class="flex screen-size floating-editor">
       <div class="row flex center">
         {#if displayConfigAvailable}
-          <Editor what={edit} on:discard={() => (edit = null)} on:edit={onEdit} />
+          <Editor what={edit} on:discard={() => (edit = null)} on:edit={onEdit} on:refresh={refreshItems}/>
         {/if}
       </div>
     </div>
