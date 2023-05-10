@@ -13,7 +13,7 @@
 
   export let what;
 
-  let editingTypeName = true;
+  let editingTypeName = false;
 
   function switchTypeNameEditing() {
     editingTypeName = !editingTypeName;
