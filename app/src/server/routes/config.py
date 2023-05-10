@@ -18,7 +18,11 @@ def config_patch_request_handler():
     target = args['target']
 
     if target == "order":
-        response = jsonify({'response': 'error', 'message': 'target "order" is not supported yet (will be)'})
+        new_value = args['new_value']
+        config['order'] = new_value
+        write_yaml(CONFIG_PATH, config)
+        response = jsonify({'response': 'ok (probably)'})
+
     elif target == "name":
         old_name = args['type_name']
         new_name = args['new_value']['name']
@@ -63,6 +67,7 @@ def config_patch_request_handler():
         write_yaml(CONFIG_PATH, config)
 
         response = jsonify({'response': 'ok (probably)'})
+
     else:
         response = jsonify({'response': 'error', 'message': f'unsupported target: {target}'})
 

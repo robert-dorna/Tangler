@@ -14,8 +14,8 @@ formatters:
     pwa: blue
     server: white
 order:
-- to-dodo
 - note
+- task
 types:
   note:
     emoji: "\u270D\uFE0F"
@@ -29,7 +29,7 @@ types:
       values: text
       width: false
     template: '{_id:dot:>3} {title:<14}     {body:body:nn:orange}'
-  to-dodo:
+  task:
     emoji: "\U0001F680"
     fields:
     - name: title
