@@ -37,7 +37,7 @@
   {#if edit !== null}
     <div class="flex screen-size floating-editor">
       <div class="row flex center">
-        {#if displayConfigAvailable}
+        {#if $displayConfigAvailable}
           <Editor what={edit} on:discard={() => (edit = null)} on:edit={onEdit} on:refresh={refreshItems}/>
         {/if}
       </div>
