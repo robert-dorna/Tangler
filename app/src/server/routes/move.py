@@ -3,7 +3,7 @@ from ..app import app
 from ...lib.api import Api
 
 
-@app.route("/move")
+@app.route("/old/move")
 def move_data():
     args = {**request.args}
 

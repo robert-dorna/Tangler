@@ -3,7 +3,7 @@ from ..app import app
 from ...lib.api import Api
 
 
-@app.route("/data", methods=['GET'])
+@app.route("/old/data", methods=['GET'])
 def data_read():  # not really, now it callls arbitrary function
 
     args = {**request.args}
@@ -44,7 +44,7 @@ def data_read():  # not really, now it callls arbitrary function
     return response
 
 
-@app.route("/data", methods=['POST'])
+@app.route("/old/data", methods=['POST'])
 def data_update():
     args = {**request.args}
 
@@ -59,7 +59,7 @@ def data_update():
     return response
 
 
-@app.route("/data", methods=['PUT'])
+@app.route("/old/data", methods=['PUT'])
 def data_create():
     args = {**request.args}
 

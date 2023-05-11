@@ -3,7 +3,7 @@ from ..app import app
 from ...lib.api import Api
 
 
-@app.route("/unlink")
+@app.route("/old/unlink")
 def unlink_data():
     args = {**request.args}
 

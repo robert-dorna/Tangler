@@ -4,7 +4,7 @@ from ..app import app
 from ...lib.core.files import read_yaml, write_yaml, read_json, write_json, DATADIR_PATH, CONFIG_PATH
 
 
-@app.route("/config")
+@app.route("/old/config", methods = ['GET'])
 def read_config():
     display = read_yaml(CONFIG_PATH)
     response = jsonify(display)
@@ -12,7 +12,7 @@ def read_config():
     return response
 
 
-@app.route("/config", methods=["POST"])
+@app.route("/old/config", methods=["POST"])
 def patch_config():
     config = read_yaml(CONFIG_PATH)
 
