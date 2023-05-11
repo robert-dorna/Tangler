@@ -14,8 +14,8 @@ formatters:
     pwa: blue
     server: white
 order:
-- note
 - task
+- note
 types:
   note:
     emoji: "\u270D\uFE0F"
