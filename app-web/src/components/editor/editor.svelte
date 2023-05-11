@@ -43,7 +43,7 @@
 
   function onSave() {
     if (emoji !== config.emoji && name === what) {
-      client.patchConfig({
+      client.oldapi.patchConfig({
         target: "emoji",
         type_name: what,
         new_value: emoji,
@@ -53,7 +53,7 @@
       if (emoji !== config.emoji) {
         new_value.emoji = emoji;
       }
-      client.patchConfig({
+      client.oldapi.patchConfig({
         target: "name",
         type_name: what,
         new_value,

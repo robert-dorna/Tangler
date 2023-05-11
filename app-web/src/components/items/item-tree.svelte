@@ -21,7 +21,7 @@
   $: newItemFields = { _id: "new", _what: $newItem.anchorWhat };
 
   function create() {
-    client
+    client.oldapi
       .create({
         ...newItemFields,
         _location: newItemLocation,

@@ -6,7 +6,7 @@ function createDisplayConfig() {
   const { subscribe, set } = writable({});
 
   function fetch() {
-    client.config().then((json) => {
+    client.oldapi.config().then((json) => {
       set({
         types: json.types,
         order: json.order,

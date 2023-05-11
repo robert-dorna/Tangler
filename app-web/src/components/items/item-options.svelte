@@ -37,21 +37,21 @@
   $: options = itemIsMoveTarget ? allOptions.moveTarget : itemIsMarkedForMove ? allOptions.markedForMove : allOptions.normal;
 
   function detachItem() {
-    client
+    client.oldapi
       .unlink({ what: item["_what"], _id: item["_id"] })
       .then(() => dispatch("refresh"))
       .catch(() => alert("error on detach"));
   }
 
   function deleteItem() {
-    client
+    client.oldapi
       .get({ method: "delete", what: item["_what"], _id: item["_id"] })
       .then(() => dispatch("refresh"))
       .catch(() => alert("error on delete"));
   }
 
   function moveItem(location) {
-    client
+    client.oldapi
       .move({
         location: location === LOCATION.ABOVE ? "above" : location === LOCATION.BELOW ? "below" : "child",
         what: $movingItem.what,

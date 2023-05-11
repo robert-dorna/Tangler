@@ -15,7 +15,7 @@
   let items = [];
 
   function refreshItems() {
-    client.get({ method: "readall", what: selected }).then((json) => {
+    client.oldapi.get({ method: "readall", what: selected }).then((json) => {
       items = json.result;
     });
   }

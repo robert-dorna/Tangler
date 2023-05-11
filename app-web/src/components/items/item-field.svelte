@@ -23,7 +23,7 @@
   function submitChange() {
     editing = false;
     if (item[name] !== originalValue && item["_id"] !== "new") {
-      client
+      client.oldapi
         .update({
           what: item["_what"],
           _id: item["_id"],

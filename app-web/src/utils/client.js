@@ -58,17 +58,19 @@ const client = {
   },
 
   // todo: old api, remove
-  get: async (args) => req('api/old/data', { method: 'GET' }, args),
-  update: async (args) => req('api/old/data', { method: 'POST' }, args),
-  create: async (args) => req('api/old/data', { method: 'PUT' }, args),
-  move: async (args) => req('api/old/move', { method: 'GET' }, args),
-  unlink: async (args) => req('api/old/unlink', { method: 'GET' }, args),
-  config: async () => req('api/old/config', { method: 'GET' }),
-  patchConfig: async (data) => req('api/old/config', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
+  oldapi: {
+    get: async (args) => req('api/old/data', { method: 'GET' }, args),
+    update: async (args) => req('api/old/data', { method: 'POST' }, args),
+    create: async (args) => req('api/old/data', { method: 'PUT' }, args),
+    move: async (args) => req('api/old/move', { method: 'GET' }, args),
+    unlink: async (args) => req('api/old/unlink', { method: 'GET' }, args),
+    config: async () => req('api/old/config', { method: 'GET' }),
+    patchConfig: async (data) => req('api/old/config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+  }
 }
 
 export default client
