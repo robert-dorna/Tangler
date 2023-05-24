@@ -9,10 +9,3 @@ ENV FLASK_RUN_HOST=0.0.0.0
 ENV TANGLER_DATA_DIR=/usr/src/app/_data
 CMD [ "flask", "--app", "tangler.py", "--debug", "run" ]
 EXPOSE 8000
-
-# WORKDIR /app
-# COPY src/ ./src/
-# COPY docs/ ./docs/
-# COPY tangler.py ./
-# CMD [ "bash" ]
-# CMD [ "python", "./tangler.py", "server" ]
