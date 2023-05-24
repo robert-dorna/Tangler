@@ -27,9 +27,12 @@
   }
 
   function create() {
+    const fields = {...newItemFields};
+    delete fields._id
+    delete fields._what
     client.data
       .create($newItem.anchorWhat, {
-        ...newItemFields,
+        ...fields,
         _place: {
           relationship: translateObsoleteLocation(newItemLocation),
           reference: {
