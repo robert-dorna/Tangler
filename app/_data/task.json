@@ -90,13 +90,6 @@
         "title": "splits and saved views"
     },
     {
-        "_id": 13,
-        "due_date": "8 hours",
-        "label": "feat",
-        "project": "pwa",
-        "title": "types display editing"
-    },
-    {
         "_id": 14,
         "due_date": "1 day",
         "label": "feat",
@@ -109,21 +102,6 @@
         "label": "feat",
         "project": "pwa",
         "title": "sorting"
-    },
-    {
-        "_id": 16,
-        "body": "move, link, unlink",
-        "due_date": "1 hour",
-        "label": "feat",
-        "project": "pwa",
-        "title": "items move operations"
-    },
-    {
-        "_id": 17,
-        "due_date": "2 hours",
-        "label": "feat",
-        "project": "pwa",
-        "title": "items CRUD operations"
     },
     {
         "_id": 18,
@@ -162,22 +140,6 @@
         "label": "feat",
         "project": "pwa",
         "title": "readonly mode"
-    },
-    {
-        "_id": 26,
-        "body": "",
-        "due_date": "4 hours",
-        "label": "feat",
-        "project": "pwa",
-        "title": "types CRUD operations"
-    },
-    {
-        "_id": 27,
-        "body": "",
-        "due_date": "2 hours",
-        "label": "feat",
-        "project": "pwa",
-        "title": "types move operations"
     },
     {
         "_id": 28,
@@ -232,14 +194,14 @@
         "body": "",
         "label": "feat",
         "project": "pwa",
-        "title": "items operations"
+        "title": "data operations"
     },
     {
         "_id": 35,
         "body": "",
         "label": "feat",
         "project": "pwa",
-        "title": "types operations"
+        "title": "config operations"
     },
     {
         "_id": 36,
@@ -320,13 +282,6 @@
         "title": "maybe one DNS record should be a redirect, use SSL/TSL"
     },
     {
-        "_id": 48,
-        "body": "",
-        "label": "bug",
-        "project": "pwa",
-        "title": "fix and polish tangler CRUD and other data operations"
-    },
-    {
         "_id": 49,
         "body": "like e.g. wttr.in",
         "due_date": "2023",
@@ -357,5 +312,96 @@
         "label": "feat",
         "project": "pwa",
         "title": "use cookies to remember last open list and expands"
+    },
+    {
+        "_id": 53,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "reorder types"
+    },
+    {
+        "_id": 54,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "create type"
+    },
+    {
+        "_id": 55,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "update type"
+    },
+    {
+        "_id": 56,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "delete type"
+    },
+    {
+        "_id": 57,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "reorder fields"
+    },
+    {
+        "_id": 58,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "create field"
+    },
+    {
+        "_id": 59,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "update field"
+    },
+    {
+        "_id": 60,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "delete field"
+    },
+    {
+        "_id": 61,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "reorder values"
+    },
+    {
+        "_id": 62,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "create value"
+    },
+    {
+        "_id": 63,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "update value"
+    },
+    {
+        "_id": 64,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "delete value"
+    },
+    {
+        "_id": 65,
+        "body": "",
+        "label": "feat",
+        "project": "pwa",
+        "title": "slick enough"
     }
 ]
