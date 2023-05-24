@@ -1,11 +1,8 @@
 from .app import app
 from .routes.data import *
-from .routes.move import *
-from .routes.unlink import *
 from .routes.config import *
-
-from .routes.new_config import *
-from .routes.new_data import *
+from .routes.config_fields import *
+from .routes.config_types import *
 
 
 def run():

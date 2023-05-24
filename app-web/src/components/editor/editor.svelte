@@ -42,24 +42,12 @@
   }
 
   function onSave() {
-    if (emoji !== config.emoji && name === what) {
-      client.oldapi.patchConfig({
-        target: "emoji",
-        type_name: what,
-        new_value: emoji,
-      });
-    } else if (name !== what) {
-      let new_value = { name };
-      if (emoji !== config.emoji) {
-        new_value.emoji = emoji;
-      }
-      client.oldapi.patchConfig({
-        target: "name",
-        type_name: what,
-        new_value,
-      });
+    if (name !== what || emoji !== config.emoji) {
+      client.config.type.modify(what, {
+        name, emoji
+      })
+      dispatch("refresh");
     }
-    dispatch('refresh')
   }
 </script>
 

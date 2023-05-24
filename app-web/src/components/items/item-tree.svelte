@@ -20,13 +20,23 @@
 
   $: newItemFields = { _id: "new", _what: $newItem.anchorWhat };
 
+  function translateObsoleteLocation(location) {
+    if (location === LOCATION.ABOVE) return "above"
+    if (location === LOCATION.BELOW) return "below"
+    return "child"
+  }
+
   function create() {
-    client.oldapi
-      .create({
+    client.data
+      .create($newItem.anchorWhat, {
         ...newItemFields,
-        _location: newItemLocation,
-        _anchorId: item["_id"],
-        _anchorWhat: item["_what"],
+        _place: {
+          relationship: translateObsoleteLocation(newItemLocation),
+          reference: {
+            what: item["_what"],
+            _id: item["_id"],
+          }
+        }
       })
       .then(() => {
         dispatch("refresh");

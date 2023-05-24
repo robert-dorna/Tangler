@@ -9,7 +9,7 @@
 
 <div class="row items-container">
   <div class="column flex items">
-    {#if $displayConfigAvailable}
+    {#if $displayConfigAvailable && items && items.length}
       {#each items as item, index (item._what + item._id)}
         <ItemTree {item} on:refresh />
       {/each}

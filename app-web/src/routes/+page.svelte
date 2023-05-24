@@ -15,12 +15,12 @@
   let items = [];
 
   function refreshItems() {
-    client.oldapi.get({ method: "readall", what: selected }).then((json) => {
-      items = json.result;
+    client.data.read(selected).then((json) => {
+      items = json;
     });
   }
 
-  $: if ($displayConfigAvailable && selected === null) selected = $displayConfig.order[0]
+  $: if ($displayConfigAvailable && selected === null) selected = $displayConfig.order[0];
   // // TODO: check is this good or does it have e.g. SSR problems?
   $: if (selected && $displayConfigAvailable) refreshItems();
 
@@ -38,7 +38,7 @@
     <div class="flex screen-size floating-editor">
       <div class="row flex center">
         {#if $displayConfigAvailable}
-          <Editor what={edit} on:discard={() => (edit = null)} on:edit={onEdit} on:refresh={refreshItems}/>
+          <Editor what={edit} on:discard={() => (edit = null)} on:edit={onEdit} on:refresh={refreshItems} />
         {/if}
       </div>
     </div>

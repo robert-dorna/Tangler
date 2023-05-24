@@ -23,11 +23,9 @@
   function submitChange() {
     editing = false;
     if (item[name] !== originalValue && item["_id"] !== "new") {
-      client.oldapi
-        .update({
-          what: item["_what"],
-          _id: item["_id"],
-          [name]: item[name],
+      client.data
+        .modify(item["_what"], item["_id"], {
+          [name]: item[name]
         })
         .then(() => {
           dispatch("refresh");

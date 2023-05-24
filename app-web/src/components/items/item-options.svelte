@@ -37,27 +37,33 @@
   $: options = itemIsMoveTarget ? allOptions.moveTarget : itemIsMarkedForMove ? allOptions.markedForMove : allOptions.normal;
 
   function detachItem() {
-    client.oldapi
-      .unlink({ what: item["_what"], _id: item["_id"] })
+    client.data
+      .modify(item["_what"], item["_id"], {
+        _place: {
+          relationship: "top"
+        }
+      })
       .then(() => dispatch("refresh"))
       .catch(() => alert("error on detach"));
   }
 
   function deleteItem() {
-    client.oldapi
-      .get({ method: "delete", what: item["_what"], _id: item["_id"] })
+    client.data
+      .delete(item["_what"], item["_id"])
       .then(() => dispatch("refresh"))
       .catch(() => alert("error on delete"));
   }
 
   function moveItem(location) {
-    client.oldapi
-      .move({
-        location: location === LOCATION.ABOVE ? "above" : location === LOCATION.BELOW ? "below" : "child",
-        what: $movingItem.what,
-        id: $movingItem._id,
-        to_what: item._what,
-        to_id: item._id,
+    client.data
+      .modify($movingItem.what, $movingItem._id, {
+        _place: {
+          relationship: location === LOCATION.ABOVE ? "above" : location === LOCATION.BELOW ? "below" : "child",
+          reference: {
+            what: item._what,
+            _id: item._id,
+          }
+        }
       })
       .then(() => {
         dispatch("refresh");

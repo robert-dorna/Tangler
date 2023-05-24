@@ -1,104 +1,131 @@
-from flask import request, jsonify
+import os
+import json
+from flask import request, abort, jsonify
 from ..app import app
 from ...lib.api import Api
 
 
-@app.route("/old/data", methods=['GET'])
-def data_read():  # not really, now it callls arbitrary function
 
-    args = {**request.args}
-
-    if 'index' in args:
-        args['index'] = int(args['index'])
-    if '_id' in args:
-        args['_id'] = int(args['_id'])
-
-    app.logger.info('args: %s', args)
-
-    api = Api()
-    method = args.pop('method') if 'method' in args else 'read'
-    method = getattr(api, method)
-
-    what = args.pop('what')if 'what' in args else 'task'
-    if ',' in what:
-        what = what.split(',')
-
-    app.logger.info('calling with')
-    app.logger.info(' > what: %s', what)
-    app.logger.info(' > args: %s', args)
-
-    if isinstance(what, list):
-        result = {w: method(what=w, **args) for w in what}
-    else:
-        result = method(what=what, **args)
-
-    # data.flush()
-
-    success = True  # todo, way to check from Data that it was updated
-    response = jsonify(
-        {'status': 'ran method, success unknown', 'result': result} if success else
-        {'status': 'error'}
-    )
-
+@app.route("/data/<what>", methods=['GET'])
+def get_type_items(what):
+    response = jsonify(Api().readall(what))
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
 
-@app.route("/old/data", methods=['POST'])
-def data_update():
-    args = {**request.args}
+# note: this is not consistant with config POST as this one does not have exactly the same
+# path as the resulting (new/being created) resource
+@app.route("/data/<what>", methods=['POST'])
+def create_type_item(what):
+    args = {**request.json}
 
-    what = args.pop('what')
-    _id = int(args.pop('_id'))
+    # this whole functions looks "ugly", is too long and complex and just overall bad
+    # todo: refactor lib.api
 
-    api = Api()
-    api.update(what, _id, values=args)
+    # todo: config API/lib.api should block attempts on defining those fields or any fields starting with '_'
+    if '_id' in args or '_what' in args:
+        raise ValueError(f'item cannot be created with manually specified _id or _what as those keys are reserved')
 
-    response = jsonify({'status': 'ran update, success unknown'})
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
-
-
-@app.route("/old/data", methods=['PUT'])
-def data_create():
-    args = {**request.args}
-
-    args.pop('_id')
-
-    what = args.pop('_what')
-    location = int(args.pop('_location'))
-    anchor = {
-        '_id': int(args.pop('_anchorId')),
-        'what': args.pop('_anchorWhat'),
-    }
+    place = args.pop('_place')
+    relationship = place['relationship']
+    reference = place['reference'] if relationship != 'top' else None
 
     api = Api()
     api.read_links()
 
-    ABOVE = 1
-    BELOW = 2
-    CHILD = 3
-
-    if location == CHILD:
-        newId = api.create(what, values=args)
-        new_link = {
-            'from': {'_id': anchor['_id'], 'what': anchor['what']},
-            'to': {'_id': newId, 'what': what}
-        }
-        api.links.append(new_link)
+    if relationship == 'child':
+        new_id = api.create(what, args)
+        api.links.append({
+            'from': {'_id': reference['_id'], 'what': reference['what']},
+            'to': {'_id': new_id, 'what': what}
+        })
         api.write_links()
-    else:
+    elif relationship != 'top':
         try:
             i, link = next((i, v)
-                           for i, v in enumerate(api.links) if v['to'] == anchor)
-            newId = api.create(what, values=args)
-            new_link = {'from': link['from'], 'to': {'_id': newId, 'what': what}}
-            api.links.insert(i if location == ABOVE else i+1, new_link)
+                           for i, v in enumerate(api.links) if v['to'] == reference)
+            new_id = api.create(what, args)
+            api.links.insert(i if relationship == 'above' else i+1, {
+                'from': link['from'],
+                'to': {'_id': new_id, 'what': what}
+            })
             api.write_links()
         except StopIteration:
-            i, _ = api.read(anchor['what'], anchor['_id'])
-            api.create(what, index=i if location == ABOVE else i+1, values=args)
+            i, _ = api.read(reference['what'], reference['_id'])
+            api.create(what, index=i if relationship == 'above' else i+1, values=args)
 
-    response = jsonify({'status': 'ran craete, success unknown'})
+    response = jsonify({'new_item_id': new_id})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
+@app.route("/data/<what>/<int:id>", methods=['GET'])
+def get_type_item(what, id):
+    response = jsonify(Api().read(what, id))
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
+@app.route("/data/<what>/<int:id>", methods=['PATCH'])
+def update_type_item(what, id):
+    # todo: move, link and maybe more 
+    args = {**request.json}
+
+    # todo: duplicates logic of POST method
+    if '_id' in args or '_what' in args:
+        raise ValueError(f'item cannot be created with manually specified _id or _what as those keys are reserved')
+
+    if '_place' in args:
+        place = args.pop('_place')
+        relationship = place['relationship']
+
+        if relationship == 'top':
+            api = Api()
+            parent_data = api.parent(what, id)
+            if parent_data:
+                _, parent = parent_data
+                # todo: standarize '_' in special types (sometimes its missing, e.g. in link and reference)
+                api.unlink(parent['_what'], parent['_id'], what, id)
+
+        reference = place['reference']
+
+        api = Api()
+
+        reference_parent = api.parent(reference['what'], reference['_id'])
+        if (reference_parent is None) and (what != reference['what']) and (relationship != "child"):
+            abort(400)
+        
+        parent_data = api.parent(what, id)
+        if parent_data:
+            _, parent = parent_data
+            api.unlink(parent['_what'], parent['_id'], what, id)
+
+        if relationship == "child":
+            api.link(reference['what'], reference['_id'], what, id)
+        else:
+            if reference_parent is None:
+                index, _ = api.read(reference['what'], reference['_id'])
+                api.move(what, id, index if relationship == 'above' else index + 1)
+            else:
+                link_index, parent = reference_parent
+                if relationship == "below":
+                    link_index += 1
+
+                api.links.insert(link_index, {
+                    'from': {'what': parent['_what'], '_id': parent['_id']},
+                    'to': {'what': what, '_id': id}
+                })
+                api.write_links()
+
+    app.logger.info('calling update %s %s %s', what, id, json.dumps(args))
+    Api().update(what, id, values=args)
+    return get_type_item(what, id)
+
+
+@app.route("/data/<what>/<int:id>", methods=['DELETE'])
+def delete_type_item(what, id):
+    # todo: delete throws if id does not exist and that is not indempotent
+    Api().delete(what, id)
+    response = jsonify({'response': 'ok (probably)'})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
