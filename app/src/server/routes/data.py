@@ -33,6 +33,7 @@ def create_type_item(what):
     api = Api()
     api.read_links()
 
+    new_id = None
     if relationship == 'child':
         new_id = api.create(what, args)
         api.links.append({
