@@ -29,9 +29,10 @@
   function create() {
     const fields = {...newItemFields};
     delete fields._id
+    const newFieldType = fields._what
     delete fields._what
     client.data
-      .create($newItem.anchorWhat, {
+      .create(newFieldType, {
         ...fields,
         _place: {
           relationship: translateObsoleteLocation(newItemLocation),
@@ -55,7 +56,7 @@
 <Item {item} {indent} bind:open on:refresh />
 
 {#if open}
-  {#each item._children as child (child._id)}
+  {#each item._children as child (child._what + child._id)}
     <svelte:self item={child} indent={indent + 32} on:refresh />
   {/each}
 {/if}
