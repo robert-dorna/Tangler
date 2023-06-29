@@ -8,6 +8,11 @@
         "title": "version 0.1: CRUD"
     },
     {
+        "_id": 69,
+        "body": "",
+        "title": "version 0.1.1: CLI"
+    },
+    {
         "_id": 45,
         "body": "",
         "label": "feat",
@@ -255,7 +260,7 @@
     },
     {
         "_id": 42,
-        "body": "",
+        "body": "note: I forgot it, refresh knowledge on different types of tests: smoke, sanity, regression, unit tests,...",
         "label": "refactor",
         "project": "cli",
         "title": "write server tests"
@@ -417,5 +422,12 @@
         "label": "feat",
         "project": "server",
         "title": "solid CI/CD pipeline and development Code of Conduct"
+    },
+    {
+        "_id": 70,
+        "body": "",
+        "label": "refactor",
+        "project": "library",
+        "title": "refactor entire app/"
     }
 ]

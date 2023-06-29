@@ -175,6 +175,31 @@
         "title": "support bold, italic (with stars), and `` in title (when editing markup would be visible)"
     },
     {
+        "_id": 44,
+        "body": "maybe: flatpak, snap?",
+        "title": "shipping with: Nix, Docker, AppImage, source code (manual build)"
+    },
+    {
+        "_id": 45,
+        "body": "",
+        "title": "use standard ports everywhere (e.g. HTTPS port), not some custom values picked at random"
+    },
+    {
+        "_id": 46,
+        "body": "https://blog.postman.com/easier-api-authentication-in-postman/",
+        "title": "check postman auth stuff"
+    },
+    {
+        "_id": 47,
+        "body": "instead of 'what' if 'what' is in some places confusing",
+        "title": "refactor Tangler to use everywhere 'typeName'?"
+    },
+    {
+        "_id": 48,
+        "body": "https://learning.postman.com/docs/postman-cli/postman-cli-overview/",
+        "title": "maybe use postman cli / newman"
+    },
+    {
         "_id": 41,
         "body": "",
         "title": "if someone reads it: time estimates are not to be depended upon"
