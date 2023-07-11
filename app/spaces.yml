@@ -1,0 +1,12 @@
+spaces:
+  - name: Tangler
+    directory: ./spaces/tangler.space/
+  - name: Bodypace
+    directory: ./spaces/bodypace.space/
+    visibility: public
+  - name: dotfiles
+    directory: ./spaces/dotfiles.space/
+    visibility: public
+  - name: Private
+    directory: ./spaces/priv.space/
+    visibility: public
