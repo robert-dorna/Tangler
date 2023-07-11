@@ -1,6 +1,6 @@
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/27585123-2015d56b-84bf-4fbe-8e49-a41e743ee7e9?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D27585123-2015d56b-84bf-4fbe-8e49-a41e743ee7e9%26entityType%3Dcollection%26workspaceId%3D884e5d03-de4a-463e-928a-4e6d02e17684)
 
-<img title="" src="docs/logo.svg" alt="s" width="838">
+<img title="" src="assets/logo.svg" alt="s" width="838">
 
 ## Simple yet smart lists of whatever you want.
 
