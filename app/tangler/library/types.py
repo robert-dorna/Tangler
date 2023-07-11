@@ -32,6 +32,9 @@ class Item(BaseModel):
         type: Item.Type
         identifier: ItemIdentifier
 
+        def __hash__(self):
+            return hash((self.type.name, self.identifier))
+
     model_config = ConfigDict(strict=True, extra="forbid")
 
     full_id: FullId
