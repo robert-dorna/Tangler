@@ -25,8 +25,8 @@ class FilesystemSpace(Space):
         )
 
         self.files.items = {
-            type_name: ItemsFile(space_path, type_name)
-            for type_name in self.list_types_names()
+            item_type.name: ItemsFile(space_path, item_type)
+            for item_type in self.list_types()
         }
 
         for link in self.files.links.list_links():
@@ -90,7 +90,7 @@ class FilesystemSpace(Space):
 
         self.files.items[new_type.name] = ItemsFile(
             space_path=self.path,
-            type_name=new_type.name,
+            items_type=new_type,
             allowExisting=True,
             reset=False,
         )
@@ -104,7 +104,7 @@ class FilesystemSpace(Space):
 
         self.files.items[new_type.name] = ItemsFile(
             space_path=self.path,
-            type_name=new_type.name,
+            items_type=new_type,
             allowExisting=True,
             reset=True,
         )
@@ -314,8 +314,9 @@ class FilesystemSpace(Space):
         return relationship, reference
 
     def create_item(
-        self, type_name: types.TypeName, new_item: types.Item, place: dict
+        self, type_name: types.TypeName, new_item: types.Item, place: dict | None = None
     ) -> types.Item:
+        new_item = new_item.model_copy(deep=True)
         self.files.items[type_name].create_item(new_item)
         self.files.items[type_name].write()
 

@@ -14,14 +14,15 @@ class ItemsFile(JsonFile):
     def __init__(
         self,
         space_path: str | Path,
-        type_name: types.TypeName,
+        items_type: types.Item.Type,
         *,
         allowExisting=True,
         reset=False,
     ):
+        self.items_type = items_type
         self.items: OrderedDict[types.ItemIdentifier, types.Item] = OrderedDict()
 
-        path = Path(space_path) / self.get_file_name(type_name)
+        path = Path(space_path) / self.get_file_name(items_type.name)
 
         if not allowExisting and path.exists():
             raise RuntimeError("items file already exists (not allowed)")
@@ -33,13 +34,20 @@ class ItemsFile(JsonFile):
         )
 
     def load(self, items):
-        self.items = OrderedDict((item["_id"], types.as_item(item)) for item in items)
+        self.items = OrderedDict(
+            (item["_id"], types.as_item(item, self.items_type)) for item in items
+        )
 
     def write(self, data=None) -> None:
         if data is not None:
             self.load(data)
 
-        super().write(types.from_item(item) for item in self.items.values())
+        super().write(
+            list(
+                types.from_item(item, include_metadata=False)
+                for item in self.items.values()
+            )
+        )
 
     def rename_by_type_name(self, new_type_name: types.TypeName) -> None:
         return super().rename(self.get_file_name(new_type_name))
@@ -58,9 +66,12 @@ class ItemsFile(JsonFile):
         return item_id in self.items
 
     def create_item(self, new_item: types.Item):
-        new_id = types.ItemIdentifier(
-            max(item.full_id.identifier for item in self.items.values()) + 1
-        )
+        new_id = types.ItemIdentifier(1)
+        if len(self.items) > 0:
+            new_id = types.ItemIdentifier(
+                max(item.full_id.identifier for item in self.items.values()) + 1
+            )
+
         new_item.full_id.identifier = new_id
         self.items[new_id] = new_item
 

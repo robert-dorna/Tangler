@@ -267,8 +267,10 @@ class Server:
 
         place: dict = data.pop("_place", None)
 
+        item_type = self.space.get_type(types.TypeName(what))
+
         result = self.space.create_item(
-            types.TypeName(what), types.as_item(data), place
+            item_type.name, types.as_item(data, item_type), place
         )
         return as_response(result)
 

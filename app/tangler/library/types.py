@@ -106,8 +106,7 @@ def from_type(type: Item.Type) -> dict:
     }
 
 
-def as_item(data: dict) -> Item:
-    item_type = data.pop("_what")
+def as_item(data: dict, item_type: Item.Type) -> Item:
     item_id = data.pop("_id")
 
     for key in data.keys():
@@ -122,14 +121,17 @@ def as_item(data: dict) -> Item:
     )
 
 
-def from_item(item: Item) -> dict:
-    # this should recursively serialize .children to _children key
-    return {
-        "_what": item.full_id.type,
+def from_item(item: Item, *, include_metadata=True) -> dict:
+    as_dict: dict[Any, Any] = {
         "_id": item.full_id.identifier,
         **item.fields,
-        "_children": [from_item(child) for child in item.children.values()],
     }
+
+    if include_metadata:
+        as_dict["_children"] = ([from_item(child) for child in item.children.values()],)
+        as_dict["_what"] = (item.full_id.type.name,)
+
+    return as_dict
 
 
 def as_config(data: dict) -> Config:

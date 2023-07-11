@@ -23,7 +23,7 @@ def read_json(path: str | Path) -> dict:
         return json.load(f)
 
 
-def write_json(path: str | Path, data: dict, *, indent: int = 4):
+def write_json(path: str | Path, data: dict | list, *, indent: int = 4):
     with open(path, "w") as f:
         f.write(json.dumps(data, indent=indent))
 
