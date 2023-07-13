@@ -1,48 +1,32 @@
-import pytest
-from shutil import copytree, rmtree
-from pathlib import Path
 from typing import Any
+
 from tangler.library import types
 from tangler.library.spaces.config import SpacesConfig
 from tangler.library.spaces.filesystem import FilesystemSpace
 
-
-@pytest.fixture
-def space_copy_path():
-    space_path = Path("tests/assets/tangler-test.space")
-    copy_path = space_path.parent / (str(space_path.name) + "-copy")
-
-    copytree(space_path, copy_path)
-
-    yield copy_path
-
-    rmtree(copy_path)
+from . import utils_assets as assets
+from .utils_fixtures import *
+from .utils_requests import *
 
 
-def test_space_config_with_valid_path():
+def test_space_config_with_valid_path() -> None:
     space_config = SpacesConfig("tests/assets/spaces.yml")
-    expected_config = {
-        "spaces": [
-            {
-                "name": "TanglerTest",
-                "directory": "./tangler-test.space/",
-            }
-        ]
-    }
-
-    assert space_config.config == expected_config
+    assert space_config.config == assets.spaces_config()
 
 
-def test_filesystem_space():
-    fs_space = FilesystemSpace("tests/assets/tangler-test.space")
+def test_filesystem_space(space_copy_path) -> None:
+    fs_space = FilesystemSpace(space_copy_path)
 
-    assert fs_space.list_types_names() == ["note", "task"]
+    assert fs_space.list_types_names() == [
+        assets.exising.type_name_second,
+        assets.exising.type_name,
+    ]
     assert list(fs_space.list_fields_names(types.TypeName("task"))) == [
-        "title",
-        "category",
+        assets.exising.field_name_second,
+        assets.exising.field_name,
     ]
     assert list(fs_space.list_fields_names(types.TypeName("note"))) == [
-        "title",
+        assets.exising.field_name_second,
     ]
 
 
