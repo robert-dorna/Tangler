@@ -16,6 +16,28 @@ from .logging import configure as configure_logging
 configure_logging()
 
 
+def from_typed(
+    value: types.Config
+    | types.Item.Type.Field
+    | types.Item.Type
+    | types.Item
+    | list
+    | dict
+    | None,
+):
+    if isinstance(value, list):
+        return [from_typed(v) for v in value]
+    elif isinstance(value, types.Config):
+        return types.from_config(value)
+    elif isinstance(value, types.Item.Type.Field):
+        return types.from_field(value)
+    elif isinstance(value, types.Item.Type):
+        return types.from_type(value)
+    elif isinstance(value, types.Item):
+        return types.from_item(value)
+    return value
+
+
 def as_response(
     result: types.Config
     | types.Item.Type.Field
@@ -34,12 +56,14 @@ def as_response(
     elif isinstance(result, types.Item):
         result = types.from_item(result)
 
+    untyped_result = from_typed(result)
+
     # TODO: enable CORS(app), smth like that
     # TODO: turn it into a decorator
     response = jsonify(
         {
             "result_summary": "request processed",
-            "result": result,
+            "result": untyped_result,
         }
     )
     response.headers.add("Access-Control-Allow-Origin", "*")
@@ -68,7 +92,7 @@ class Server:
         )
 
         self.app = Flask(__name__)
-        self.app.register_error_handler(BadRequest, self._jsonify_exception)
+        self.app.register_error_handler(500, self._jsonify_exception)
 
         # not sure if POST by some convention should not have <what> (new resource name) in URL but in params instead
 
@@ -118,19 +142,18 @@ class Server:
     def run(self):
         self.app.run(host="0.0.0.0", port=8000)
 
-    def _jsonify_exception(self, e: Any) -> Response:
+    def _jsonify_exception(self, e: Any) -> tuple[Response, int]:
         """Return JSON instead of HTML for HTTP errors."""
 
-        response = e.get_response()
-        response.data = json.dumps(
+        response = jsonify(
             {
-                "code": e.code,
-                "name": e.name,
-                "description": e.description,
+                "result_summary": f"{e.code}: {e.name}: {e.description}",
+                "result": None,
             }
         )
-        response.content_type = "application/json"
-        return response
+        response.status_code
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response, e.code
 
     ## ================================================================================ ##
     ## config                                                                           ##
@@ -186,14 +209,23 @@ class Server:
         if not isinstance(data, dict):
             raise ValueError("request should have a json dict as body")
 
+        new_name = data.pop("name", None)
+        new_emoji = data.pop("emoji", None)
+        new_fields = data.pop("fields", None)
+        new_template = data.pop("template", None)
+
+        if data:
+            unknown_fields = list(data.keys())
+            raise ValueError(f"unknown fields in type update: {unknown_fields}")
+
         self.space.update_type(
             types.TypeName(what),
-            new_name=data.pop("name", None),
-            new_emoji=data.pop("emoji", None),
-            new_fields=data.pop("fields", None),
-            new_template=data.pop("template", None),
+            new_name=new_name,
+            new_emoji=new_emoji,
+            new_fields=new_fields,
+            new_template=new_template,
         )
-        return self.get_type(what)
+        return self.get_type(what if new_name is None else new_name)
 
     def remove_type(self, what: str) -> Response:
         if self.space.exists_type(types.TypeName(what)):
@@ -237,15 +269,24 @@ class Server:
         if not isinstance(data, dict):
             raise ValueError("request should have a json dict as body")
 
+        new_name = data.pop("name", None)
+        new_required = data.pop("required", None)
+        new_values = data.pop("values", None)
+        new_width = data.pop("width", None)
+
+        if data:
+            unknown_fields = list(data.keys())
+            raise ValueError(f"unknown keys in field update: {unknown_fields}")
+
         self.space.update_field(
             types.TypeName(what),
             types.FieldName(field),
-            new_name=data.pop("name", None),
-            new_required=data.pop("required", None),
-            new_values=data.pop("values", None),
-            new_width=data.pop("width", None),
+            new_name=new_name,
+            new_required=new_required,
+            new_values=new_values,
+            new_width=new_width,
         )
-        return self.get_field(what, field)
+        return self.get_field(what, field if new_name is None else new_name)
 
     def remove_field(self, what: str, field: str) -> Response:
         if self.space.exists_field(types.TypeName(what), types.FieldName(field)):
