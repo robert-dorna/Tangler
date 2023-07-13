@@ -74,8 +74,12 @@ class ConfigFile(YamlFile):
         self.add_type_to_order(new_type.name)
         self.config.types[new_type.name] = new_type
 
-    def set_type(self, new_item_type: types.Item.Type) -> None:
-        raise NotImplemented
+    def set_type(self, new_type: dict | types.Item.Type) -> None:
+        if isinstance(new_type, dict):
+            new_type = types.as_type(new_type)
+
+        self.add_type_to_order(new_type.name)
+        self.config.types[new_type.name] = new_type
 
     def get_type(self, type_name: types.TypeName) -> types.Item.Type:
         return self.config.types[type_name]
