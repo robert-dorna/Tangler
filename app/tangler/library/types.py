@@ -68,14 +68,25 @@ class Config(BaseModel):
 
 
 def as_field(data: dict) -> Item.Type.Field:
-    if data["name"][0] == "_":
+    data = data.copy()
+
+    name = data.pop("name")
+    required = data.pop("required")
+    values = data.pop("values")
+    width = data.pop("width")
+
+    if data:
+        unknown_fields = list(data.keys())
+        raise ValueError(f"unknown keys in type fields: {unknown_fields}")
+
+    if name[0] == "_":
         raise ValueError("field name cannot start with an underscore")
 
     return Item.Type.Field(
-        name=data["name"],
-        required=data["required"],
-        values=data["values"],
-        width=data["width"],
+        name=name,
+        required=required,
+        values=values,
+        width=width,
     )
 
 
@@ -89,14 +100,23 @@ def from_field(field: Item.Type.Field) -> dict:
 
 
 def as_type(data: dict) -> Item.Type:
-    if data["name"][0] == "_":
+    name = data.pop("name")
+    emoji = data.pop("emoji")
+    fields = data.pop("fields")
+    template = data.pop("template")
+
+    if data:
+        unknown_fields = list(data.keys())
+        raise ValueError(f"unknown keys in type: {unknown_fields}")
+
+    if name[0] == "_":
         raise ValueError("type name cannot start with an underscore")
 
     return Item.Type(
-        name=data["name"],
-        emoji=data["emoji"],
-        fields=[as_field(datum) for datum in data["fields"]],
-        template=data["template"],
+        name=name,
+        emoji=emoji,
+        fields=[as_field(datum) for datum in fields],
+        template=template,
     )
 
 
