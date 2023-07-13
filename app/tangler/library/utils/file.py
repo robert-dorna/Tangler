@@ -45,7 +45,7 @@ class File:
         if self.path.exists():
             return self._read_func(self.path)
         else:
-            return None
+            raise FileNotFoundError(f"path {self.path.absolute()} does not exist")
 
     def write(self, data) -> None:
         self._write_func(self.path, data)
@@ -59,9 +59,6 @@ class File:
 
 class JsonFile(File):
     def __init__(self, path: str | Path, *, initializer=None, on_init=None):
-        if not os.path.exists(path):
-            raise FileNotFoundError(f"path {Path(path).absolute()} does not exist")
-
         super().__init__(
             path,
             read_func=read_json,
@@ -73,9 +70,6 @@ class JsonFile(File):
 
 class YamlFile(File):
     def __init__(self, path: str | Path, *, initializer=None, on_init=None):
-        if not os.path.exists(path):
-            raise FileNotFoundError(f"path {Path(path).absolute()} does not exist")
-
         super().__init__(
             path,
             read_func=read_yaml,
