@@ -310,8 +310,12 @@ class Server:
 
         item_type = self.space.get_type(types.TypeName(what))
 
+        # TODO: Id -1 is wrong approach.
+        # TODO: There should be untyped version of this library that wraps typed one.
+        # TODO: Untyped library should handle all conversions, server should wrap it
+        #       without any adaptations beyond idempotence (probably, maybe e.g. some flags also).
         result = self.space.create_item(
-            item_type.name, types.as_item(data, item_type), place
+            item_type.name, types.as_item({"_id": -1, **data}, item_type), place
         )
         return as_response(result)
 
