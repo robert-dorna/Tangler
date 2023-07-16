@@ -151,8 +151,8 @@ def from_item(item: Item, *, include_metadata=True) -> dict:
     }
 
     if include_metadata:
-        as_dict["_children"] = ([from_item(child) for child in item.children.values()],)
-        as_dict["_what"] = (item.full_id.type.name,)
+        as_dict["_children"] = [from_item(child) for child in item.children.values()]
+        as_dict["_what"] = item.full_id.type.name
 
     return as_dict
 
