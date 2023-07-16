@@ -9,6 +9,11 @@ class Tangler:
 
         self.spaces_config = spaces_config
 
+    def get_server(self):
+        from .server import Server
+
+        return Server(spaces_config=self.spaces_config)
+
     def run(self, argv: list) -> None:
         # TODO: use some library to parse command line
 
