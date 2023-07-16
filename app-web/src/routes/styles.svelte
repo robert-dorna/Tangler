@@ -20,7 +20,7 @@
     --radius-small: 8px;
     --radius-large: 40px;
 
-    --panel-width: 20vw;
+    --panel-width: 30vw;
     --items-width: 700px;
     --item-width: 65vw;
     --prompt-width: 40vw;
@@ -56,10 +56,9 @@
     --page-color-bg: white;
 
     /* panel */
-    --panel-color-bg: var(--color-mint-cream);
-    --panel-color-border: var(--color-nyanza);
-    --panel-color-hover: var(--color-tea-green);
-    --panel-color-button-hover: var(--color-pistachio);
+    --panel-color-border: var(--color-silver);
+    --panel-color-hover: var(--color-anti-flash-white);
+    --panel-color-button-hover: var(--color-silver);
   }
 
   /* effects */

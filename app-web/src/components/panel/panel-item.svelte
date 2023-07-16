@@ -7,6 +7,9 @@
 </script>
 
 <div {id} class="row align clickable panel-item" class:selected on:click|stopPropagation on:keypress={undefined}>
+  {#if id === undefined}
+    <div class="dot">•</div>
+  {/if}
   {emoji}
   <div class="name">{name}</div>
   <div class="flex" />
@@ -29,6 +32,10 @@
   .panel-item:hover {
     --panel-item-hover-true: inherit;
     --panel-item-hover-flase: ;
+  }
+  .dot {
+    color: var(--color-silver);
+    margin-right: var(--gap-medium);
   }
   .selected {
     background-color: var(--panel-color-hover);

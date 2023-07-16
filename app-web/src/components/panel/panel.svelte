@@ -24,8 +24,10 @@
 </script>
 
 <div class="column panel">
-  <PanelItem id="title" emoji="" name="Items">
-    <IconButton name="plus" color="grey" size="small" on:click={onCreate} />
+  <PanelItem id="title" emoji="" name="Defined types">
+    <div class="row align buttons">
+      <IconButton name="plus" color="grey" size="small" on:click={onCreate} />
+    </div>
   </PanelItem>
   {#each types as typeName, i (typeName)}
     <PanelItem emoji={emojis[i]} name={typeName} selected={typeName === selected} on:click={() => (selected = typeName)}>
@@ -39,11 +41,12 @@
 
 <style>
   .panel {
-    background-color: var(--panel-color-bg);
-    border-right: var(--gap-tiny) solid var(--panel-color-border);
+    border-right: var(--gap-line) solid var(--panel-color-border);
     padding-left: var(--gap-large);
     padding-top: var(--gap-large);
     width: var(--panel-width);
+    margin-top: var(--gap-medium);
+    margin-bottom: var(--gap-medium);
   }
   .buttons {
     gap: var(--gap-medium);
@@ -55,7 +58,6 @@
   }
 
   :global(.panel .panel-item#title > .name) {
-    font-weight: bold;
     margin-left: 0px;
   }
 
