@@ -7,7 +7,8 @@ services:
   srv:
     image: ssurrealism/tangler-server
     volumes:
-      - ./app/:/usr/src/app
+      - ./app/tangler/:/usr/src/app/tangler
+      - ./app/spaces/:/usr/src/app/spaces
   proxy:
     # image: ssurrealism/tangler-proxy
     image: nginx
