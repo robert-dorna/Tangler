@@ -285,8 +285,9 @@ class FilesystemSpace(Space):
         updated_links = False
 
         if not _ommit_existing_link_removal:
-            self.files.links.remove_parent_link(item)
-            updated_links = True
+            if item.parent is not None:
+                self.files.links.remove_parent_link(item)
+                updated_links = True
 
         if relationship != types.Relationship.CHILD and reference.parent is None:
             if item.full_id.type != reference.full_id.type:
@@ -361,8 +362,9 @@ class FilesystemSpace(Space):
         for child in item.children.values():
             self.remove_item(child)
 
-        self.files.links.remove_parent_link(item)
-        self.files.links.write()
+        if item.parent is not None:
+            self.files.links.remove_parent_link(item)
+            self.files.links.write()
 
         self.files.items[item.full_id.type.name].remove_item(item)
         self.files.items[item.full_id.type.name].write()
