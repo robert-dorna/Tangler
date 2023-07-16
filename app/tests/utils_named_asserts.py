@@ -363,3 +363,184 @@ def config_is_missing_field(client: FlaskClient, type_name, field_name) -> None:
     assert len(actual_fields) == previous_fields_length - 1
 
     assert actual_config == assets.current_fsspace.config_file()
+
+
+## ================================================================================ ##
+## items                                                                            ##
+## ================================================================================ ##
+
+
+def raw_item_equals_item_with_metadata(raw_item, type_name, item_with_metadata) -> None:
+    raw_item_with_metadata = {
+        **raw_item,
+        "_what": type_name,
+        "_children": [],
+    }
+
+    assert raw_item_with_metadata == item_with_metadata
+
+
+def raw_items_eqaul_items_with_metadata(
+    raw_items, type_name, items_with_metadata
+) -> None:
+    index = 0
+    for raw_item, item_with_metadata in zip(raw_items, items_with_metadata):
+        raw_item_equals_item_with_metadata(raw_item, type_name, item_with_metadata)
+        index += 1
+
+
+def items_file_did_not_change(client: FlaskClient, type_name) -> None:
+    initial_items = assets.initial_fsspace.items_file(type_name)
+    initial_items_len = len(initial_items)
+
+    current_items = assets.current_fsspace.items_file(type_name)
+    current_items_len = len(current_items)
+
+    api_get_items = asserted_rq.get(client, f"/data/{type_name}")
+
+    raw_items_eqaul_items_with_metadata(current_items, type_name, api_get_items)
+
+    assert current_items_len == initial_items_len
+    assert current_items == initial_items
+
+
+def items_file_has_extra_item(
+    client: FlaskClient, type_name, item_definition, *, new_id
+) -> None:
+    initial_items = assets.initial_fsspace.items_file(type_name)
+    initial_items_len = len(initial_items)
+
+    current_items = assets.current_fsspace.items_file(type_name)
+    current_items_len = len(current_items)
+
+    api_get_items = asserted_rq.get(client, f"/data/{type_name}")
+
+    raw_items_eqaul_items_with_metadata(current_items, type_name, api_get_items)
+
+    assert "_id" not in item_definition
+
+    item_definition["_id"] = new_id
+
+    assert current_items_len == initial_items_len + 1
+    assert current_items == initial_items + [item_definition]
+
+
+def items_file_has_updated_item(
+    client: FlaskClient, type_name, item_id, item_patch
+) -> None:
+    initial_items: list = assets.initial_fsspace.items_file(type_name)
+    initial_items_len = len(initial_items)
+
+    current_items: list = assets.current_fsspace.items_file(type_name)
+    current_items_len = len(current_items)
+
+    api_get_items = asserted_rq.get(client, f"/data/{type_name}")
+    apt_get_item = asserted_rq.get(client, f"/data/{type_name}/{item_id}")
+
+    raw_items_eqaul_items_with_metadata(current_items, type_name, api_get_items)
+
+    # assert "_id" not in item_definition
+
+    assert current_items_len == initial_items_len
+    assert current_items != initial_items
+
+    item_index = next(i for i, e in enumerate(initial_items) if e["_id"] == item_id)
+
+    initial_item = initial_items.pop(item_index)
+    current_item = current_items.pop(item_index)
+
+    raw_item_equals_item_with_metadata(current_item, type_name, apt_get_item)
+
+    assert current_items == initial_items
+    assert current_item != initial_item
+
+    initial_item |= item_patch
+
+    assert current_item == initial_item
+
+
+def items_file_is_missing_item(client: FlaskClient, type_name, item_id) -> None:
+    initial_items: list = assets.initial_fsspace.items_file(type_name)
+    initial_items_len = len(initial_items)
+
+    current_items: list = assets.current_fsspace.items_file(type_name)
+    current_items_len = len(current_items)
+
+    api_get_items = asserted_rq.get(client, f"/data/{type_name}")
+
+    asserted_rq.get(client, f"/data/{type_name}/{item_id}", code=500)
+
+    raw_items_eqaul_items_with_metadata(current_items, type_name, api_get_items)
+
+    assert current_items_len == initial_items_len - 1
+    assert current_items != initial_items
+
+    item_index = next(i for i, e in enumerate(initial_items) if e["_id"] == item_id)
+
+    initial_items.pop(item_index)
+
+    assert current_items == initial_items
+
+
+## ================================================================================ ##
+## items & links (stuff related to parent-child relationships)                      ##
+## ================================================================================ ##
+
+# TODO: Define it and use in other named assets, e.g. when checking
+# that items did not change.
+
+
+def links_file_did_not_change():
+    initial_links = assets.initial_fsspace.links_file()
+    currect_links = assets.current_fsspace.links_file()
+
+    assert currect_links == initial_links
+
+
+# TODO: this is only for root to root same type, write others and split them + combine
+# to avoid duplications
+def items_file_has_item_placed_above_another(
+    client: FlaskClient, type_name, moving_item_id, reference_item_id
+) -> None:
+    initial_items: list = assets.initial_fsspace.items_file(type_name)
+    initial_items_len = len(initial_items)
+
+    current_items: list = assets.current_fsspace.items_file(type_name)
+    current_items_len = len(current_items)
+
+    api_get_items = asserted_rq.get(client, f"/data/{type_name}")
+
+    raw_items_eqaul_items_with_metadata(current_items, type_name, api_get_items)
+
+    assert current_items_len == initial_items_len
+    assert current_items != initial_items
+
+    initial_item_index = next(
+        i for i, e in enumerate(initial_items) if e["_id"] == moving_item_id
+    )
+
+    current_item_index = next(
+        i for i, e in enumerate(current_items) if e["_id"] == moving_item_id
+    )
+
+    assert current_item_index != initial_item_index
+
+    assert initial_items[current_item_index]["_id"] == reference_item_id
+    assert current_items[current_item_index + 1]["_id"] == reference_item_id
+
+    initial_item = initial_items.pop(initial_item_index)
+    current_item = current_items.pop(current_item_index)
+
+    assert current_items == initial_items
+    assert current_item == initial_item
+
+
+## ================================================================================ ##
+## space                                                                            ##
+## ================================================================================ ##
+
+
+def space_did_not_change(client: FlaskClient) -> None:
+    config_did_not_change(client)
+    items_file_did_not_change(client, assets.exising.type_name)
+    items_file_did_not_change(client, assets.exising.type_name_second)

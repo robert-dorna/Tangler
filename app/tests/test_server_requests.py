@@ -657,3 +657,246 @@ def test_server_field_remove_not_existing_type(prod_client: FlaskClient):
 ## ================================================================================ ##
 ## items                                                                            ##
 ## ================================================================================ ##
+
+## items - read
+
+
+def test_server_item_read_all(client: FlaskClient):
+    items = asserted_rq.get(client, f"/data/{assets.exising.type_name}")
+
+    named_asserts.raw_items_eqaul_items_with_metadata(
+        assets.initial_fsspace.items_file(assets.exising.type_name),
+        assets.exising.type_name,
+        items,
+    )
+    named_asserts.raw_items_eqaul_items_with_metadata(
+        assets.current_fsspace.items_file(assets.exising.type_name),
+        assets.exising.type_name,
+        items,
+    )
+
+
+def test_server_item_read_all_not_existing_type(prod_client: FlaskClient):
+    asserted_rq.get(prod_client, f"/data/{assets.not_exising.type_name}", code=500)
+
+
+def test_server_item_read(prod_client):
+    item = asserted_rq.get(prod_client, f"/data/{assets.exising.type_name}/{7}")
+
+    named_asserts.raw_item_equals_item_with_metadata(
+        assets.initial_fsspace.items_file(assets.exising.type_name)[2],
+        assets.exising.type_name,
+        item,
+    )
+    named_asserts.raw_item_equals_item_with_metadata(
+        assets.current_fsspace.items_file(assets.exising.type_name)[2],
+        assets.exising.type_name,
+        item,
+    )
+
+
+def test_server_item_read_not_existing(prod_client: FlaskClient):
+    asserted_rq.get(prod_client, f"/data/{assets.exising.type_name}/{8}", code=500)
+
+
+def test_server_item_read_not_existing_type(prod_client: FlaskClient):
+    asserted_rq.get(prod_client, f"/data/{assets.not_exising.type_name}/{0}", code=500)
+
+
+## items - create
+
+
+def test_server_item_create(client: FlaskClient):
+    asserted_rq.post(
+        client,
+        f"/data/{assets.exising.type_name}",
+        json=assets.definition_new_item_correct,
+    )
+
+    named_asserts.items_file_has_extra_item(
+        client, assets.exising.type_name, assets.definition_new_item_correct, new_id=8
+    )
+
+
+# TODO: Test create with mentioned id in resource path (url).
+
+
+def test_server_item_create_invalid_key(prod_client: FlaskClient):
+    # TODO: Implement validation in library and server.
+
+    # asserted_rq.post(
+    #     prod_client,
+    #     f"/data/{assets.exising.type_name}",
+    #     json=assets.definition_new_item_invalid_key,
+    #     code=500,
+    # )
+
+    # named_asserts.items_did_not_change(prod_client, assets.exising.type_name)
+    pass
+
+
+def test_server_item_create_invalid_key_value(prod_client: FlaskClient):
+    # TODO: Implement validation in library and server.
+    pass
+
+
+def test_server_item_create_not_existing_type(prod_client: FlaskClient):
+    asserted_rq.post(
+        prod_client,
+        f"/data/{assets.not_exising.type_name}",
+        json=assets.definition_new_item_correct,
+        code=500,
+    )
+
+    named_asserts.space_did_not_change(prod_client)
+
+
+# TODO: Test creating with specified place.
+
+## items - set
+
+
+def test_server_item_set():
+    # TODO: test items do not have set, only post works for them
+    # (as identifier cannot be manually specified, at least for now).
+    pass
+
+
+## items - move
+
+
+# root above root same type
+# root below root same type
+# root under root same type
+
+# root above root other type  X
+# root below root other type  X
+# root under root other type
+
+# root above leaf same type
+# root below leaf same type
+# root under leaf same type
+
+# root above leaf other type
+# root below leaf other type
+# root under leaf other type
+
+
+# leaf above root same type
+# leaf below root same type
+# leaf under root same type
+
+# leaf above root other type  X
+# leaf below root other type  X
+# leaf under root other type
+
+# leaf above leaf same type
+# leaf below leaf same type
+# leaf under leaf same type
+
+# leaf above leaf other type
+# leaf below leaf other type
+# leaf under leaf other type 
+
+
+
+
+def test_server_item_place_root_above_root_same_type(client: FlaskClient):
+    id_source = 7
+    id_reference = 4
+
+    asserted_rq.patch(
+        client,
+        f"/data/{assets.exising.type_name}/{id_source}",
+        json={
+            "_place": {
+                "relationship": "above",
+                "reference": {
+                    "what": assets.exising.type_name,
+                    "_id": id_reference,
+                },
+            },
+        },
+    )
+
+    named_asserts.items_file_has_item_placed_above_another(
+        client,
+        assets.exising.type_name,
+        id_source,
+        id_reference,
+    )
+
+
+## items - update
+
+
+def test_server_item_update(client: FlaskClient):
+    asserted_rq.patch(
+        client,
+        f"/data/{assets.exising.type_name}/{4}",
+        json=assets.patch_item_correct,
+    )
+
+    named_asserts.items_file_has_updated_item(
+        client,
+        assets.exising.type_name,
+        4,
+        assets.patch_item_correct,
+    )
+
+
+def test_server_item_update_not_existing(prod_client: FlaskClient):
+    asserted_rq.patch(
+        prod_client,
+        f"/data/{assets.exising.type_name}/{5}",
+        json=assets.patch_item_correct,
+        code=500,
+    )
+
+    named_asserts.space_did_not_change(prod_client)
+
+
+# TODO: inplement key validation and Test update with invalid key.
+# TODO: inplement value validation and Test update with invalid key value.
+
+
+def test_server_item_update_not_existing_type(prod_client: FlaskClient):
+    asserted_rq.patch(
+        prod_client,
+        f"/data/{assets.not_exising.type_name}/{4}",
+        json=assets.patch_item_correct,
+        code=500,
+    )
+
+    named_asserts.space_did_not_change(prod_client)
+
+
+## items - remove
+
+
+def test_server_item_remove(prod_client: FlaskClient):
+    asserted_rq.delete(
+        prod_client,
+        f"/data/{assets.exising.type_name}/{4}",
+    )
+
+    named_asserts.items_file_is_missing_item(prod_client, assets.exising.type_name, 4)
+
+
+def test_server_item_remove_not_existing(prod_client: FlaskClient):
+    asserted_rq.delete(
+        prod_client,
+        f"/data/{assets.exising.type_name}/{5}",
+    )
+
+    named_asserts.space_did_not_change(prod_client)
+
+
+def test_server_item_remove_not_existing_type(prod_client: FlaskClient):
+    asserted_rq.delete(
+        prod_client,
+        f"/data/{assets.not_exising.type_name}/{4}",
+        code=500,
+    )
+
+    named_asserts.space_did_not_change(prod_client)

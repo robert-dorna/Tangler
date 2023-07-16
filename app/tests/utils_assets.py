@@ -34,6 +34,15 @@ class FilesystemSpaceViewer:
         with open(f"{self.path}/_config.yaml", "r") as f:
             return yaml.safe_load(f)
 
+    def items_file(self, type_name) -> list:
+        with open(f"{self.path}/{type_name}.json") as f:
+            return json.load(f)
+
+    def links_file(self):
+        with open(f"{self.path}/_links.json") as f:
+            return json.load(f)
+
+
 
 initial_fsspace = FilesystemSpaceViewer("tests/assets/test.space")
 current_fsspace = FilesystemSpaceViewer("tests/assets/test.space.copy")
@@ -144,6 +153,34 @@ patch_field_invalid_key_value = {
     **patch_field_correct,
     "emoji": False,
 }
+
+# ========================================================================
+# item - definitions
+# ========================================================================
+
+definition_new_item_correct = {
+    exising.field_name_second: "new_item_field_second_value",
+    exising.field_name: "new_item_field_value",
+}
+definition_new_item_invalid_key = {
+    **definition_new_item_correct,
+    "invalid_key": "invalid_key_value",
+}
+definition_new_item_invalid_key_value = {
+    **definition_new_item_correct,
+    exising.field_name_second: True,
+}
+
+# ========================================================================
+# item - patches
+# ========================================================================
+
+patch_item_correct = {exising.field_name_second: "patched_item_field_second_value"}
+patch_item_invalid_key = {
+    **patch_item_correct,
+    "invalid_key": "invalid_key_value",
+}
+patch_item_invalid_key_value = {exising.field_name_second: True}
 
 # ==============================================================
 # ==============================================================

@@ -35,6 +35,8 @@ def test_filesystem_space_create_item(space_copy_path) -> None:
 
     type_name = types.TypeName("task")
 
+    old_all_items = fs_space.list_root_items(type_name)
+
     new_item_type = fs_space.get_type(type_name)
     new_item = types.Item(
         full_id=types.Item.FullId(
@@ -49,20 +51,24 @@ def test_filesystem_space_create_item(space_copy_path) -> None:
     )
 
     created_item = fs_space.create_item(type_name, new_item, place=None)
-    read_item = fs_space.get_item(type_name, types.ItemIdentifier(1))
+    read_item = fs_space.get_item(type_name, types.ItemIdentifier(8))
+
+    new_all_items = fs_space.list_root_items(type_name)
 
     assert id(created_item) != id(new_item)
     assert id(created_item) == id(read_item)
-    assert fs_space.list_root_items(type_name) == [created_item]
+    assert new_all_items == old_all_items + [created_item]
     assert new_item.full_id.identifier == -1
-    assert read_item.full_id.identifier == 1
-    assert created_item.full_id.identifier == 1
+    assert read_item.full_id.identifier == 8
+    assert created_item.full_id.identifier == 8
 
     created_item = fs_space.create_item(type_name, new_item, place=None)
 
+    new_all_items = fs_space.list_root_items(type_name)
+
     assert id(created_item) != id(new_item)
     assert id(created_item) != id(read_item)
-    assert fs_space.list_root_items(type_name) == [read_item, created_item]
+    assert new_all_items == old_all_items + [read_item, created_item]
     assert new_item.full_id.identifier == -1
-    assert read_item.full_id.identifier == 1
-    assert created_item.full_id.identifier == 2
+    assert read_item.full_id.identifier == 8
+    assert created_item.full_id.identifier == 9
