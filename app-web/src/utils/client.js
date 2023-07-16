@@ -5,7 +5,7 @@ const request = async (method, path, data = null) => {
     options.headers = { 'Content-Type': 'application/json' }
     options.body = JSON.stringify(data)
   }
-  return fetch(api_server + path, options).then((res) => res.json());
+  return fetch(api_server + path, options).then((res) => res.json()).then(json => json.result);
 }
 
 const client = {
