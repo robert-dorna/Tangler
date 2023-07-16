@@ -1,11 +1,14 @@
-FROM python:3
+FROM python:latest
 WORKDIR /usr/src/app
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . ./
+COPY pyproject.toml ./
+RUN pip install poetry
+RUN poetry install --no-cache --no-interaction --without=dev
+COPY tangler tangler/
+COPY spaces spaces/
+COPY main.py ./
+COPY spaces.yml ./
 STOPSIGNAL SIGINT
-ENV FLASK_RUN_PORT=8000
 ENV FLASK_RUN_HOST=0.0.0.0
-ENV TANGLER_DATA_DIR=/usr/src/app/_data
-CMD [ "flask", "--app", "tangler.py", "--debug", "run" ]
+ENV FLASK_RUN_PORT=8000
+CMD [ "poetry", "run", "flask", "--app", "/usr/src/app/main.py", "--debug", "run" ]
 EXPOSE 8000
