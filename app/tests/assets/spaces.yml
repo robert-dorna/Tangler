@@ -1,3 +1,7 @@
 spaces:
   - name: TanglerTest
     directory: ./test.space.copy/
+  - name: TanglerTestSecond
+    directory: ./test.space.second/
+  - name: NotExistingSpace
+    directory: ./not-existing-dir/

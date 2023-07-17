@@ -1,0 +1,17 @@
+[
+    {
+        "_id": 0,
+        "title": "task no. 1 from second space",
+        "category": "priv"
+    },
+    {
+        "_id": 4,
+        "title": "task no. 2 from second space",
+        "category": "work"
+    },
+    {
+        "_id": 7,
+        "title": "task no. 3 from second space",
+        "category": "school"
+    }
+]

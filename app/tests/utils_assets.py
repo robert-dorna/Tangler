@@ -15,10 +15,24 @@ def spaces_config():
                 {
                     "name": "TanglerTest",
                     "directory": "./test.space.copy/",
-                }
+                },
+                {
+                    "name": "TanglerTestSecond",
+                    "directory": "./test.space.second/",
+                },
+                {
+                    "name": "NotExistingSpace",
+                    "directory": "./not-existing-dir/",
+                },
             ]
         }
     )
+
+
+space_name = "TanglerTest"
+space_name_second = "TanglerTestSecond"
+space_name_invalid = "NotExistingSpace"
+space_name_not_existing = "not_existing_space_name"
 
 
 # ========================================================================
@@ -43,9 +57,9 @@ class FilesystemSpaceViewer:
             return json.load(f)
 
 
-
 initial_fsspace = FilesystemSpaceViewer("tests/assets/test.space")
 current_fsspace = FilesystemSpaceViewer("tests/assets/test.space.copy")
+second_fsspace = FilesystemSpaceViewer("tests/assets/test.space.second")
 
 
 @dataclass

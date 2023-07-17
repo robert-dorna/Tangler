@@ -86,9 +86,11 @@ class Server:
             spaces_config = SpacesConfig(spaces_config)
 
         self.spaces_config = spaces_config
+        self.spaces = self.spaces_config.config["spaces"]
+        self.space_selected = 0
         self.space = FilesystemSpace(
             self.spaces_config.path.parent
-            / self.spaces_config.config["spaces"][0]["directory"]
+            / self.spaces[self.space_selected]["directory"]
         )
 
         self.app = Flask(__name__)
@@ -99,7 +101,8 @@ class Server:
         rules: list[tuple[str, str, Server.RequestHandler]] = [
             # spaces
             # >
-            # > todo
+            ("/spaces", "GET", self.get_spaces),
+            ("/spaces", "PUT", self.set_space),
             # >
             # config
             ("/config", "GET", self.get_config),
@@ -154,6 +157,54 @@ class Server:
         response.status_code
         response.headers.add("Access-Control-Allow-Origin", "*")
         return response, e.code
+
+    ## ================================================================================ ##
+    ## spaces                                                                           ##
+    ## ================================================================================ ##
+
+    def _get_spaces(self) -> list:
+        def get_path(directory):
+            return self.spaces_config.path.parent / directory
+
+        return [
+            space["name"]
+            for space in self.spaces
+            if get_path(space["directory"]).is_dir()
+        ]
+
+    def get_spaces(self) -> Response:
+        return as_response(
+            {
+                "all": self._get_spaces(),
+                "selected": self.spaces[self.space_selected]["name"],
+            }
+        )
+
+    def set_space(self) -> Response:
+        data = request.json
+
+        if not isinstance(data, dict):
+            raise ValueError("request should have a json dict as body")
+
+        new_selected = data.pop("selected")
+
+        if data:
+            unknown_fields = list(data.keys())
+            raise ValueError(
+                f"unknown keys in selecting new space request: {unknown_fields}"
+            )
+
+        spaces = self._get_spaces()
+        for i, space in enumerate(spaces):
+            if space == new_selected:
+                self.space_selected = i
+                self.space = FilesystemSpace(
+                    self.spaces_config.path.parent
+                    / self.spaces[self.space_selected]["directory"]
+                )
+                return as_response(None)
+
+        raise ValueError(f"cannot select unknown or invalid space name: {new_selected}")
 
     ## ================================================================================ ##
     ## config                                                                           ##

@@ -7,6 +7,7 @@ from .utils_fixtures import *
 
 # TODO: assert that GET requests fail if they contain unused json data etc.
 
+
 ## ================================================================================ ##
 ## config                                                                           ##
 ## ================================================================================ ##
@@ -796,9 +797,7 @@ def test_server_item_set():
 
 # leaf above leaf other type
 # leaf below leaf other type
-# leaf under leaf other type 
-
-
+# leaf under leaf other type
 
 
 def test_server_item_place_root_above_root_same_type(client: FlaskClient):
@@ -900,3 +899,99 @@ def test_server_item_remove_not_existing_type(prod_client: FlaskClient):
     )
 
     named_asserts.space_did_not_change(prod_client)
+
+
+## ================================================================================ ##
+## spaces                                                                           ##
+## ================================================================================ ##
+
+
+def test_server_spaces_read(client: FlaskClient):
+    spaces = asserted_rq.get(client, "/spaces")
+
+    assert spaces == {
+        "all": [
+            assets.space_name,
+            assets.space_name_second,
+        ],
+        "selected": assets.space_name,
+    }
+
+
+def test_server_spaces_set(client: FlaskClient):
+    asserted_rq.put(
+        client,
+        "/spaces",
+        json={"selected": assets.space_name_second},
+    )
+
+    spaces = asserted_rq.get(client, "/spaces")
+
+    assert spaces == {
+        "all": [
+            assets.space_name,
+            assets.space_name_second,
+        ],
+        "selected": assets.space_name_second,
+    }
+
+    initial_items = assets.initial_fsspace.items_file(assets.exising.type_name)
+    current_items = assets.second_fsspace.items_file(assets.exising.type_name)
+
+    actual_items = asserted_rq.get(client, f"/data/{assets.exising.type_name}")
+
+    named_asserts.raw_items_eqaul_items_with_metadata(
+        current_items,
+        assets.exising.type_name,
+        actual_items,
+    )
+
+    assert current_items != initial_items
+
+    for item in initial_items:
+        item["title"] += " from second space"
+
+    assert current_items == initial_items
+
+
+def test_server_spaces_set_invalid(prod_client: FlaskClient):
+    all_spaces_names = [entry["name"] for entry in assets.spaces_config()["spaces"]]
+
+    assert assets.space_name_invalid in all_spaces_names
+
+    asserted_rq.put(
+        prod_client, "/spaces", json={"selected": assets.space_name_invalid}, code=500
+    )
+
+    spaces = asserted_rq.get(prod_client, "/spaces")
+
+    assert spaces == {
+        "all": [
+            assets.space_name,
+            assets.space_name_second,
+        ],
+        "selected": assets.space_name,
+    }
+
+
+def test_server_spaces_set_not_existing(prod_client: FlaskClient):
+    all_spaces_names = [entry["name"] for entry in assets.spaces_config()["spaces"]]
+
+    assert assets.space_name_not_existing not in all_spaces_names
+
+    asserted_rq.put(
+        prod_client,
+        "/spaces",
+        json={"selected": assets.space_name_not_existing},
+        code=500,
+    )
+
+    spaces = asserted_rq.get(prod_client, "/spaces")
+
+    assert spaces == {
+        "all": [
+            assets.space_name,
+            assets.space_name_second,
+        ],
+        "selected": assets.space_name,
+    }
