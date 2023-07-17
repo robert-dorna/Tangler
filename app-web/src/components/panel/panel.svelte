@@ -1,13 +1,13 @@
 <script>
   import PanelItem from "./panel-item.svelte";
   import IconButton from "../icon-button.svelte";
-  import { displayConfig } from "../../utils";
+  import { displayConfig, selectedType } from "../../utils";
 
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
 
-  export let selected;
+  $: selected = $selectedType;
 
   function onCreate() {
     alert("create");
@@ -30,10 +30,25 @@
     </div>
   </PanelItem>
   {#each types as typeName, i (typeName)}
-    <PanelItem emoji={emojis[i]} name={typeName} selected={typeName === selected} on:click={() => (selected = typeName)}>
+    <PanelItem
+      emoji={emojis[i]}
+      name={typeName}
+      selected={typeName === selected}
+      on:click={() => selectedType.set(typeName)}
+    >
       <div class="row align buttons">
-        <IconButton name="cog-outline" color="black" size="small" on:click={() => onEdit(typeName, i)} />
-        <IconButton name="hand-outline" color="black" size="small" on:click={() => onMove(typeName, i)} />
+        <IconButton
+          name="cog-outline"
+          color="black"
+          size="small"
+          on:click={() => onEdit(typeName, i)}
+        />
+        <IconButton
+          name="hand-outline"
+          color="black"
+          size="small"
+          on:click={() => onMove(typeName, i)}
+        />
       </div>
     </PanelItem>
   {/each}

@@ -1,6 +1,8 @@
 import client from "./client";
 import lang from "./lang";
 import {
+  selectedType,
+  items,
   displayConfig,
   displayConfigAvailable,
   displayConfigTypes,
@@ -12,7 +14,9 @@ import {
 export {
   client,
   lang,
+  selectedType,
   displayConfig,
+  items,
   displayConfigAvailable,
   displayConfigTypes,
   LOCATION,

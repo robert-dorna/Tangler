@@ -2,26 +2,58 @@ import { writable, derived } from 'svelte/store'
 import client from './client'
 
 
-function createDisplayConfig() {
-  const { subscribe, set } = writable({});
+class ConfigStore {
+  constructor() {
+    const { subscribe, set } = writable({});
 
-  function fetch() {
-    client.config.read().then((json) => {
-      set({
-        types: json.types,
-        order: json.order,
-        emojis: json.order.map((typename) => json.types[typename].emoji),
+    this.subscribe = subscribe
+    this.set = set
+  }
+
+  fetch() {
+    client.config.read().then((result) => {
+      this.set({
+        types: result.types,
+        order: result.order,
+        emojis: result.order.map((typename) => result.types[typename].emoji),
       })
     });
   }
-
-  return {
-    subscribe,
-    fetch,
-  };
 }
 
-export const displayConfig = createDisplayConfig()
+export const config = new ConfigStore
+export const selectedType = writable(null)
+
+config.subscribe((newConfig) => {
+  if (newConfig.order) {
+    selectedType.set(newConfig.order[0])
+  }
+})
+
+class ItemsStore {
+  constructor() {
+    const { subscribe, set } = writable([])
+
+    this.subscribe = subscribe
+    this.set = set
+  }
+
+  fetch(typeName) {
+    client.data.read(typeName).then((result) => {
+      this.set(result)
+    });
+  }
+}
+
+export const items = new ItemsStore
+
+selectedType.subscribe((newSelectedType) => {
+  if (newSelectedType !== null) {
+    items.fetch(newSelectedType)
+  }
+})
+
+export const displayConfig = config
 export const displayConfigAvailable = derived(displayConfig, $displayConfig => Boolean(Object.keys($displayConfig).length !== 0))
 export const displayConfigTypes = derived(displayConfig, $displayConfig => $displayConfig.types)
 
