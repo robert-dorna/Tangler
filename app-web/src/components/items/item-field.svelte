@@ -8,6 +8,7 @@
   export let name;
   export let style = undefined;
   export let values = undefined;
+  export let required = undefined;
 
   export let width = undefined;
 
@@ -25,7 +26,7 @@
     if (item[name] !== originalValue && item["_id"] !== "new") {
       client.data
         .modify(item["_what"], item["_id"], {
-          [name]: item[name]
+          [name]: item[name],
         })
         .then(() => {
           dispatch("refresh");

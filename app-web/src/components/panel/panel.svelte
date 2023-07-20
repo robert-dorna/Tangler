@@ -1,13 +1,11 @@
 <script>
   import PanelItem from "./panel-item.svelte";
   import IconButton from "../icon-button.svelte";
-  import { displayConfig, selectedType } from "../../utils";
+  import { space, spaces, order, emojis, type } from "../../utils";
 
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
-
-  $: selected = $selectedType;
 
   function onCreate() {
     alert("create");
@@ -18,23 +16,30 @@
   function onMove(typeName, i) {
     alert("move");
   }
-
-  $: emojis = $displayConfig.emojis || [];
-  $: types = $displayConfig.order || [];
 </script>
 
 <div class="column panel">
+  <PanelItem id="title" emoji="" name="Spaces" />
+  {#each $spaces as spaceName (spaceName)}
+    <PanelItem
+      emoji="🪐"
+      name={spaceName}
+      selected={spaceName === $space}
+      on:click={() => space.set(spaceName)}
+    />
+  {/each}
+
   <PanelItem id="title" emoji="" name="Defined types">
     <div class="row align buttons">
       <IconButton name="plus" color="grey" size="small" on:click={onCreate} />
     </div>
   </PanelItem>
-  {#each types as typeName, i (typeName)}
+  {#each $order as typeName, i ($space + typeName)}
     <PanelItem
-      emoji={emojis[i]}
+      emoji={$emojis[i]}
       name={typeName}
-      selected={typeName === selected}
-      on:click={() => selectedType.set(typeName)}
+      selected={typeName === $type}
+      on:click={() => type.set(typeName)}
     >
       <div class="row align buttons">
         <IconButton

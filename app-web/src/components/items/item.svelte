@@ -10,7 +10,12 @@
   import Field from "./item-field.svelte";
   import Options from "./item-options.svelte";
 
-  import { displayConfig, displayConfigTypes, newItem, movingItem } from "../../utils";
+  import {
+    config as latestConfig,
+    itemsLoaded,
+    newItem,
+    movingItem,
+  } from "../../utils";
 
   import { createEventDispatcher } from "svelte";
 
@@ -26,10 +31,8 @@
 
   let options;
 
-  let v = item._what;
-
   function toggleOpen() {
-    if (open !== undefined) open = !open;
+    dispatch("toggleOpen");
   }
 
   function createBody() {
@@ -41,63 +44,108 @@
     item.body = "";
   }
 
-  $: item._what = v;
+  let config = $latestConfig;
+  $: if ($itemsLoaded) config = $latestConfig;
 
-  $: what = item._what;
-  $: layout = $displayConfigTypes[what];
-  $: fields = layout.fields;
+  // $: typeConfig = console.log("updating typeConfig!") || $config.types[item._what];
+  $: typeConfig = config.types[item._what];
 
-  $: creatingNewItem = item._id === "new";
+  // console.log("rendering item ", item._what);
+  // console.log({ item, typeConfig, what: item._what, config: $config, space: $space });
 
-  $: elevated = creatingNewItem || ($movingItem !== null && $movingItem.what === item._what && $movingItem._id === item._id);
+  $: isMoving =
+    $movingItem !== null &&
+    $movingItem.what === item._what &&
+    $movingItem._id === item._id;
+  $: isNewItem = item._id === "new";
+  $: isElevated = isNewItem || isMoving;
 
   $: chevronColor = hover ? "#8A817C" : "#BCB8B1";
   $: if (!hover) editing = false;
 
-  const emojiOptions = $displayConfig.order.map((typeName) => ({
-    emoji: $displayConfigTypes[typeName].emoji,
+  $: emojiOptions = config.order.map((typeName) => ({
+    emoji: config.types[typeName].emoji,
     text: typeName,
-    action: () => (v = typeName),
+    action: () => {
+      item._what = typeName;
+    },
   }));
 </script>
 
-<Hovering cls="column clickable item" {elevated} bind:hover on:click={toggleOpen}>
+<Hovering
+  cls="column clickable item"
+  elevated={isElevated}
+  bind:hover
+  on:click={toggleOpen}
+>
   <div class="row flex align wrap-reverse item-fields">
     <div style="width: {indent}px;" />
-    <Icon name={open === undefined ? "dot" : open ? "expanded" : "expand"} color={chevronColor} size="large" />
+    <Icon
+      name={open === undefined ? "dot" : open ? "expanded" : "expand"}
+      color={chevronColor}
+      size="large"
+    />
 
-    {#if creatingNewItem}
+    {#if isNewItem}
       <Menu cls="emoji" options={emojiOptions} bind:focus={editing}>
-        <span class="row center emoji-button"> {layout.emoji} </span>
+        <span class="row center emoji-button"> {typeConfig.emoji} </span>
       </Menu>
     {:else}
-      <span class="emoji"> {layout.emoji} </span>
+      <span class="emoji"> {typeConfig.emoji} </span>
     {/if}
 
-    {#each fields as field (field.name)}
+    {#each typeConfig.fields as field (field.name)}
       {#if field.width !== false}
         <Field {...field} {item} bind:editing on:refresh>
           {#if field.name === "title"}
             {#if item.body}
-              <IconSwitch nameOn="dots" nameOff="dots-h" color="darkgoldenrod" size="medium" bind:toggled={detailed} />
+              <IconSwitch
+                nameOn="dots"
+                nameOff="dots-h"
+                color="darkgoldenrod"
+                size="medium"
+                bind:toggled={detailed}
+              />
             {:else}
-              <IconButton name="pencil-plus" color="darkgoldenrod" size="medium" hidden={!hover} on:click={createBody} />
+              <IconButton
+                name="pencil-plus"
+                color="darkgoldenrod"
+                size="medium"
+                hidden={!hover}
+                on:click={createBody}
+              />
             {/if}
           {/if}
         </Field>
       {/if}
     {/each}
 
-    {#if creatingNewItem}
-      <IconButton name="check" color="grey" size="large" on:click={() => dispatch("create")} />
+    {#if isNewItem}
+      <IconButton
+        name="check"
+        color="grey"
+        size="large"
+        on:click={() => dispatch("create")}
+      />
     {:else}
-      <Menu cls="row center" hide={!hover || $newItem.anchorId !== null} bind:focus={editing} {options}>
+      <Menu
+        cls="row center"
+        hide={!hover || $newItem.anchor.id !== null}
+        bind:focus={editing}
+        {options}
+      >
         <Icon name="dots-v" color="grey" size="large" />
       </Menu>
     {/if}
   </div>
   {#if item.body && detailed}
-    <Field style="margin-left: {indent + 80}px;" name="body" {item} bind:editing on:refresh />
+    <Field
+      style="margin-left: {indent + 80}px;"
+      name="body"
+      {item}
+      bind:editing
+      on:refresh
+    />
   {/if}
 </Hovering>
 

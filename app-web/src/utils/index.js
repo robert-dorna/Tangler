@@ -1,8 +1,20 @@
 import client from "./client";
 import lang from "./lang";
 import {
-  selectedType,
+  fetch,
+
+  spaces,
+  space,
+  config,
+  type,
+  itemsLoad,
   items,
+  itemsLoaded,
+
+  order,
+  types,
+  emojis,
+
   displayConfig,
   displayConfigAvailable,
   displayConfigTypes,
@@ -14,9 +26,22 @@ import {
 export {
   client,
   lang,
-  selectedType,
-  displayConfig,
+
+  fetch,
+
+  spaces,
+  space,
+  config,
+  type,
+  itemsLoad,
   items,
+  itemsLoaded,
+
+  order,
+  types,
+  emojis,
+
+  displayConfig,
   displayConfigAvailable,
   displayConfigTypes,
   LOCATION,

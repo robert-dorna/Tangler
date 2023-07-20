@@ -1,20 +1,17 @@
 <script>
   import ItemTree from "./item-tree.svelte";
-  import { lang, displayConfigAvailable } from "../../utils";
+  import { lang, items, space } from "../../utils";
 
   const texts = lang.components.items;
-
-  export let items = [];
 </script>
 
 <div class="row items-container">
   <div class="column flex items">
-    {#if $displayConfigAvailable && items && items.length}
-      {#each items as item, index (item._what + item._id)}
+    {#if $items.length}
+      {#each $items as item ($space + item._what + item._id)}
         <ItemTree {item} on:refresh />
       {/each}
-    {/if}
-    {#if Array.isArray(items) && items.length === 0}
+    {:else}
       <div class="row center noitems">{texts.no_items}</div>
     {/if}
     <!-- TODO: replace below with some css e.g. in div.items -->

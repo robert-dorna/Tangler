@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { client, displayConfig, displayConfigAvailable, displayConfigTypes } from "../../utils";
+  import { client, types, displayConfig, displayConfigAvailable, displayConfigTypes } from "../../utils";
   import DragDropList from "../drag-drop-list.svelte";
   import IconButton from "../icon-button.svelte";
   import Icon from "../icon.svelte";
@@ -19,9 +19,8 @@
     editingTypeName = !editingTypeName;
   }
 
-  $: configs = $displayConfig.types;
-  $: config = configs !== undefined && configs[what];
-  $: fields = config !== undefined && config.fields;
+  $: config = $types[what];
+  $: fields = config !== undefined ? config.fields : null;
 
   $: emojiOptions =
     $displayConfigAvailable &&
@@ -44,8 +43,9 @@
   function onSave() {
     if (name !== what || emoji !== config.emoji) {
       client.config.type.modify(what, {
-        name, emoji
-      })
+        name,
+        emoji,
+      });
       dispatch("refresh");
     }
   }

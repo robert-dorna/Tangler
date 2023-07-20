@@ -1,4 +1,5 @@
 const request = async (method, path, data = null) => {
+  console.log('request: ', { method, path, data })
   const api_server = window.location.href + 'api'
   const options = { method }
   if (data) {
@@ -9,6 +10,10 @@ const request = async (method, path, data = null) => {
 }
 
 const client = {
+  spaces: {
+    read: async () => request('GET', '/spaces'),
+    set: async (newSelectedSpace) => request('PUT', '/spaces', { 'selected': newSelectedSpace }),
+  },
   config: {
     read: async (section = null) => request('GET', section ? `/config/${section}` : '/config'),
     setOrder: async (newOrder) => request('PUT', '/config/order', newOrder),
