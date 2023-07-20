@@ -67,6 +67,7 @@
     width: var(--panel-width);
     margin-top: var(--gap-medium);
     margin-bottom: var(--gap-medium);
+    overflow: scroll;
   }
   .buttons {
     gap: var(--gap-medium);
