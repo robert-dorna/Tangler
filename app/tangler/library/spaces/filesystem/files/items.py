@@ -34,9 +34,12 @@ class ItemsFile(JsonFile):
         )
 
     def load(self, items):
-        self.items = OrderedDict(
-            (item["_id"], types.as_item(item, self.items_type)) for item in items
-        )
+        try:
+            self.items = OrderedDict(
+                (item["_id"], types.as_item(item, self.items_type)) for item in items
+            )
+        except ValueError as e:
+            raise ValueError(f'while loading file: {self.path} got an error: {str(e)}')
 
     def write(self, data=None) -> None:
         if data is not None:

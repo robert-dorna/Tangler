@@ -70,10 +70,25 @@ class Config(BaseModel):
 def as_field(data: dict) -> Item.Type.Field:
     data = data.copy()
 
-    name = data.pop("name")
-    required = data.pop("required")
-    values = data.pop("values")
-    width = data.pop("width")
+    name = None
+    required = None
+    values = None
+    width = None
+    try:
+        name = data.pop("name")
+        required = data.pop("required")
+        values = data.pop("values")
+        width = data.pop("width")
+    except KeyError as e:
+        raise ValueError(
+            f"""while parsing dict as Item.Type.Field got an key error: {str(e)},
+            stopped at such results:
+                name="{name}",
+                required="{required}",
+                values="{values}",
+                width="{width}"
+            """
+        )
 
     if data:
         unknown_fields = list(data.keys())
@@ -112,12 +127,17 @@ def as_type(data: dict) -> Item.Type:
     if name[0] == "_":
         raise ValueError("type name cannot start with an underscore")
 
-    return Item.Type(
-        name=name,
-        emoji=emoji,
-        fields=[as_field(datum) for datum in fields],
-        template=template,
-    )
+    try:
+        return Item.Type(
+            name=name,
+            emoji=emoji,
+            fields=[as_field(datum) for datum in fields],
+            template=template,
+        )
+    except ValueError as e:
+        raise ValueError(
+            f'while creating Item.Type (name="{name}", emoji="{emoji}") error was raised: {str(e)}'
+        )
 
 
 def from_type(type: Item.Type) -> dict:
@@ -135,7 +155,7 @@ def as_item(data: dict, item_type: Item.Type) -> Item:
     for key in data.keys():
         if key[0] == "_":
             raise ValueError(
-                "unknown special (starting with underscore) item field value"
+                f'unknown special (starting with underscore) item field: "{key}", entire dict: {data}'
             )
 
     return Item(
