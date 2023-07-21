@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any, TypeAlias
 
 from flask import Flask, Response, jsonify, request
+from flask_cors import CORS
 from werkzeug.exceptions import BadRequest
 
 from ..library import types
@@ -94,6 +95,7 @@ class Server:
         )
 
         self.app = Flask(__name__)
+        self.cors = CORS(self.app)
         self.app.register_error_handler(500, self._jsonify_exception)
 
         # not sure if POST by some convention should not have <what> (new resource name) in URL but in params instead
