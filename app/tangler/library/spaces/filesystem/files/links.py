@@ -60,11 +60,11 @@ class LinksFile(JsonFile):
     def index_link(self, parent: types.Item, child: types.Item) -> int:
         link = {
             "from": {
-                "what": parent.full_id.type,
+                "what": parent.full_id.type.name,
                 "_id": parent.full_id.identifier,
             },
             "to": {
-                "what": child.full_id.type,
+                "what": child.full_id.type.name,
                 "_id": child.full_id.identifier,
             },
         }
@@ -75,14 +75,14 @@ class LinksFile(JsonFile):
     ):
         new_link = {
             "to": {
-                "what": item.full_id.type,
+                "what": item.full_id.type.name,
                 "_id": item.full_id.identifier,
             },
         }
 
         if relationship == types.Relationship.CHILD:
             new_link["from"] = {
-                "what": reference.full_id.type,
+                "what": reference.full_id.type.name,
                 "_id": reference.full_id.identifier,
             }
 
@@ -98,7 +98,7 @@ class LinksFile(JsonFile):
                 )
 
             new_link["from"] = {
-                "what": reference.parent.full_id.type,
+                "what": reference.parent.full_id.type.name,
                 "_id": reference.parent.full_id.identifier,
             }
 
@@ -111,7 +111,7 @@ class LinksFile(JsonFile):
             item.parent = reference.parent
             item.parent.children = odict_inserted(
                 item.parent.children,
-                item,
+                (item.full_id, item),
                 reference_key=reference.full_id,
                 placement=Placement.BEFORE
                 if relationship == types.Relationship.ABOVE
@@ -127,11 +127,11 @@ class LinksFile(JsonFile):
         self.links.remove(
             {
                 "from": {
-                    "what": item.parent.full_id.type,
+                    "what": item.parent.full_id.type.name,
                     "_id": item.parent.full_id.identifier,
                 },
                 "to": {
-                    "what": item.full_id.type,
+                    "what": item.full_id.type.name,
                     "_id": item.full_id.identifier,
                 },
             }
