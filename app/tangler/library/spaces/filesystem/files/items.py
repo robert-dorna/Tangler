@@ -39,7 +39,7 @@ class ItemsFile(JsonFile):
                 (item["_id"], types.as_item(item, self.items_type)) for item in items
             )
         except ValueError as e:
-            raise ValueError(f'while loading file: {self.path} got an error: {str(e)}')
+            raise ValueError(f"while loading file: {self.path} got an error: {str(e)}")
 
     def write(self, data=None) -> None:
         if data is not None:
@@ -97,8 +97,10 @@ class ItemsFile(JsonFile):
 
     def update_item(self, item: types.Item, fields: types.ItemFields):
         for field_name, new_field_value in fields.items():
-            if isinstance(item.fields[field_name], dict) and isinstance(
-                new_field_value, dict
+            if (
+                isinstance(new_field_value, dict)
+                and field_name in item.fields
+                and isinstance(item.fields[field_name], dict)
             ):
                 item.fields[field_name].update(
                     {k: v for k, v in new_field_value if v is not None}
